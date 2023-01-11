@@ -1,4 +1,4 @@
-# ************************  PHILO MAKEFILE  ************************ #
+# **********************  MINISHELL MAKEFILE  ********************** #
 
 .PHONY			:	all clean fclean re debug run runl runs rund
 
@@ -6,29 +6,29 @@
 
 # ---  Final Executable  --- #
 
-NAME			=	philo
-DEBUG			=	philo_debug
+NAME			=	minishell
+NAME_LIBFT		=	libft.a
+DEBUG			=	minishell_debug
 
 # ----------  Directories  ----------- #
 
 DIR_HEAD		=	./incl/
 DIR_SRCS		=	./srcs/
-DIR_OBJS		=	.objs/
-DIR_OBJS_D		=	.objs_debug/
+DIR_LIBFT		=	./srcs/libft/
+DIR_OBJS		=	.build/
+DIR_OBJS_D		=	.build_debug/
 
 # -------------  Files  -------------- #
 
-HEAD			=	philo.h
+HEAD			=	minishell.h
 
-SRCS			=	ft_check_arg.c	\
-					ft_check_run.c	\
-					ft_init.c		\
-					ft_process.c	\
-					ft_utilis.c		\
-					philo.c
+SRCS			=	minishell.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
+
+DEPS			=	${OBJS:.o=.d}
+DEPS_D			=	${OBJS_D:.o=.d}
 
 # --------------  Path  -------------- #
 
@@ -40,7 +40,7 @@ PATH_LIBFT		=	${addprefix ${DIR_LIBFT}, ${LIBFT_A}}
 CC				=	cc
 CFLAGS			= 	-Wall -Wextra -Werror
 AR				= 	ar rcs
-FSANITIZE		=	-fsanitize=pthread
+FSANITIZE		=	-fsanitize=address
 OPTI			=	-O3
 LIBFT			=	-lft
 LIBFT_D			=	-lft_debug
@@ -61,33 +61,34 @@ all					:
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS}
-						${CC} ${CFLAGS} -pthread ${OBJS} -o ${NAME} 
+${NAME}				:	${OBJS} ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${OBJS} -o ${NAME} 
 
-${OBJS}				:	| ${DIR_OBJS}
+${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}	:	
+						$(MAKE) ${NAME_LIBFT} -C ${DIR_LIBFT}
 
-${DIR_OBJS}%.o		:	${DIR_SRCS}%.c ${PATH_HEAD} Makefile
-						${CC} ${CFLAGS} -pthread -I ${DIR_HEAD} ${MMD} -c $< -o $@
+${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
+						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -c $< -o $@
 
 ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS}
 
--include ${DIR_OBJS}%.d
+-include ${DEPS}
 
 # ------  Compiled Rules Debug  ------ #
 
 ${DEBUG}			:	${OBJS_D}
-						${CC} ${CFLAGS} -pthread ${OBJS_D} -g3 ${FSANITIZE} -o ${DEBUG}
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${OBJS_D} -g3 ${FSANITIZE} -o ${DEBUG}
 
-${OBJS_D}			:	| ${DIR_OBJS_D}
+${OBJS_D}			:	| ${DIR_OBJS_C_D}
 
-${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c ${PATH_HEAD} Makefile
-						${CC} ${CFLAGS} -pthread -I ${DIR_HEAD} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
+${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c ${PATH_HEAD} ${PATH_LIBFT} Makefile
+						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}
 
--include ${DIR_OBJS_D}%.d
+-include ${DEPS_D}
 
 # ---------  Usual Commands  --------  #
 
@@ -98,6 +99,7 @@ clean				:
 fclean				:	clean
 						${RM} ${NAME}
 						${RM} ${DEBUG}
+						$(MAKE) fclean -C ${DIR_LIBFT}
 
 re					:
 						$(MAKE) fclean
@@ -106,14 +108,13 @@ re					:
 # ---------  Other Commands  --------- #
 
 debug				:	
+						$(MAKE) debug -C ${DIR_LIBFT}
 						$(MAKE) -j ${DEBUG}
 
 # -----------  Run Commands  --------- #
 
-TEST				=	 4 410 200 200
-
 run					:	all
-						./${NAME} ${TEST}
+						./${NAME}
 
 runl				:	all
 						${LEAKS}./${NAME} ${TEST}
