@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/12 12:22:16 by bperriol         ###   ########lyon.fr   */
+/*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
+/*   Updated: 2023/01/12 12:26:45 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+static int	is_space_tab(char *str)
 {
-	char	*line;
+	int	i;
 
-	(void) argc;
-	(void) argv;
-	(void) envp;
-	while (1)
+	i = 0;
+	while (str[i])
 	{
-		line = readline("minishell > ");
-		parse(line);
-		free(line);
+		if (str[i] != 32 && str[i] != 9)
+			return (1);
+		i++;
 	}
 	return (0);
+}
+
+void	parse(char *str)
+{
+	if (!str || !*str || !is_space_tab(str))
+		return ;
+	add_history(str);
 }

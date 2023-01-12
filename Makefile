@@ -22,7 +22,7 @@ DIR_OBJS_D		=	.build_debug/
 
 HEAD			=	minishell.h
 
-SRCS			=	minishell.c
+SRCS			=	minishell.c			parsing.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
