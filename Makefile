@@ -9,6 +9,7 @@
 NAME			=	minishell
 NAME_LIBFT		=	libft.a
 DEBUG			=	minishell_debug
+DEBUG_LIBFT		=	libft_debug.a
 
 # ----------  Directories  ----------- #
 
@@ -78,13 +79,14 @@ ${DIR_OBJS}			:
 
 # ------  Compiled Rules Debug  ------ #
 
-${DEBUG}			:	${OBJS_D}
+${DEBUG}			:	${OBJS_D} ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
 						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${READLINE} ${OBJS_D} -g3 ${FSANITIZE} -o ${DEBUG}
 
-${OBJS_D}			:	| ${DIR_OBJS_C_D}
+${addprefix ${DIR_LIBFT}, ${DEBUG_LIBFT}}	:	
+						$(MAKE) ${DEBUG_LIBFT} -C ${DIR_LIBFT}
 
-${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c ${PATH_HEAD} ${PATH_LIBFT} Makefile
-						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${READLINE} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
+${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS_D}
+						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}
@@ -118,13 +120,10 @@ run					:	all
 						./${NAME}
 
 runl				:	all
-						${LEAKS}./${NAME} ${TEST}
-
-runcheckl			:	all
-						./${NAME}
+						${LEAKS}./${NAME}
 
 runs				:	debug
-						./${DEBUG} ${TEST}
+						./${DEBUG}
 
 rund				:	debug
 						${LLDB} ./${DEBUG}
