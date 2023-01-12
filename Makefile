@@ -45,6 +45,7 @@ OPTI			=	-O3
 LIBFT			=	-lft
 LIBFT_D			=	-lft_debug
 MMD				=	-MMD
+READLINE		=	-lreadline
 
 # ------------  Commands  ------------ #
 
@@ -62,7 +63,7 @@ all					:
 # ---------  Compiled Rules  --------- #
 
 ${NAME}				:	${OBJS} ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
-						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${OBJS} -o ${NAME} 
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} ${OBJS} -o ${NAME} 
 
 ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}	:	
 						$(MAKE) ${NAME_LIBFT} -C ${DIR_LIBFT}
@@ -78,12 +79,12 @@ ${DIR_OBJS}			:
 # ------  Compiled Rules Debug  ------ #
 
 ${DEBUG}			:	${OBJS_D}
-						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${OBJS_D} -g3 ${FSANITIZE} -o ${DEBUG}
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${READLINE} ${OBJS_D} -g3 ${FSANITIZE} -o ${DEBUG}
 
 ${OBJS_D}			:	| ${DIR_OBJS_C_D}
 
 ${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c ${PATH_HEAD} ${PATH_LIBFT} Makefile
-						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
+						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${READLINE} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}

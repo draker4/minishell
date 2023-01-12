@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/11 16:08:55 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/12 11:41:01 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /* ------------------------------  STRUCTURE  ------------------------------- */
 
