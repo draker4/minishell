@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/12 12:26:45 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/13 17:10:19 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,25 @@ static int	is_space_tab(char *str)
 	return (0);
 }
 
-void	parse(char *str)
+void	parse(char *str, char **envp)
 {
+	char	*line_parsed;
+
 	if (!str || !*str || !is_space_tab(str))
 		return ;
 	add_history(str);
+	line_parsed = malloc(sizeof(char));
+	if (!line_parsed)
+	{
+		perror("Error: ");
+		return ;
+	}
+	*line_parsed = '\0';
+	if (!check_quotes(str, &line_parsed, envp))
+	{
+		free(line_parsed);
+		return ;
+	}
+	printf("fin %s\n", line_parsed);
+	free(line_parsed);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2022/12/21 13:38:45 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/13 15:46:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+# include <stdint.h>
 
 /* ------------------------------  STRUCTURE  ------------------------------- */
 
@@ -49,7 +50,7 @@ void	*ft_calloc(size_t count, size_t size);
 
 	/* ----- ft_get_next_line.c ---- */
 
-		/*Lis un fichier et retroune une ligne (malloc) à chaque appel.
+		/*Lis un fichier et retourne une ligne (malloc) à chaque appel.
 		Il est possible d'appeler plusieurs fichier à la fois.*/	
 char	*get_next_line(int fd);
 

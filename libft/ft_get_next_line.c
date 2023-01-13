@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2022/12/15 13:50:59 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/13 15:34:36 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define BUFFER_SIZE 3
 #endif
 
-char static	*ft_str_join(char *s1, char *s2)
+static char	*ft_str_join(char *s1, char *s2)
 {
 	char	*new;
 	size_t	i;
@@ -43,7 +43,7 @@ char static	*ft_str_join(char *s1, char *s2)
 	return (new);
 }
 
-void static	ft_reset_str(char *tmp, char *str, size_t start)
+static void	ft_reset_str(char *tmp, char *str, size_t start)
 {
 	size_t	i;
 
@@ -56,7 +56,7 @@ void static	ft_reset_str(char *tmp, char *str, size_t start)
 	str[i] = '\0';
 }
 
-char static	*ft_ret_line(char *tmp, char *str)
+static char	*ft_ret_line(char *tmp, char *str)
 {
 	size_t	i;
 	char	*line;
@@ -83,7 +83,7 @@ char static	*ft_ret_line(char *tmp, char *str)
 	return (line);
 }
 
-char static	*ft_read_file(int fd, char *str)
+static char	*ft_read_file(int fd, char *str)
 {
 	char	*tmp;
 	int		nbc;
@@ -108,7 +108,7 @@ char static	*ft_read_file(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	str[OPEN_MAX][BUFFER_SIZE + 1];
+	static char	str[_SC_OPEN_MAX][BUFFER_SIZE + 1];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

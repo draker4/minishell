@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/13 16:40:39 by bperriol         ###   ########lyon.fr   */
+/*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
+/*   Updated: 2023/01/13 17:19:17 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*str_add(char *str, char c)
 {
-	char	*line;
-	// int		i;
-	// int		check = 3;
+	int		i;
+	char	*copy;
 
-	(void) argc;
-	(void) argv;
-	// i = 0;
-	// while (envp[i])
-	// {
-	// 	printf("env[%d] = %s\n", i, envp[i]);
-	// 	i++;
-	// }
-	while (1)
+	if (!str)
+		return (NULL);
+	copy = malloc(sizeof(char) * ((int)ft_strlen(str) + 2));
+	if (!copy)
 	{
-		line = readline("minishell > ");
-		// write(1, "Minishell > ", 12);
-		// line = get_next_line(0);
-		// if (!line)
-		// 	write(2, "Error \n", 7);
-		parse(line, envp);
-		free(line);
+		free(str);
+		perror("Error: ");
+		return (NULL);
 	}
-	return (0);
+	i = 0;
+	while (str[i])
+	{
+		copy[i] = str[i];
+		i++;
+	}
+	copy[i++] = c;
+	copy[i] = '\0';
+	free(str);
+	return (copy);
 }

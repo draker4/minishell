@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mem_all.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 08:51:02 by bboisson          #+#    #+#             */
-/*   Updated: 2022/11/23 15:34:29 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/13 15:37:35 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,11 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
-	int		overlap;
-
-	if (!len || (!dst && !src))
-		return (dst);
-	i = 0;
-	overlap = 0;
-	while (i < len)
+	if ((!dst && !src) || (!dst && !src && len))
+		return (NULL);
+	if (dst > src)
 	{
-		if (&src[i] == &dst[0])
-			overlap = 1;
-		i++;
-	}
-	if (overlap)
-	{
-		while (len > 0)
+		while (len)
 		{
 			((unsigned char *)dst)[len - 1] = ((unsigned char *)src)[len - 1];
 			len--;
