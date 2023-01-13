@@ -24,14 +24,11 @@ DIR_OBJS_D			=	.build_debug/
 
 HEAD			=	minishell.h
 
-SRCS			=	minishell.c
-PARSING_SRCS	=	parsing.c	parsing_utils.c	\
-					quotes.c	env_var.c		\
+SRCS			=	minishell.c 					\
+					parsing/parsing.c	parsing/parsing_utils.c		\
+					parsing/quotes.c	parsing/env_var.c			\
 
-SRCS			+=	${addprefix ${DIR_PARSING_SRCS}, ${PARSING_SRCS}}
-
-OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o} \
-					+ ${${addprefix ${DIR_PARSING_SRCS}, ${PARSING_SRCS}}:%.c=${DIR_OBJS}%.o}
+OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
 
 DEPS			=	${OBJS:.o=.d}
@@ -80,6 +77,7 @@ ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
 
 ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS}
+						${MKDIR} -p .build/parsing
 
 -include ${DEPS}
 
