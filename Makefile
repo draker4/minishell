@@ -63,8 +63,8 @@ all					:
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS} ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
-						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} ${OBJS} -o ${NAME} 
+${NAME}				:	${OBJS} #${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${OBJS} -o ${NAME} ${READLINE} 
 
 ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}	:	
 						$(MAKE) ${NAME_LIBFT} -C ${DIR_LIBFT}
