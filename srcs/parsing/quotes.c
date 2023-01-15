@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:27:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/14 06:20:55 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 12:45:25 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static int	adapt_line(char *str, char **line_parsed, int *i, char **envp)
 
 static	int	add_char(char *str, char **line_parsed, int *i)
 {
+	if (str[*i] == ')' && is_last_bracket(str, *i))
+		return (1);
 	*line_parsed = str_add(*line_parsed, str[*i]);
 	if (!*line_parsed)
 		return (0);
@@ -93,17 +95,20 @@ static	int	add_char(char *str, char **line_parsed, int *i)
 	return (1);
 }
 
-int	check_quotes(char *str, char **line_parsed, char **envp)
+int	parse_quotes(char *str, char **line_parsed, char **envp)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] == 32)
+	while (str[i] && str[i] == 32)
+		i++;
+	if (str[i] && str[i] == '(')
 		i++;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"' || (str[i] == '$' \
-		&& str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_')))
+		&& str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_' || \
+		str[i + 1] == '{')))
 		{
 			if (!adapt_line(str, line_parsed, &i, envp))
 				return (0);

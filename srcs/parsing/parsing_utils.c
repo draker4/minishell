@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 11:04:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 12:33:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,16 @@ char	*create_copy(t_data *data)
 	}
 	copy[data->save] = '\0';
 	return (copy);
+}
+
+int	is_last_bracket(char *str, int i)
+{
+	i++;
+	while (str[i])
+	{
+		if (str[i] == ')')
+			return (0);
+		i++;
+	}
+	return (1);
 }

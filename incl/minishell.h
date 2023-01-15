@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/15 11:00:17 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 12:33:56 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ typedef struct s_data
 // parsing.c
 void		parse(char *str, char **envp, t_bracket **bfracket);
 
-// quotes and env variables
-int			check_quotes(char *str, char **line_parsed, char **envp);
+// quotes
+int			parse_quotes(char *str, char **line_parsed, char **envp);
 
 // parsing utils
 char		*str_add(char *str, char c);
 void		initialize_data(t_data *data, char*str);
 char		*create_copy(t_data *data);
 int			is_in_quote(char *str, int index);
+int			is_last_bracket(char *str, int i);
 
 // check around parenthesis
 int			check_around_parenthesis(char *str);
@@ -81,7 +82,7 @@ int			check_redirections(char *str);
 // get path variable
 char		**get_path(char **envp);
 
-// check_env
+// environment variables
 int			check_env(char *str, char **line_parsed, int *i, char **envp);
 
 // bracket list utils

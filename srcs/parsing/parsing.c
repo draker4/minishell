@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 11:05:50 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 12:26:46 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,37 @@ static int	check_nb_quotes(char *str)
 	return (1);
 }
 
+static int	parse_brackets(t_bracket **bracket, char **envp)
+{
+	t_bracket	*current;
+	char		*line_parsed;
+
+	current = *bracket;
+	while (current)
+	{
+		line_parsed = malloc(sizeof(char));
+		line_parsed[0] = '\0';
+		if (!line_parsed)
+		{
+			write(2, "Malloc function error!\n", 23);
+			bracket_clear_data(bracket);
+			return (0);
+		}
+		if (!parse_quotes(current->str, &line_parsed, envp))
+		{
+			free(line_parsed);
+			bracket_clear_data(bracket);
+			return (0);
+		}
+		free(current->str);
+		current->str = line_parsed;
+		current = current->next;
+	}
+	return (1);
+}
+
 void	parse(char *str, char **envp, t_bracket **bracket)
 {
-	// char	*line_parsed;
-
 	if (!str || !*str || !is_space_tab(str))
 		return ;
 	add_history(str);
@@ -91,24 +118,12 @@ void	parse(char *str, char **envp, t_bracket **bracket)
 	|| !check_around_parenthesis(str) || !check_and_or(str) || \
 	!check_redirections(str) || !create_brackets(str, bracket))
 		return ;
-	(void)envp;
+	if (!parse_brackets(bracket, envp))
+		return ;
 	while (*bracket)
 	{
-		printf("ici bracket = %s et enum=%d\n", (*bracket)->str, (*bracket)->type);
+		printf("ici bracket = %s et enum=%d\n", \
+		(*bracket)->str, (*bracket)->type);
 		(*bracket) = (*bracket)->next;
 	}
-	// line_parsed = malloc(sizeof(char));
-	// if (!line_parsed)
-	// {
-	// 	perror("Error: ");
-	// 	return ;
-	// }
-	// *line_parsed = '\0';
-	// if (!check_quotes(str, &line_parsed, envp))
-	// {
-	// 	free(line_parsed);
-	// 	return ;
-	// }
-	// printf("%s\n", line_parsed);
-	// free(line_parsed);
 }
