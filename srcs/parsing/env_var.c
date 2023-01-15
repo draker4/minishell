@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:09:09 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/13 18:27:27 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/14 03:38:25 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ static int	add_env(char **line_parsed, char **envp, int var)
 	k = 0;
 	while (envp[var][k] != '=')
 		k++;
-	while (envp[var][++k])
+	k++;
+	while (envp[var][k])
 	{
 		*line_parsed = str_add(*line_parsed, envp[var][k]);
 		if (!*line_parsed)
 			return (0);
+		if (envp[var][k] == ' ')
+			while (envp[var][k] && envp[var][k] == ' ')
+				k++;
+		else
+			k++;
 	}
 	return (1);
 }

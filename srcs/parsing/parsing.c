@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/13 17:10:19 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 11:05:50 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,89 @@ static int	is_space_tab(char *str)
 	return (0);
 }
 
-void	parse(char *str, char **envp)
+static int	check_parenthesis(char *str)
 {
-	char	*line_parsed;
+	int	nb_left;
+	int	nb_right;
+	int	i;
+
+	nb_left = 0;
+	nb_right = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '(' && !is_in_quote(str, i))
+			nb_left++;
+		else if (str[i] == ')' && !is_in_quote(str, i))
+			nb_right++;
+		i++;
+	}
+	if (nb_left != nb_right)
+	{
+		write(2, "Wrong number of parenthesis!\n", 29);
+		return (0);
+	}
+	return (1);
+}
+
+static int	check_nb_quotes(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
+				i++;
+		}
+		if (str[i] == '"')
+		{
+			i++;
+			while (str[i] && str[i] != '"')
+				i++;
+		}
+		if (!str[i])
+		{
+			write(2, "Warning: Unclosed quotes!\n", 26);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+void	parse(char *str, char **envp, t_bracket **bracket)
+{
+	// char	*line_parsed;
 
 	if (!str || !*str || !is_space_tab(str))
 		return ;
 	add_history(str);
-	line_parsed = malloc(sizeof(char));
-	if (!line_parsed)
-	{
-		perror("Error: ");
+	if (!check_nb_quotes(str) || !check_parenthesis(str) \
+	|| !check_around_parenthesis(str) || !check_and_or(str) || \
+	!check_redirections(str) || !create_brackets(str, bracket))
 		return ;
-	}
-	*line_parsed = '\0';
-	if (!check_quotes(str, &line_parsed, envp))
+	(void)envp;
+	while (*bracket)
 	{
-		free(line_parsed);
-		return ;
+		printf("ici bracket = %s et enum=%d\n", (*bracket)->str, (*bracket)->type);
+		(*bracket) = (*bracket)->next;
 	}
-	printf("fin %s\n", line_parsed);
-	free(line_parsed);
+	// line_parsed = malloc(sizeof(char));
+	// if (!line_parsed)
+	// {
+	// 	perror("Error: ");
+	// 	return ;
+	// }
+	// *line_parsed = '\0';
+	// if (!check_quotes(str, &line_parsed, envp))
+	// {
+	// 	free(line_parsed);
+	// 	return ;
+	// }
+	// printf("%s\n", line_parsed);
+	// free(line_parsed);
 }

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/13 16:40:39 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/14 10:15:03 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	// int		i;
-	// int		check = 3;
+	char		*line;
+	char		**path;
+	t_bracket	*bracket;
 
-	(void) argc;
+	if (argc != 1)
+	{
+		write(2, "Please don't enter any argument!\n", 33);
+		return (0);
+	}
 	(void) argv;
-	// i = 0;
-	// while (envp[i])
-	// {
-	// 	printf("env[%d] = %s\n", i, envp[i]);
-	// 	i++;
-	// }
+	bracket = NULL;
+	path = get_path(envp);
+	if (!path)
+		return (0);
 	while (1)
 	{
 		line = readline("minishell > ");
-		// write(1, "Minishell > ", 12);
-		// line = get_next_line(0);
-		// if (!line)
-		// 	write(2, "Error \n", 7);
-		parse(line, envp);
+		parse(line, envp, &bracket);
 		free(line);
+		bracket_clear_data(&bracket);
 	}
+	free(path);
 	return (0);
 }

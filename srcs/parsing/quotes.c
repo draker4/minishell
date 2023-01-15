@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:27:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/13 18:06:32 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/14 06:20:55 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,27 @@ static int	adapt_line(char *str, char **line_parsed, int *i, char **envp)
 	return (1);
 }
 
+static	int	add_char(char *str, char **line_parsed, int *i)
+{
+	*line_parsed = str_add(*line_parsed, str[*i]);
+	if (!*line_parsed)
+		return (0);
+	if (str[*i] == ' ')
+	{
+		while (str[*i] && str[*i] == ' ')
+			*i += 1;
+		*i -= 1;
+	}
+	return (1);
+}
+
 int	check_quotes(char *str, char **line_parsed, char **envp)
 {
 	int	i;
 
 	i = 0;
+	while (str[i] == 32)
+		i++;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"' || (str[i] == '$' \
@@ -94,8 +110,7 @@ int	check_quotes(char *str, char **line_parsed, char **envp)
 		}
 		else
 		{
-			*line_parsed = str_add(*line_parsed, str[i]);
-			if (!*line_parsed)
+			if (!add_char(str, line_parsed, &i))
 				return (0);
 		}
 		if (str[i])

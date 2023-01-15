@@ -24,9 +24,13 @@ DIR_OBJS_D			=	.build_debug/
 
 HEAD			=	minishell.h
 
-SRCS			=	minishell.c 					\
-					parsing/parsing.c	parsing/parsing_utils.c		\
-					parsing/quotes.c	parsing/env_var.c			\
+SRCS			=	minishell.c 		\
+					\
+					parsing/parsing.c				parsing/parsing_utils.c			\
+					parsing/quotes.c				parsing/env_var.c				\
+					parsing/lst_bracket_utils.c		parsing/create_bracket.c		\
+					parsing/get_path_var.c			parsing/check_around_par.c		\
+					parsing/check_and_or_symbols.c	parsing/check_redirections.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
