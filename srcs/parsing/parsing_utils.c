@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 12:33:37 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 13:10:55 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,11 @@ char	*create_copy(t_data *data)
 
 	copy = malloc(sizeof(char) * (data->i - data->save + 1));
 	if (!copy)
-		return (0);
-	copy[0] = '\0';
-	if (!copy)
 	{
 		write(2, "Malloc function error!\n", 23);
 		return (0);
 	}
+	copy[0] = '\0';
 	while (data->save != data->i)
 	{
 		copy = str_add(copy, data->str[data->save]);
@@ -95,7 +93,6 @@ char	*create_copy(t_data *data)
 			return (0);
 		data->save += 1;
 	}
-	copy[data->save] = '\0';
 	return (copy);
 }
 

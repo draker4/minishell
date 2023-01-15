@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 12:26:46 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 12:49:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,10 @@ void	parse(char *str, char **envp, t_bracket **bracket)
 		return ;
 	if (!parse_brackets(bracket, envp))
 		return ;
-	while (*bracket)
-	{
-		printf("ici bracket = %s et enum=%d\n", \
-		(*bracket)->str, (*bracket)->type);
-		(*bracket) = (*bracket)->next;
-	}
+	// while (*bracket)
+	// {
+	// 	printf("ici bracket = %s et enum=%d\n", 
+	// 	(*bracket)->str, (*bracket)->type);
+	// 	(*bracket) = (*bracket)->next;
+	// }
 }

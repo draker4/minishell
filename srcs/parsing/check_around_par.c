@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 09:35:13 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 10:49:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 12:55:29 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_after_right_par(char *str, int *i)
 
 static int	check_before_left_par(char *str, int i)
 {
-	while (str[i - 1] && (str[i] == '(' || str[i] == ' '))
+	while (i - 1 >= 0 && (str[i] == '(' || str[i] == ' '))
 		i--;
 	if (i > 0 && str[i] != '&' && str[i] != '|')
 	{
@@ -51,7 +51,7 @@ static int	check_before_left_par(char *str, int i)
 
 static int	check_before_right_par(char *str, int i)
 {
-	while (str[i - 1] && (str[i] == ')' || str[i] == ' '))
+	while (i - 1 >= 0 && (str[i] == ')' || str[i] == ' '))
 		i--;
 	if (i > 0 && (str[i] == '&' || str[i] == '|' || str[i] == '>' \
 	|| str[i] == '<'))

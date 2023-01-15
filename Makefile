@@ -66,15 +66,13 @@ CP				=	cp
 # ****************************  RULES  ***************************** #
 
 all					:	
+						${MAKE} -C ${DIR_LIBFT}
 						$(MAKE) -j ${NAME}
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS} ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
+${NAME}				:	${OBJS}
 						${CC} ${CFLAGS} -o ${NAME} ${OBJS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} 
-
-${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}	:	
-						$(MAKE) ${NAME_LIBFT} -C ${DIR_LIBFT}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@

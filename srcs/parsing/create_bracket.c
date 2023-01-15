@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:39:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 11:16:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 13:17:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	add_bracket_and(t_data *data, t_bracket **bracket)
 	new = new_bracket(copy, data->type);
 	if (!new)
 	{
+		free(copy);
 		bracket_clear_data(bracket);
 		return (0);
 	}
@@ -52,6 +53,7 @@ static int	add_bracket_or(t_data *data, t_bracket **bracket)
 	new = new_bracket(copy, data->type);
 	if (!new)
 	{
+		free(copy);
 		bracket_clear_data(bracket);
 		return (0);
 	}
@@ -92,6 +94,7 @@ static int	add_bracket_last(t_data *data, t_bracket **bracket)
 	new = new_bracket(copy, data->type);
 	if (!new)
 	{
+		free(copy);
 		bracket_clear_data(bracket);
 		return (0);
 	}
