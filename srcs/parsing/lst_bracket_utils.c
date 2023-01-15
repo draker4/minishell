@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 12:21:48 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 17:19:45 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_bracket	*new_bracket(char *str, enum e_type type)
 	new->prev_exit = -1;
 	new->type = type;
 	new->next = NULL;
+	new->child = NULL;
 	return (new);
 }
 
@@ -39,6 +40,8 @@ void	bracket_clear_data(t_bracket **bracket)
 	clear = *bracket;
 	while (clear)
 	{
+		if (clear->child)
+			bracket_clear_data(&clear->child);
 		tmp = clear;
 		clear = clear->next;
 		free(tmp->str);

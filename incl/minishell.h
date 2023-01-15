@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/15 12:33:56 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 17:12:28 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,24 @@ enum	e_type
 
 /* ------------------------------  STRUCTURE  ------------------------------- */
 
-// structure used for the parsing
-// typedef struct s_parsing
-// {
-// 	char	**path;
-// 	char	*line;
-// }	t_parsing;
+// structure used for saving everything from minishell
+typedef struct s_minishell
+{
+	char				**path;
+	char				**envp;
+	struct s_bracket	*bracket;
+}	t_minishell;
 
 // structure saving each steps separated by && or || or parenthesis 
 // on the read line
 typedef struct s_bracket
 {
 	char				*str;
+	char				**path;
 	int					prev_exit;
 	enum e_type			type;
 	struct s_bracket	*next;
+	struct s_bracket	*child;
 }	t_bracket;
 
 // structure used to create the bracket list defined above
@@ -57,8 +60,11 @@ typedef struct s_data
 
 /* ------------------------------  PROTOTYPE   ------------------------------ */
 
+// check line
+int			check_line(char *str);
+
 // parsing.c
-void		parse(char *str, char **envp, t_bracket **bfracket);
+int			parse(char *str, t_bracket **bracket);
 
 // quotes
 int			parse_quotes(char *str, char **line_parsed, char **envp);
@@ -66,9 +72,13 @@ int			parse_quotes(char *str, char **line_parsed, char **envp);
 // parsing utils
 char		*str_add(char *str, char c);
 void		initialize_data(t_data *data, char*str);
-char		*create_copy(t_data *data);
+char		*create_copy(t_data *data, int remove);
+int			init_minishell(t_minishell *minishell, char **envp);
+
+// search character
 int			is_in_quote(char *str, int index);
 int			is_last_bracket(char *str, int i);
+int			has_and_or_symbols(char *str);
 
 // check around parenthesis
 int			check_around_parenthesis(char *str);
@@ -92,5 +102,11 @@ void		bracket_add_back(t_bracket **bracket, t_bracket *new);
 
 // create bracket list
 int			create_brackets(char *str, t_bracket **step);
+
+// free utils
+void		free_split(char **split);
+
+// execute brackets
+void		exec_brackets(t_minishell *minishell);
 
 #endif

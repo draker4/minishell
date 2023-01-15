@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:57:20 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/14 07:58:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 13:49:51 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	**get_path(char **envp)
 	char	*str;
 
 	i = 0;
+	if (!envp[0])
+		return (NULL);
 	str = ft_strdup("PATH");
 	if (!str)
 	{

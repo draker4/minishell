@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 13:10:55 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 16:15:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,6 @@ char	*str_add(char *str, char c)
 	return (copy);
 }
 
-int	is_in_quote(char *str, int index)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] && str[i] != '"')
-				if (i++ == index)
-					return (1);
-		}
-		else if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				if (i++ == index)
-					return (1);
-		}
-		if (str[i])
-			i++;
-		else
-			return (1);
-	}
-	return (0);
-}
-
 void	initialize_data(t_data *data, char*str)
 {
 	data->i = 0;
@@ -75,11 +46,15 @@ void	initialize_data(t_data *data, char*str)
 	data->type = always;
 }
 
-char	*create_copy(t_data *data)
+char	*create_copy(t_data *data, int remove)
 {
 	char	*copy;
+	int		less_char;
 
-	copy = malloc(sizeof(char) * (data->i - data->save + 1));
+	less_char = 1;
+	if (remove != -1)
+		less_char = 0;
+	copy = malloc(sizeof(char) * (data->i - data->save + less_char));
 	if (!copy)
 	{
 		write(2, "Malloc function error!\n", 23);
@@ -88,7 +63,8 @@ char	*create_copy(t_data *data)
 	copy[0] = '\0';
 	while (data->save != data->i)
 	{
-		copy = str_add(copy, data->str[data->save]);
+		if (data->save != remove)
+			copy = str_add(copy, data->str[data->save]);
 		if (!copy)
 			return (0);
 		data->save += 1;
@@ -96,14 +72,15 @@ char	*create_copy(t_data *data)
 	return (copy);
 }
 
-int	is_last_bracket(char *str, int i)
+int	init_minishell(t_minishell *minishell, char **envp)
 {
-	i++;
-	while (str[i])
-	{
-		if (str[i] == ')')
-			return (0);
-		i++;
-	}
+	char	**path;
+
+	path = get_path(envp);
+	if (envp[0] && !path)
+		return (0);
+	minishell->path = path;
+	minishell->bracket = NULL;
+	minishell->envp = envp;
 	return (1);
 }

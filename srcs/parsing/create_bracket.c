@@ -6,18 +6,18 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:39:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 13:17:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 16:27:50 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	add_bracket_and(t_data *data, t_bracket **bracket)
+static int	add_bracket_and(t_data *data, t_bracket **bracket, int *remove)
 {
 	t_bracket	*new;
 	char		*copy;
 
-	copy = create_copy(data);
+	copy = create_copy(data, *remove);
 	if (!copy)
 	{
 		bracket_clear_data(bracket);
@@ -34,15 +34,17 @@ static int	add_bracket_and(t_data *data, t_bracket **bracket)
 	}
 	bracket_add_back(bracket, new);
 	data->type = and;
+	if (*remove != -1)
+		*remove = -1;
 	return (1);
 }
 
-static int	add_bracket_or(t_data *data, t_bracket **bracket)
+static int	add_bracket_or(t_data *data, t_bracket **bracket, int *remove)
 {
 	t_bracket	*new;
 	char		*copy;
 
-	copy = create_copy(data);
+	copy = create_copy(data, *remove);
 	if (!copy)
 	{
 		bracket_clear_data(bracket);
@@ -59,15 +61,18 @@ static int	add_bracket_or(t_data *data, t_bracket **bracket)
 	}
 	bracket_add_back(bracket, new);
 	data->type = or;
+	if (*remove != -1)
+		*remove = -1;
 	return (1);
 }
 
-static void	move_end_bracket(t_data *data)
+static int	move_end_bracket(t_data *data)
 {
 	int	left_bracket;
 	int	right_bracket;
 
 	data->i += 1;
+	data->save = data->i;
 	left_bracket = 1;
 	right_bracket = 0;
 	while (data->str[data->i] && left_bracket != right_bracket)
@@ -78,14 +83,15 @@ static void	move_end_bracket(t_data *data)
 			right_bracket++;
 		data->i += 1;
 	}
+	return (data->i - 1);
 }
 
-static int	add_bracket_last(t_data *data, t_bracket **bracket)
+static int	add_bracket_last(t_data *data, t_bracket **bracket, int *remove)
 {
 	t_bracket	*new;
 	char		*copy;
 
-	copy = create_copy(data);
+	copy = create_copy(data, *remove);
 	if (!copy)
 	{
 		bracket_clear_data(bracket);
@@ -99,31 +105,35 @@ static int	add_bracket_last(t_data *data, t_bracket **bracket)
 		return (0);
 	}
 	bracket_add_back(bracket, new);
+	if (*remove != -1)
+		*remove = -1;
 	return (1);
 }
 
 int	create_brackets(char *str, t_bracket **bracket)
 {
-	t_data		data;
+	t_data	data;
+	int		remove;
 
 	initialize_data(&data, str);
+	remove = -1;
 	while (str[data.i])
 	{
 		if (!is_in_quote(str, data.i))
 		{
 			if (str[data.i] == '&' && str[data.i + 1] && str[data.i + 1] == '&')
-				if (!add_bracket_and(&data, bracket))
+				if (!add_bracket_and(&data, bracket, &remove))
 					return (0);
 			if (str[data.i] == '|' && str[data.i + 1] && str[data.i + 1] == '|')
-				if (!add_bracket_or(&data, bracket))
+				if (!add_bracket_or(&data, bracket, &remove))
 					return (0);
 			if (str[data.i] == '(')
-				move_end_bracket(&data);
+				remove = move_end_bracket(&data);
 		}
 		if (str[data.i])
 			data.i += 1;
 	}
-	if (!add_bracket_last(&data, bracket))
+	if (!add_bracket_last(&data, bracket, &remove))
 		return (0);
 	return (1);
 }

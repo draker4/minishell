@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:32:16 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 10:46:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/15 17:17:47 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,31 @@ static int	check_or(char *str, int *i)
 	return (1);
 }
 
+static int	begin_and_or_char(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == 32)
+		i++;
+	if (str[i])
+	{
+		if (str[i] == '&')
+			write(2, "Wrong '&' symbol!\n", 18);
+		if (str[i] == '|')
+			write(2, "Wrong '|' symbol!\n", 18);
+		return (0);
+	}
+	return (1);
+}
+
 int	check_and_or(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (begin_and_or_char(str))
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '&' && !is_in_quote(str, i))
