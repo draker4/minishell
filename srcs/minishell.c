@@ -6,25 +6,25 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/15 16:59:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 11:55:17 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	print_bracket(t_bracket *bracket)
-// {
-// 	t_bracket	*current;
+static void	print_bracket(t_bracket *bracket)
+{
+	t_bracket	*current;
 
-// 	current = bracket;
-// 	while (current)
-// 	{
-// 		if (current->child)
-// 			print_bracket(current->child);
-// 		printf("current = %s et enum = %d\n", current->str, current->type);
-// 		current = current->next;
-// 	}
-// }
+	current = bracket;
+	while (current)
+	{
+		if (current->child)
+			print_bracket(current->child);
+		printf("current = %s et enum = %d\n", current->str, current->type);
+		current = current->next;
+	}
+}
 
 static void	read_line(t_minishell *minishell)
 {
@@ -34,7 +34,7 @@ static void	read_line(t_minishell *minishell)
 	if (check_line(line))
 		parse(line, &minishell->bracket);
 	// exec_brackets(minishell);
-	// print_bracket(minishell->bracket);
+	print_bracket(minishell->bracket);
 	// printf("debut = %s\n", minishell->bracket->str);
 	// printf("ici child next = %s\n", minishell->bracket->child->next->str);
 	free(line);

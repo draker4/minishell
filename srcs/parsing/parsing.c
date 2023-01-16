@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 17:11:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 12:02:05 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ int	parse(char *str, t_bracket **bracket)
 {
 	t_bracket	*current;
 
-	// printf("debut str = %s\n", str);
 	if (!create_brackets(str, bracket))
 		return (0);
-	// printf("apres\n");
 	current = *bracket;
 	while (current)
 	{
