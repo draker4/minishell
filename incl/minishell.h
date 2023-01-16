@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 15:46:58 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 18:35:33 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_bracket
 	enum e_type			type;
 	struct s_bracket	*next;
 	struct s_bracket	*child;
+	struct s_bracket	*pipe;
 }	t_bracket;
 
 // structure used to create the bracket list defined above
@@ -83,6 +84,7 @@ int			init_minishell(t_minishell *minishell, char **envp);
 int			is_in_quote(char *str, int index);
 int			is_last_bracket(char *str, int i);
 int			has_and_or_symbols(char *str);
+int			has_pipe_symbol(char *str);
 
 // check around parenthesis
 int			check_around_parenthesis(char *str);
