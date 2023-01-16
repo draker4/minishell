@@ -28,7 +28,7 @@ HEAD			=	minishell.h
 SRCS			=	minishell.c
 
 SRCS_P			=	parsing.c				parsing_utils.c			\
-					quotes.c				env_var.c				\
+					quotes.c				env_var.c			\
 					lst_bracket_utils.c		create_bracket.c		\
 					get_path_var.c			check_around_par.c		\
 					check_and_or_symbols.c	check_redirections.c	\

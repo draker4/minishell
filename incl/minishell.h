@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 12:34:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 13:30:27 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ typedef struct s_data
 int			check_line(char *str);
 
 // parsing.c
-int			parse(char *str, t_bracket **bracket);
+int			parse(char *str, t_bracket **bracket, char **envp);
 
 // quotes
-int			parse_quotes(char *str, char **line_parsed, char **envp);
+int			parse_quotes_env(char *str, char **line_parsed, char **envp);
 
 // parsing utils
 char		*str_add(char *str, char c);
