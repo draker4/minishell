@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 13:30:27 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 15:46:58 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ typedef struct s_bracket
 	char				**path;
 	char				**words;
 	int					prev_exit;
+	int					standin;
+	int					standout;
+	int					standerror;
 	enum e_type			type;
 	struct s_bracket	*next;
 	struct s_bracket	*child;
@@ -111,6 +114,6 @@ void		free_split(char **split);
 void		exec_brackets(t_minishell *minishell);
 
 // split words
-char		**split_not_quotes(char *str, char c);
+char		**split_not_quotes(char *str);
 
 #endif

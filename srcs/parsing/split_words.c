@@ -6,85 +6,86 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:08:33 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 13:04:46 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 16:50:32 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**ft_free_double_words(char **str, int i)
+static int	ft_find_next(char *s, int *i)
 {
-	while (i >= 0)
-		free(str[i--]);
-	free (str);
-	return (NULL);
+	if ((s[*i] == '>' || s[*i] == '<') && !is_in_quote(s, *i))
+	{
+		*i += 1;
+		return (0);
+	}
+	while (s[*i])
+	{
+		if ((s[*i] == ' ' || s[*i] == '>' || s[*i] == '<') \
+		&& !is_in_quote(s, *i))
+		{
+			if (s[*i] == ' ')
+				return (1);
+			else
+				return (0);
+		}
+		*i += 1;
+	}
+	return (0);
 }
 
-/*Separe s par c en comptabiliasant le nombre de mots.*/
-static int	ft_divide_words(char *s, char c)
+static char	**ft_cut(char *s, char **split)
 {
 	int	i;
-	int	j;
-	int	size;
+	int	save;
+	int	nb;
+	int	k;
+	int	next;
 
 	i = 0;
-	size = 0;
+	nb = 0;
 	while (s[i])
 	{
-		j = i;
-		while (s[i] && (s[i] != c || is_in_quote(s, i)))
-			i++;
-		if (i - j)
-			size++;
-		if (s[i])
-			i++;
-	}	
-	return (size);
-}
-
-/*Insert chaque string dans le tableau split.*/
-static char	**ft_insert_words(char *s, char c, char **split, int i)
-{
-	int		j;
-	int		k;
-	int		l;
-
-	k = 0;
-	while (s[i])
-	{
-		j = i;
-		while (s[i] && (s[i] != c || is_in_quote(s, i)))
-			i++;
-		if (i - j)
+		save = i;
+		next = ft_find_next(s, &i);
+		if (i - save)
 		{
-			split[k] = malloc(sizeof(**split) * (i - j + 1));
-			if (split[k] == NULL)
-				return (ft_free_double_words(split, k));
-			l = 0;
-			while (j < i)
-				split[k][l++] = s[j++];
-			split[k][l] = '\0';
-			k++;
+			split[nb] = malloc(sizeof(**split) * (i - save + 1));
+			if (split[nb] == NULL)
+				return (free_split(split), NULL);
+			k = 0;
+			while (save < i)
+				split[nb][k++] = s[save++];
+			split[nb++][k] = '\0';
 		}
-		if (s[i])
-			i++;
+		i += next;
 	}
 	return (split);
 }
 
-char	**split_not_quotes(char *s, char c)
+char	**split_not_quotes(char *s)
 {
-	int		size;
 	char	**split;
+	int		i;
+	int		save;
+	int		nb_str;
+	int		next;
 
+	i = 0;
+	nb_str = 0;
 	if (s == NULL)
 		return (NULL);
-	size = ft_divide_words(s, c);
-	split = malloc(sizeof(*split) * (size + 1));
+	while (s[i])
+	{
+		save = i;
+		next = ft_find_next(s, &i);
+		if (i - save)
+			nb_str++;
+		i += next;
+	}
+	split = malloc(sizeof(*split) * (nb_str + 1));
 	if (split == NULL)
 		return (NULL);
-	if (ft_insert_words(s, c, split, 0) == NULL)
-		return (NULL);
-	split[size] = NULL;
-	return (split);
+	split[nb_str] = NULL;
+	return (ft_cut(s, split));
 }
