@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:09:09 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 12:44:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 14:48:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	move_index(char *str, int *i)
 	*i -= 1;
 }
 
-static int	add_env(char **line_parsed, char **envp, int var)
+static int	add_env(char **word_parsed, char **envp, int var)
 {
 	int	k;
 
@@ -31,8 +31,8 @@ static int	add_env(char **line_parsed, char **envp, int var)
 	k++;
 	while (envp[var][k])
 	{
-		*line_parsed = str_add(*line_parsed, envp[var][k]);
-		if (!*line_parsed)
+		*word_parsed = str_add(*word_parsed, envp[var][k]);
+		if (!*word_parsed)
 			return (0);
 		if (envp[var][k] == ' ')
 			while (envp[var][k] && envp[var][k] == ' ')
@@ -43,7 +43,7 @@ static int	add_env(char **line_parsed, char **envp, int var)
 	return (1);
 }
 
-int	check_env(char *str, char **line_parsed, int *i, char **envp)
+int	check_env(char *str, char **word_parsed, int *i, char **envp)
 {
 	int	j;
 	int	k;
@@ -67,7 +67,7 @@ int	check_env(char *str, char **line_parsed, int *i, char **envp)
 		j++;
 	}
 	move_index(str, i);
-	if (var != -1 && !add_env(line_parsed, envp, var))
+	if (var != -1 && !add_env(word_parsed, envp, var))
 		return (0);
 	return (1);
 }
