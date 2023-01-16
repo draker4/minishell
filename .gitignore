@@ -3,14 +3,13 @@
 # --------- Editor --------- #
 .vscode/*
 *~
-\#*\#
 
 # ---------- Other --------- #
 .DS_STORE
 
 # ------------- Template from https://github.com/github/gitignore ------------ #
 
-# ------ Prerequisites ----- #
+# ------ Dependencies ----- #
 *.d
 
 # ------ Object files ------ #
