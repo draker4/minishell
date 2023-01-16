@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2022/11/23 13:45:56 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 13:07:11 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,11 @@ size_t	ft_put_ptr(size_t n)
 	ft_print_ptr(n, "0123456789abcdef", &i);
 	i += 2;
 	return (i);
+}
+
+void	ft_putstr_color(char *color, char *s, int fd)
+{
+	ft_putstr_fd(color, fd);
+	ft_putstr_fd(s, fd);
+	ft_putstr_fd(COLOR_RESET, fd);
 }

@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2022/12/15 10:00:00 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 13:09:02 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+
+# define COLOR_RED 		"\x1b[31m"
+# define COLOR_GREEN 	"\x1b[32m"
+# define COLOR_YELLOW 	"\x1b[33m"
+# define COLOR_BLUE 	"\x1b[34m"
+# define COLOR_RESET	"\x1b[0m"
 
 /* ------------------------------  STRUCTURE  ------------------------------- */
 
@@ -175,6 +181,8 @@ size_t	ft_put_str(char *s);
 
 		/*Imprime l'adresse d'un pointeur sur le terminal*/
 size_t	ft_put_ptr(size_t n);
+
+void	ft_putstr_color(char *color, char *s, int fd);
 
 	/* -------- ft_printf.c -------- */
 

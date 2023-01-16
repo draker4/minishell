@@ -1,50 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rotate.c                                        :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2022/12/15 16:26:28 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 17:45:20 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "pipex.h"
 
-void	ft_rotate(t_stack *s)
+int	main(int argc, char **argv, char **env)
 {
-	t_arg	*tmp;
+	(void)env;
+	if (argc < 5)
+		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
+	if (access(argv[1], R_OK))
+		perror("Error");
+	return (0);
+	int pipe_fd[2]
 
-	if (s->top == s->last)
-		return ;
-	tmp = s->top->next;
-	s->top->prev = s->last;
-	s->last->next = s->top;
-	s->top->next = NULL;
-	s->last = s->top;
-	s->top = tmp;
-	s->top->prev = NULL;
-}
+// pipe(pipe_fd);
 
-void	ft_rotate_a(t_stack *a, int print)
-{
-	ft_rotate(a);
-	if (print)
-		write(1, "ra\n", 3);
-}
+// if (fork() == 0)
+// {
+// 	dup2(pipe_fd[1], STDOUT_FILENO);
+// 	close(pipe_fd[0]);
+// 	close(pipe_fd[1]);
+// 	execve("/bin/cat", ["cat", "ARG", NULL], envp);
+// }
 
-void	ft_rotate_b(t_stack *b, int print)
-{
-	ft_rotate(b);
-	if (print)
-		write(1, "rb\n", 3);
-}
+// dup2(pipe_fd[0], STDIN_FILENO);
 
-void	ft_rotate_r(t_stack *a, t_stack *b, int print)
-{
-	ft_rotate(a);
-	ft_rotate(b);
-	if (print)
-		write(1, "rr\n", 3);
+// close(pipe_fd[0]);
+// close(pipe_fd[1]);
 }
