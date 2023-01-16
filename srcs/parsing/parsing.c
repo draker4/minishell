@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 17:11:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 10:51:59 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,29 @@
 // 	return (1);
 // }
 
+static int	parse_words(t_bracket **bracket)
+{
+	char		**split_words;
+	t_bracket	*current;
+
+	current = *bracket;
+	while (current)
+	{
+		split_words = ft_split_not_quotes(current->str);
+		if (!split_words)
+			return (0);
+		current->words = split_words;
+		current = current->next;
+	}
+	return (1);
+}
+
 int	parse(char *str, t_bracket **bracket)
 {
 	t_bracket	*current;
 
-	// printf("debut str = %s\n", str);
 	if (!create_brackets(str, bracket))
 		return (0);
-	// printf("apres\n");
 	current = *bracket;
 	while (current)
 	{
@@ -61,6 +76,11 @@ int	parse(char *str, t_bracket **bracket)
 			}
 		}
 		current = current->next;
+	}
+	if (!parse_words(bracket))
+	{
+		bracket_clear_data(bracket);
+		return (0);
 	}
 	return (1);
 }

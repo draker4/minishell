@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/15 16:59:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 10:42:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ static void	read_line(t_minishell *minishell)
 
 	line = readline("minishell > ");
 	if (check_line(line))
+	{
 		parse(line, &minishell->bracket);
 	// exec_brackets(minishell);
 	// print_bracket(minishell->bracket);
 	// printf("debut = %s\n", minishell->bracket->str);
 	// printf("ici child next = %s\n", minishell->bracket->child->next->str);
+	}
 	free(line);
 	bracket_clear_data(&minishell->bracket);
 }

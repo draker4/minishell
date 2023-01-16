@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/15 17:12:28 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 10:47:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_bracket
 {
 	char				*str;
 	char				**path;
+	char				**words;
 	int					prev_exit;
 	enum e_type			type;
 	struct s_bracket	*next;
