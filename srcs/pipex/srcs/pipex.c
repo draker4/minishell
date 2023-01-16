@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 17:45:20 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 18:08:43 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **env)
 	if (access(argv[1], R_OK))
 		perror("Error");
 	return (0);
-	int pipe_fd[2]
+//int pipe_fd[2]
 
 // pipe(pipe_fd);
 

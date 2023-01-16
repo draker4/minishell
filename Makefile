@@ -77,8 +77,8 @@ all					:
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS} ${OBJS_P}
-						${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${OBJS_P} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} 
+${NAME}				:	${OBJS} ${OBJS_P} 
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} ${OBJS} ${OBJS_P} -o ${NAME}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
@@ -88,26 +88,28 @@ ${DIR_OBJS_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS}
 
 ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS}
-						${MKDIR} -p .build/parsing
+						${MKDIR} ${DIR_OBJS_P}
 
 -include ${DEPS}
 -include ${DEPS_P}
 
 # ------  Compiled Rules Debug  ------ #
 
-${DEBUG}			:	${OBJS_D} ${addprefix ${DIR_LIBFT}, ${NAME_LIBFT}}
-						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${READLINE} ${OBJS_D} -g3 ${FSANITIZE} -o ${DEBUG}
-
-${addprefix ${DIR_LIBFT}, ${DEBUG_LIBFT}}	:	
-						$(MAKE) ${DEBUG_LIBFT} -C ${DIR_LIBFT}
+${DEBUG}			:	${OBJS_D} 
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${READLINE} ${OBJS_D} ${OBJS_P} -g3 ${FSANITIZE} -o ${DEBUG}
 
 ${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS_D}
 						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
 
+${DIR_OBJS_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS}
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}
+						${MKDIR} ${DIR_OBJS_P}
 
 -include ${DEPS_D}
+-include ${DEPS_P}
 
 # ---------  Usual Commands  --------  #
 
