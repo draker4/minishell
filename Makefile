@@ -15,29 +15,33 @@ DEBUG_LIBFT		=	libft_debug.a
 
 DIR_HEAD			=	./incl/
 DIR_SRCS			=	./srcs/
-DIR_PARSING_SRCS	=	./parsing
+DIR_SRCS_P			=	./srcs/parsing/
 DIR_LIBFT			=	./libft/
 DIR_OBJS			=	.build/
+DIR_OBJS_P			=	.build/parsing/
 DIR_OBJS_D			=	.build_debug/
 
 # -------------  Files  -------------- #
 
 HEAD			=	minishell.h
 
-SRCS			=	minishell.c 		\
-					\
-					parsing/parsing.c				parsing/parsing_utils.c			\
-					parsing/quotes.c				parsing/env_var.c				\
-					parsing/lst_bracket_utils.c		parsing/create_bracket.c		\
-					parsing/get_path_var.c			parsing/check_around_par.c		\
-					parsing/check_and_or_symbols.c	parsing/check_redirections.c	\
-					parsing/free_utils.c			parsing/search_char.c			\
-					parsing/exec_bracket.c			parsing/check_line.c
+SRCS			=	minishell.c
+
+SRCS_P			=	parsing.c				parsing_utils.c			\
+					quotes.c				env_var.c				\
+					lst_bracket_utils.c		create_bracket.c		\
+					get_path_var.c			check_around_par.c		\
+					check_and_or_symbols.c	check_redirections.c	\
+					free_utils.c			search_char.c			\
+					exec_bracket.c			check_line.c			\
+					split_words.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
+OBJS_P			=	${SRCS_P:%.c=${DIR_OBJS_P}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
 
 DEPS			=	${OBJS:.o=.d}
+DEPS_P			=	${OBJS_P:.o=.d}
 DEPS_D			=	${OBJS_D:.o=.d}
 
 # --------------  Path  -------------- #
@@ -73,10 +77,13 @@ all					:
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS}
-						${CC} ${CFLAGS} -o ${NAME} ${OBJS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} 
+${NAME}				:	${OBJS} ${OBJS_P}
+						${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${OBJS_P} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} 
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+
+${DIR_OBJS_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
 
 ${DIR_OBJS}			:
@@ -84,6 +91,7 @@ ${DIR_OBJS}			:
 						${MKDIR} -p .build/parsing
 
 -include ${DEPS}
+-include ${DEPS_P}
 
 # ------  Compiled Rules Debug  ------ #
 

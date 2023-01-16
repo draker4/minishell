@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 10:50:43 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 12:23:52 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	bracket_clear_data(t_bracket **bracket)
 			bracket_clear_data(&clear->child);
 		tmp = clear;
 		clear = clear->next;
-		if (clear->words)
-			free_split(clear->words);
+		if (tmp->words)
+			free_split(tmp->words);
 		free(tmp->str);
 		free(tmp);
 	}

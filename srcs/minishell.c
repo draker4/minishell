@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 10:42:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 13:08:04 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 // static void	print_bracket(t_bracket *bracket)
 // {
 // 	t_bracket	*current;
+// 	int			i;
 
 // 	current = bracket;
 // 	while (current)
 // 	{
 // 		if (current->child)
 // 			print_bracket(current->child);
-// 		printf("current = %s et enum = %d\n", current->str, current->type);
+// 		i = 0;
+// 		while (current->words[i])
+// 			printf("current = %s et enum = %d et words = %s\n", current->str, current->type, current->words[i++]);
 // 		current = current->next;
 // 	}
 // }

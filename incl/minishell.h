@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 10:47:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 12:34:42 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,8 @@ void		free_split(char **split);
 
 // execute brackets
 void		exec_brackets(t_minishell *minishell);
+
+// split words
+char		**split_not_quotes(char *str, char c);
 
 #endif

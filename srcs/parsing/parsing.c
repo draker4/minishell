@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 10:51:59 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 12:34:48 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	parse_words(t_bracket **bracket)
 	current = *bracket;
 	while (current)
 	{
-		split_words = ft_split_not_quotes(current->str);
+		split_words = split_not_quotes(current->str, ' ');
 		if (!split_words)
 			return (0);
 		current->words = split_words;
