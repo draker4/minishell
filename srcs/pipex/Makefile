@@ -12,13 +12,10 @@ DEBUG			=	pipex_debug
 # ----------  Directories  ----------- #
 
 DIR_HEAD		=	./incl/
-DIR_HEAD_M		=	../../incl/
 DIR_SRCS		=	./srcs/
-DIR_SRCS_P		=	../parsing/
 DIR_LIBFT		=	./srcs/libft/
 DIR_OBJS		=	.build/
 DIR_OBJS_D		=	.build_debug/
-DIR_OBJS_P		=	.build/parsing/
 
 # -------------  Files  -------------- #
 
@@ -26,29 +23,18 @@ HEAD			=	pipex.h
 
 HEAD_M			=	minishell.h
 
-SRCS			=	pipex.c
-
-SRCS_P			=	parsing.c				parsing_utils.c			\
-					quotes.c				env_var.c				\
-					lst_bracket_utils.c		create_bracket.c		\
-					get_path_var.c			check_around_par.c		\
-					check_and_or_symbols.c	check_redirections.c	\
-					free_utils.c			search_char.c			\
-					exec_bracket.c			check_line.c			\
-					split_words.c
+SRCS			=	pipex.c			\
+					get_path_var.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
-OBJS_P			=	${SRCS_P:%.c=${DIR_OBJS_P}%.o}
 
 DEPS			=	${OBJS:.o=.d}
-DEPS_P			=	${OBJS_P:.o=.d}
 DEPS_D			=	${OBJS_D:.o=.d}
 
 # --------------  Path  -------------- #
 
 PATH_HEAD		=	${addprefix ${DIR_HEAD}, ${HEAD}}
-PATH_HEAD_M		=	${addprefix ${DIR_HEAD_M}, ${HEAD_M}}
 
 # ----------  Compilation  ----------- #
 
@@ -76,23 +62,22 @@ all					:
 						$(MAKE) -C ${DIR_LIBFT}
 						$(MAKE) -j ${NAME}
 
+bonus				:	
+						$(MAKE) -C ${DIR_LIBFT}
+						$(MAKE) -j ${NAME}
+
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS} ${OBJS_P} 
+${NAME}				:	${OBJS}
 						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} ${OBJS} ${OBJS_P} -o ${NAME}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
 
-${DIR_OBJS_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD_M} -I ${DIR_LIBFT} -c $< -o $@
-
 ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS}
-						${MKDIR} ${DIR_OBJS_P}
 
 -include ${DEPS}
--include ${DEPS_P}
 
 # ------  Compiled Rules Debug  ------ #
 
@@ -102,21 +87,16 @@ ${DEBUG}			:	${OBJS_D}
 ${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS_D}
 						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
 
-${DIR_OBJS_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD_M} -I ${DIR_LIBFT} -c $< -o $@
-
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}
-						${MKDIR} ${DIR_OBJS_P}
 
 -include ${DEPS_D}
--include ${DEPS_P}
 
 # ---------  Usual Commands  --------  #
 
 clean				:	
 						${RM} ${DIR_OBJS}
-						${RM} ${DIR_OBJS_C}
+						${RM} ${DIR_OBJS_D}
 
 fclean				:	clean
 						${RM} ${NAME}
@@ -135,8 +115,7 @@ debug				:
 
 # -----------  Run Commands  --------- #
 
-TEST				= test b j p
-
+TEST				=  infile "'sed s/'A"nd/But/"'" 'awk '"'"'{count++} END {print count}'"'"'' outfile
 run					:	all
 						./${NAME} ${TEST}
 
