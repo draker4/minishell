@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_bracket_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 12:35:34 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 19:01:42 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ t_bracket	*new_bracket(char *str, enum e_type type)
 
 	new = malloc(sizeof(t_bracket));
 	if (!new)
-	{
-		write(2, "Malloc function error!\n", 23);
-		return (NULL);
-	}
+		return (perror("New_bracket: "), NULL);
 	new->str = str;
 	new->prev_exit = -1;
 	new->type = type;

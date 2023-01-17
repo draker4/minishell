@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 18:22:08 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 18:56:27 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argv;
 	if (argc != 1)
-	{
-		write(2, "Please don't enter any argument!\n", 33);
-		return (0);
-	}
+		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
 	if (!init_minishell(&minishell, envp))
 		return (1);
 	while (1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 16:15:15 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 19:00:17 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ char	*str_add(char *str, char c)
 		return (NULL);
 	copy = malloc(sizeof(char) * ((int)ft_strlen(str) + 2));
 	if (!copy)
-	{
-		free(str);
-		write(2, "Malloc function error!\n", 23);
-		return (NULL);
-	}
+		return (free(str), perror("Str_add: "), NULL);
 	i = 0;
 	while (str[i])
 	{
@@ -56,17 +52,14 @@ char	*create_copy(t_data *data, int remove)
 		less_char = 0;
 	copy = malloc(sizeof(char) * (data->i - data->save + less_char));
 	if (!copy)
-	{
-		write(2, "Malloc function error!\n", 23);
-		return (0);
-	}
+		return (perror("Create_copy: "), NULL);
 	copy[0] = '\0';
 	while (data->save != data->i)
 	{
 		if (data->save != remove)
 			copy = str_add(copy, data->str[data->save]);
 		if (!copy)
-			return (0);
+			return (NULL);
 		data->save += 1;
 	}
 	return (copy);
