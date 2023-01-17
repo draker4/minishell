@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 15:46:58 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 17:31:52 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_bracket
 	enum e_type			type;
 	struct s_bracket	*next;
 	struct s_bracket	*child;
+	struct s_bracket	*pipe;
 }	t_bracket;
 
 // structure used to create the bracket list defined above
@@ -83,6 +84,8 @@ int			init_minishell(t_minishell *minishell, char **envp);
 int			is_in_quote(char *str, int index);
 int			is_last_bracket(char *str, int i);
 int			has_and_or_symbols(char *str);
+int			has_pipe_symbol(char *str);
+int			is_in_bracket(char *str, int index);
 
 // check around parenthesis
 int			check_around_parenthesis(char *str);
@@ -103,9 +106,19 @@ int			check_env(char *str, char **line_parsed, int *i, char **envp);
 t_bracket	*new_bracket(char *str, enum e_type type);
 void		bracket_clear_data(t_bracket **bracket);
 void		bracket_add_back(t_bracket **bracket, t_bracket *new);
+t_bracket	*last_bracket(t_bracket *bracket);
 
 // create bracket list
-int			create_brackets(char *str, t_bracket **step);
+int			create_brackets(char *str, t_bracket **bracket);
+int			create_bracket_pipe(char *str, t_bracket **bracket);
+int			find_remove(t_data *data);
+
+// add bracket and, or, pipe
+int			add_bracket_and(t_data *data, t_bracket **bracket, int *remove);
+int			add_bracket_or(t_data *data, t_bracket **bracket, int *remove);
+int			add_bracket_last(t_data *data, t_bracket **bracket, int *remove);
+int			add_bracket_pipe(t_data *data, t_bracket **bracket, int *remove);
+int			add_bracket_last_pipe(t_data *data, t_bracket **bracket, int *remove);
 
 // free utils
 void		free_split(char **split);
@@ -116,4 +129,9 @@ void		exec_brackets(t_minishell *minishell);
 // split words
 char		**split_not_quotes(char *str);
 
+
+
+
+
+void	print_bracket(t_bracket *bracket, int what);
 #endif

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:32:16 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 17:17:47 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 11:21:16 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_and(char *str, int *i)
 		*i += 1;
 	if (!str[*i] || str[*i] == '|' || str[*i] == '&')
 	{
-		write(2, "Wrong '&' symbol!\n", 18);
+		write(2, "Wrong '|' symbol!\n", 18);
 		return (0);
 	}
 	return (1);
