@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 15:37:01 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 12:35:34 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_bracket	*new_bracket(char *str, enum e_type type)
 	new->type = type;
 	new->next = NULL;
 	new->child = NULL;
+	new->pipe = NULL;
 	new->words = NULL;
 	new->standin = 0;
 	new->standout = 1;
@@ -69,4 +70,16 @@ void	bracket_add_back(t_bracket **bracket, t_bracket *new)
 	}
 	else if (bracket)
 		*bracket = new;
+}
+
+t_bracket	*last_bracket(t_bracket *bracket)
+{
+	t_bracket	*current;
+
+	if (!bracket)
+		return (NULL);
+	current = bracket;
+	while (current->next)
+		current = current->next;
+	return (current);
 }

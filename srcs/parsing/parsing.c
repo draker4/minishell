@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 16:54:46 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 18:21:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,9 @@ static int	parse_words(t_bracket **bracket)
 
 int	parse(char *str, t_bracket **bracket, char **envp)
 {
-	t_bracket	*current;
-
-	if (!create_brackets(str, bracket))
-		return (0);
-	current = *bracket;
-	while (current)
-	{
-		if (has_and_or_symbols(current->str))
-		{
-			if (!parse(current->str, &current->child, envp))
-				return (0);
-		}
-		current = current->next;
-	}
-	if (!parse_words(bracket) || !parse_quotes(bracket, envp))
+	(void)envp;
+	if (!create_brackets(str, bracket) || \
+	!parse_words(bracket) || !parse_quotes(bracket, envp))
 		return (0);
 	return (1);
 }
