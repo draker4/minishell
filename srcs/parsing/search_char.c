@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 18:35:47 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 17:22:40 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,32 @@ int	has_and_or_symbols(char *str)
 	while (str[i])
 	{
 		if (str[i] == '&' && !is_in_quote(str, i) && str[i + 1] && \
-		str[i + 1] == '&')
+		str[i + 1] == '&' && !is_in_bracket(str, i))
 			return (1);
 		if (str[i] == '|' && !is_in_quote(str, i) && str[i + 1] && \
-		str[i + 1] == '|')
+		str[i + 1] == '|' && !is_in_bracket(str, i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	is_in_bracket(char *str, int index)
+{
+	int	left_bracket;
+	int	right_bracket;
+	int	i;
+
+	left_bracket = 0;
+	right_bracket = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '(' && !is_in_quote(str, i))
+			left_bracket++;
+		if (str[i] == ')' && !is_in_quote(str, i))
+			right_bracket++;
+		if (i == index && left_bracket > right_bracket)
 			return (1);
 		i++;
 	}
@@ -78,8 +100,12 @@ int	has_pipe_symbol(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '|' && !is_in_quote(str, i))
+		if (str[i] == '|' && !is_in_quote(str, i) && \
+		!is_in_bracket(str, i) && str[i + 1] && str[i + 1] != '|')
 			return (1);
+		if (str[i] == '|' && !is_in_quote(str, i) && \
+		str[i + 1] && str[i + 1] == '|')
+			i++;
 		i++;
 	}
 	return (0);
