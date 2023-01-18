@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/18 19:13:52 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 20:06:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int			add_bracket_and(t_data *data, t_bracket **bracket, int *remove);
 int			add_bracket_or(t_data *data, t_bracket **bracket, int *remove);
 int			add_bracket_last(t_data *data, t_bracket **bracket, int *remove);
 int			add_bracket_pipe(t_data *data, t_bracket **bracket, int *remove);
-int			add_bracket_last_pipe(t_data *data, t_bracket **bracket, int *remove);
+int			add_bracket_last_pipe(t_data *data, \
+t_bracket **bracket, int *remove);
 
 // free utils
 void		free_split(char **split);
