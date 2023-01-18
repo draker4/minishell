@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 19:00:17 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 20:02:16 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,27 @@ int	init_minishell(t_minishell *minishell, char **envp)
 	minishell->path = path;
 	minishell->bracket = NULL;
 	minishell->envp = envp;
+	return (1);
+}
+
+int	has_pipe_child(t_bracket **bracket)
+{
+	int	index_pipe;
+	int	index_and_or;
+
+	index_pipe = has_pipe_symbol((*bracket)->str);
+	index_and_or = has_and_or_symbols((*bracket)->str);
+	if ((index_pipe != -1 && index_and_or == -1) || \
+	(index_pipe != -1 && index_and_or != -1 && index_pipe < index_and_or))
+	{
+		if (!create_bracket_pipe((*bracket)->str, &(*bracket)->pipe))
+			return (0);
+	}
+	else if ((index_pipe == -1 && index_and_or != -1) || \
+	(index_pipe != -1 && index_and_or != -1 && index_and_or < index_pipe))
+	{
+		if (!create_brackets((*bracket)->str, &(*bracket)->child))
+			return (0);
+	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 18:56:27 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 20:01:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	print_bracket(t_bracket *bracket, int what)
 		}
 		// else
 		// 	exec_cmd
-		i = 0;
-		while (current->words[i])
-			printf("current = %s et enum = %d et words = %s\n", current->str, current->type, current->words[i++]);
 		if (what == 0)
 			printf("racine\n");
 		else if (what == 1)
@@ -45,6 +42,9 @@ void	print_bracket(t_bracket *bracket, int what)
 		else if (what == 2)
 			printf("pipe\n");
 		printf("current = %s et enum = %d\n", current->str, current->type);
+		i = 0;
+		while (current->words[i])
+			printf("detail current = %s et enum = %d et words = %s\n", current->str, current->type, current->words[i++]);
 		current = current->next;
 	}
 }

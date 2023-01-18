@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/17 18:55:59 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 20:01:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char		*str_add(char *str, char c);
 void		initialize_data(t_data *data, char*str);
 char		*create_copy(t_data *data, int remove);
 int			init_minishell(t_minishell *minishell, char **envp);
+int			has_pipe_child(t_bracket **bracket);
 
 // search character
 int			is_in_quote(char *str, int index);
@@ -112,14 +113,18 @@ t_bracket	*last_bracket(t_bracket *bracket);
 // create bracket list
 int			create_brackets(char *str, t_bracket **bracket);
 int			create_bracket_pipe(char *str, t_bracket **bracket);
+
+// find bracket
 int			find_remove(t_data *data);
+void		move_end_bracket(t_data *data);
 
 // add bracket and, or, pipe
 int			add_bracket_and(t_data *data, t_bracket **bracket, int *remove);
 int			add_bracket_or(t_data *data, t_bracket **bracket, int *remove);
 int			add_bracket_last(t_data *data, t_bracket **bracket, int *remove);
 int			add_bracket_pipe(t_data *data, t_bracket **bracket, int *remove);
-int			add_bracket_last_pipe(t_data *data, t_bracket **bracket, int *remove);
+int			add_bracket_last_pipe(t_data *data, \
+t_bracket **bracket, int *remove);
 
 // free utils
 void		free_split(char **split);
