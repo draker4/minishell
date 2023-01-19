@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/18 20:08:53 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 13:31:11 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,48 +21,40 @@
 # define ERROR_ARG "Please don't enter any argument!\n"
 /* -----------------------------  ENUMERATION  ----------------------------- */
 
-enum	e_type
-{
-	always,
-	and,
-	or,
-};
-
 /* ------------------------------  STRUCTURE  ------------------------------- */
 
-// structure used for saving everything from minishell
-typedef struct s_minishell
+// structure used for saving every data from minishell
+typedef struct s_data
 {
-	char				**path;
-	char				**envp;
-	struct s_bracket	*bracket;
-}	t_minishell;
+	char	**path;
+	char	**envp;
+	int		exit_status;
+	t_exec	*exec;
+}	t_data;
 
-// structure saving each steps separated by && or || or parenthesis 
-// on the read line
-typedef struct s_bracket
+// structure saving each steps on from the read line
+typedef struct s_exec
 {
 	char				*str;
-	char				**path;
+	char				*function;
 	char				**words;
-	int					prev_exit;
-	int					standin;
-	int					standout;
-	int					standerror;
-	enum e_type			type;
+	t_input				input;
+	t_output			output;
+	t_append			append;
+	t_delimiter			delimiter;
+	t_data				*data;
 	struct s_bracket	*next;
-	struct s_bracket	*child;
-	struct s_bracket	*pipe;
-}	t_bracket;
+	struct s_bracket	*prev;
+}	t_exec;
 
 // structure used to create the bracket list defined above
-typedef struct s_data
+typedef struct s_data2
 {
 	char		*str;
 	int			i;
 	int			save;
 	enum e_type	type;
-}	t_data;
+}	t_data2;
 
 /* ------------------------------  PROTOTYPE   ------------------------------ */
 
