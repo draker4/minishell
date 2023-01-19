@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/18 20:08:57 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 13:33:08 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,7 @@ void	print_bracket(t_bracket *bracket, int what)
 	current = bracket;
 	while (current)
 	{
-		if (current->child)
-		{
-			printf("current = %s has child\n", current->str);
-			print_bracket(current->child, 1);
-			//ft_child
-		}
-		
-		if (current->pipe)
-		{
-			printf("current = %s has pipe\n", current->str);
-			// ft_exec_pipe
-			print_bracket(current->pipe, 2);
-		}
-		// else
-		// 	exec_cmd
-		if (what == 0)
-			printf("racine\n");
-		else if (what == 1)
-			printf("child\n");
-		else if (what == 2)
-			printf("pipe\n");
-		printf("current = %s et enum = %d\n", current->str, current->type);
+		printf("current = %s\n", current->str);
 		i = 0;
 		while (current->words[i])
 			printf("detail current = %s et enum = %d et words = %s\n", current->str, current->type, current->words[i++]);
@@ -68,16 +47,16 @@ static void	read_line(t_minishell *minishell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell	minishell;
+	t_data	data;
 	// int			boucle = 5;
 
 	(void) argv;
 	if (argc != 1)
 		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
-	if (!init_minishell(&minishell, envp))
+	if (!init_data(&data, envp))
 		return (1);
 	while (1)
-		read_line(&minishell);
-	free_split(minishell.path);
+		read_line(&data);
+	free_split(data.path);
 	return (0);
 }
