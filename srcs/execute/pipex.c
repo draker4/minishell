@@ -6,11 +6,11 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/17 16:53:03 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 13:30:30 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 static char	*ft_join_cmd_path(char const *s1, char const *s2)
 {
@@ -118,30 +118,9 @@ int	ft_pipex(t_pipe *pipex, char *cmd, char **envp, int input)
 	return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	execute_line(t_exec exec)
 {
-	//t_pipe	pipex;
-	int		i;
-
-	i = 1;
-	while (argv[i])
-		printf("%s\n", argv[i++]);
-	(void)argc;
-	(void)envp;
-	// if (argc < 5)
-	// 	return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), FAIL);
-	// if (ft_check_open_redirect(argv[1], &pipex, INFILE))
-	// 	exit (FAIL);
-	// i = 2;
-	// if (ft_pipex(&pipex, argv[i++], envp, pipex.infile))
-	// 	exit (FAIL);
-	// while (i < argc - 2)
-	// {
-	// 	if (ft_pipex(&pipex, argv[i++], envp, OUTFILE))
-	// 		exit (FAIL);
-	// }
-	// if (ft_check_open_redirect(argv[argc - 1], &pipex, OUTFILE))
-	// 	exit (FAIL);
-	// ft_execute_commande(&pipex, argv[i], envp);
-	// return (0);
+	if (!exec)
+		return (FAIL);
+	
 }
