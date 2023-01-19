@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:34:30 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 17:33:03 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 19:06:54 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,8 @@ int	add_bracket_last(t_data *data, t_bracket **bracket, int *remove)
 		return (0);
 	}
 	bracket_add_back(bracket, new);
-	if (has_pipe_symbol(new->str))
-		if (!create_bracket_pipe(new->str, &new->pipe))
-			return (0);
+	if (!has_pipe_child(&new))
+		return (0);
 	return (1);
 }
 
@@ -112,9 +111,6 @@ int	add_bracket_pipe(t_data *data, t_bracket **bracket, int *remove)
 		return (0);
 	}
 	bracket_add_back(bracket, new);
-	if (has_and_or_symbols(new->str))
-		if (!create_brackets(new->str, &new->child))
-			return (0);
 	*remove = find_remove(data);
 	data->i = data->i - 1;
 	return (1);
@@ -139,8 +135,7 @@ int	add_bracket_last_pipe(t_data *data, t_bracket **bracket, int *remove)
 		return (0);
 	}
 	bracket_add_back(bracket, new);
-	if (has_and_or_symbols(new->str))
-		if (!create_brackets(new->str, &new->child))
-			return (0);
+	if (!has_pipe_child(&new))
+		return (0);
 	return (1);
 }

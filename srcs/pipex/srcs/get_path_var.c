@@ -6,11 +6,11 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:57:20 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 15:54:05 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 11:38:16 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "pipex.h"
 
 static char	**split_path(char *str)
 {
@@ -18,10 +18,16 @@ static char	**split_path(char *str)
 
 	path = ft_split(str, '=');
 	if (!path)
-		return (perror("Get path: "), NULL);
+	{
+		write(2, "Malloc function error!\n", 23);
+		return (NULL);
+	}
 	path = ft_split(path[1], ':');
 	if (!path)
-		return (perror("Get path: "), NULL);
+	{
+		write(2, "Malloc function error!\n", 23);
+		return (NULL);
+	}
 	return (path);
 }
 
@@ -35,7 +41,10 @@ char	**get_path(char **envp)
 		return (NULL);
 	str = ft_strdup("PATH");
 	if (!str)
-		return (perror("Get path: "), NULL);
+	{
+		write(2, "Malloc function error!\n", 23);
+		return (NULL);
+	}
 	while (envp[i])
 	{
 		if (!ft_strncmp(str, envp[i], 4))
@@ -44,6 +53,9 @@ char	**get_path(char **envp)
 	}
 	free(str);
 	if (!envp[i])
-		return (perror("Get path: "), NULL);
+	{
+		write(2, "Error: Could not find PATH!\n", 28);
+		return (NULL);
+	}
 	return (split_path(envp[i]));
 }

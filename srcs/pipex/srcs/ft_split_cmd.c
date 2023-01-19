@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/17 16:35:55 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 16:59:46 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_divide(char const *s, char c)
 	int	i;
 	int	j;
 	int	size;
+	t_spe	spe;
 
 	i = 0;
 	size = 0;
@@ -72,7 +73,7 @@ static char	**ft_insert(const char *s, char c, char **split, int i)
 	return (split);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_cmd(char const *s, char c)
 {
 	int		size;
 	char	**split;
