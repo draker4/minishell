@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 09:55:23 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 23:20:24 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static void	read_line(t_data *data)
 	if (check_line(line))
 	{
 		parse(line, &exec, data);
-		//print_exec(exec);
-		handle_commande(exec);
+		print_exec(exec);
+		// handle_commande(exec);
 	}
 	free(line);
 	exec_clear_data(&exec);

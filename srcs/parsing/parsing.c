@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 19:53:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 23:22:48 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ static int	find_function(t_exec **exec)
 	current = *exec;
 	while (current)
 	{
-		current->function = ft_strdup(current->words[0]);
-		if (!delete_slash_symbol(current, current->words[0]))
+		current->function = ft_strdup(current->arg[0]);
+		if (!delete_slash_symbol(current, current->arg[0]))
 			return (0);
 		current = current->next;
 	}

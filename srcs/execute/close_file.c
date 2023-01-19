@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 10:57:12 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 23:18:03 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ void	close_file(t_exec *exec)
 		close_input(exec, exec->input);
 	if (exec->output)
 		close_output(exec, exec->output);
+	dup2(1, STDOUT_FILENO);
 }
