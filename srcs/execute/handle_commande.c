@@ -6,13 +6,13 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 17:47:08 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 19:01:00 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "minishell.h"
 
-static char	*ft_join_cmd_path(char const *s1, char const *s2)
+static char	*join_cmd_path(char const *s1, char const *s2)
 {
 	char	*new;
 	int		i;
@@ -37,29 +37,24 @@ static char	*ft_join_cmd_path(char const *s1, char const *s2)
 
 void	execute_commande(t_exec *exec)
 {
-	if (exec->data->path)
-		return (perror("ft_execute_fonction - Path: "));
-	pipex->cmd = ft_split(argv, ' ');
-	if (!pipex->cmd)
-		return (perror("Path: "), FAIL);
+	int	i;
+
 	i = 0;
-	if (ft_strchr(pipex->cmd[0], '/'))
+	if (ft_strchr(exec->function, '/'))
 	{
-		pipex->cmd[0] = ft_strrchr(pipex->cmd[0], '/');
-		printf("%s", pipex->cmd[0]);
-		execve(argv, pipex->cmd, envp);
-		return (perror("Execution: "), FAIL);
+		exec->arg[0] = ft_strrchr(exec->function, '/');
+		execve(exec->function, exec->arg, exec->data->envp);
+		return (perror("Execution: "));
 	}
-	while (pipex->path[i])
+	while (exec->data->path[i])
 	{
-		pipex->cmd_path = ft_join_cmd_path(pipex->path[i++], pipex->cmd[0]);
-		if (!pipex->cmd_path)
-			return (perror("Cmd_path: "), FAIL);
-		if (!ft_strncmp(pipex->cmd[0], "awk", 3))
-			execve(pipex->cmd_path, tmp, envp);
-		execve(pipex->cmd_path, pipex->cmd, envp);
+		exec->cmd_path = join_cmd_path(exec->data->path[i++],
+				exec->function);
+		if (!exec->cmd_path)
+			return (perror("Execute_commande - Join_cmd_path: "));
+		execve(exec->cmd_path, exec->arg, exec->data->envp);
 	}
-	return (perror("Execution: "), FAIL);
+	return (perror("Execution: "));
 }
 
 void	handle_pipe(t_exec *exec)
@@ -82,7 +77,7 @@ void	handle_pipe(t_exec *exec)
 			return (perror("Handle_pipe (next) - Dup2: "));
 		if (close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (next) - Close: "));
-		if (waitpid(exec->pid, &exec->status, 0) == -1)
+		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
 			return (perror("Handle_pipe (next) - Waitpid: "));
 		return (handle_commande(exec->next));
 	}
@@ -94,7 +89,7 @@ void	handle_commande(t_exec *exec)
 		return ;
 	if (exec->input)
 	{
-		if (change_input(exec, exec.input))
+		if (change_input(exec, exec->input))
 		{
 			if (exec->next)
 				return (handle_commande(exec->next));
@@ -102,9 +97,9 @@ void	handle_commande(t_exec *exec)
 		}
 	}
 	if (exec->output)
-		if (change_output(exec, exec.output))
+		if (change_output(exec, exec->output))
 			return ;
 	if (exec->next)
 		return (handle_pipe(exec));
-	execute_fonction(exec);
+	execute_commande(exec);
 }

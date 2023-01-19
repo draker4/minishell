@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 17:39:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 19:00:39 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
 # define ERROR_ARG "Please don't enter any argument!\n"
+
+# define FAIL 1
+
 /* -----------------------------  ENUMERATION  ----------------------------- */
 
 enum e_in
@@ -77,6 +81,11 @@ typedef struct s_exec
 	char			*delimiter;
 	char			**words;
 	char			**arg;
+	int				fd_pipe[2];
+	char			*cmd_path;
+	int				infile;
+	int				outfile;
+	pid_t			pid;
 	t_input			*input;
 	t_output		*output;
 	t_data			*data;
@@ -84,7 +93,7 @@ typedef struct s_exec
 	struct s_exec	*prev;
 }	t_exec;
 
-/* ------------------------------  PROTOTYPE   ------------------------------ */
+/* --------------------------  PROTOTYPE PARSING  --------------------------- */
 
 // check line
 int			check_line(char *str);
@@ -143,7 +152,16 @@ void		free_split(char **split);
 // split words
 char		**split_not_quotes(char *str);
 
+void		print_exec(t_exec *exec);
 
+/* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
-void	print_exec(t_exec *exec);
+// strjoin with the s1 being free at the end;
+char		*gnl_strjoin(char *s1, char *s2);
+// get_next_line which update directly the line and handle perror
+int			get_delimiter(int fd, char *line);
+
+int			change_input(t_exec *exec, t_input *input);
+int			change_output(t_exec *exec, t_output *output);
+void		handle_commande(t_exec *exec);
 #endif

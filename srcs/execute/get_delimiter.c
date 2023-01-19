@@ -6,11 +6,11 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 16:01:58 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 18:44:40 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "minishell.h"
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 10
@@ -77,7 +77,7 @@ static int	ret_line(char *tmp, char *str, char *line)
 	line[i] = tmp[i];
 	line[i + 1] = '\0';
 	if (tmp[i++] != '\0')
-		ft_reset_str(tmp, str, i);
+		reset_str(tmp, str, i);
 	free(tmp);
 	return (0);
 }
@@ -105,5 +105,5 @@ int	get_delimiter(int fd, char *line)
 		if (!tmp)
 			return (FAIL);
 	}
-	return (ft_ret_line(tmp, str, line));
+	return (ret_line(tmp, str, line));
 }
