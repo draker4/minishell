@@ -6,49 +6,70 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 13:33:08 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 17:55:05 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_bracket(t_bracket *bracket, int what)
+void	print_exec(t_exec *exec)
 {
-	t_bracket	*current;
+	t_exec		*current;
+	t_input		*input;
+	t_output	*output;
 	int			i;
 
-	current = bracket;
+	current = exec;
 	while (current)
 	{
 		printf("current = %s\n", current->str);
+		// i = 0;
+		// while (current->words[i])
+		// 	printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
+		input = current->input;
+		while (input)
+		{
+			printf("detail input = %s et type = %u\n", input->str, input->in);
+			input = input->next;
+		}
+		printf("\n");
+		output = current->output;
+		while (output)
+		{
+			printf("detail output = %s et type = %u\n", output->str, output->out);
+			output = output->next;
+		}
+		printf("\n");
 		i = 0;
-		while (current->words[i])
-			printf("detail current = %s et enum = %d et words = %s\n", current->str, current->type, current->words[i++]);
+		while (current->arg[i])
+			printf("detail arg = %s\n", current->arg[i++]);
+		printf("\n");
+		printf("detail function = %s\n", current->function);
+		printf("\n");
 		current = current->next;
 	}
 }
 
-static void	read_line(t_minishell *minishell)
+static void	read_line(t_data *data)
 {
 	char	*line;
+	t_exec	*exec;
 
+	exec = NULL;
 	line = readline("minishell > ");
 	if (check_line(line))
 	{
-		parse(line, &minishell->bracket, minishell->envp);
-	// exec_brackets(minishell);
-	print_bracket(minishell->bracket, 0);
-	// printf("debut = %s\n", minishell->bracket->str);
-	// printf("ici child next = %s\n", minishell->bracket->child->next->str);
+		parse(line, &exec, data);
+		print_exec(exec);
 	}
 	free(line);
-	bracket_clear_data(&minishell->bracket);
+	exec_clear_data(&exec);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	// int			boucle = 5;
+	// int			boucle = 1;
 
 	(void) argv;
 	if (argc != 1)

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 13:31:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 17:39:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,45 @@
 # define ERROR_ARG "Please don't enter any argument!\n"
 /* -----------------------------  ENUMERATION  ----------------------------- */
 
+enum e_in
+{
+	in_file,
+	delimiter,
+};
+
+enum e_out
+{
+	out_file,
+	append,
+};
+
 /* ------------------------------  STRUCTURE  ------------------------------- */
+
+// structure used to save a string for the parsing
+typedef struct s_parse
+{
+	char	*str;
+	int		i;
+	int		save;
+}	t_parse;
+
+// structure used to save all inputs
+typedef struct s_input
+{
+	char			*str;
+	enum e_in		in;
+	struct s_input	*next;
+	struct s_input	*prev;
+}	t_input;
+
+// structure used to save all outputs
+typedef struct s_output
+{
+	char			*str;
+	enum e_out		out;
+	struct s_output	*next;
+	struct s_output	*prev;
+}	t_output;
 
 // structure used for saving every data from minishell
 typedef struct s_data
@@ -29,57 +67,43 @@ typedef struct s_data
 	char	**path;
 	char	**envp;
 	int		exit_status;
-	t_exec	*exec;
 }	t_data;
 
 // structure saving each steps on from the read line
 typedef struct s_exec
 {
-	char				*str;
-	char				*function;
-	char				**words;
-	t_input				input;
-	t_output			output;
-	t_append			append;
-	t_delimiter			delimiter;
-	t_data				*data;
-	struct s_bracket	*next;
-	struct s_bracket	*prev;
+	char			*str;
+	char			*function;
+	char			*delimiter;
+	char			**words;
+	char			**arg;
+	t_input			*input;
+	t_output		*output;
+	t_data			*data;
+	struct s_exec	*next;
+	struct s_exec	*prev;
 }	t_exec;
-
-// structure used to create the bracket list defined above
-typedef struct s_data2
-{
-	char		*str;
-	int			i;
-	int			save;
-	enum e_type	type;
-}	t_data2;
 
 /* ------------------------------  PROTOTYPE   ------------------------------ */
 
 // check line
 int			check_line(char *str);
 
-// parsing.c
-int			parse(char *str, t_bracket **bracket, char **envp);
+// parsing
+int			parse(char *str, t_exec **exec, t_data *data);
 
 // quotes
 int			parse_quotes_env(char *str, char **line_parsed, char **envp);
 
 // parsing utils
 char		*str_add(char *str, char c);
-void		initialize_data(t_data *data, char*str);
-char		*create_copy(t_data *data, int remove);
-int			init_minishell(t_minishell *minishell, char **envp);
-int			has_pipe_child(t_bracket **bracket);
+char		*create_copy(char *str, int save, int i);
+int			init_data(t_data *data, char **envp);
+int			delete_slash_symbol(t_exec *exec, char *str);
+int			size_arg(char **arg);
 
 // search character
 int			is_in_quote(char *str, int index);
-int			is_last_bracket(char *str, int i);
-int			has_and_or_symbols(char *str);
-int			has_pipe_symbol(char *str);
-int			is_in_bracket(char *str, int index);
 
 // check around parenthesis
 int			check_around_parenthesis(char *str);
@@ -96,40 +120,30 @@ char		**get_path(char **envp);
 // environment variables
 int			check_env(char *str, char **line_parsed, int *i, char **envp);
 
-// bracket list utils
-t_bracket	*new_bracket(char *str, enum e_type type);
-void		bracket_clear_data(t_bracket **bracket);
-void		bracket_add_back(t_bracket **bracket, t_bracket *new);
-t_bracket	*last_bracket(t_bracket *bracket);
+// exec list utils
+t_exec		*new_exec(char *str, t_data *data);
+void		exec_clear_data(t_exec **exec);
+void		exec_add_back(t_exec **bracket, t_exec *new);
 
-// create bracket list
-int			create_brackets(char *str, t_bracket **bracket);
-int			create_bracket_pipe(char *str, t_bracket **bracket);
+// input output list utils
+t_input		*last_input(t_input *input);
+t_output	*last_output(t_output *output);
+void		input_clear_data(t_input **input);
+void		output_clear_data(t_output **output);
 
-// find bracket
-int			find_remove(t_data *data);
-void		move_end_bracket(t_data *data);
+// find redirections
+int			find_redirections(t_exec **exec);
 
-// add bracket and, or, pipe
-int			add_bracket_and(t_data *data, t_bracket **bracket, int *remove);
-int			add_bracket_or(t_data *data, t_bracket **bracket, int *remove);
-int			add_bracket_last(t_data *data, t_bracket **bracket, int *remove);
-int			add_bracket_pipe(t_data *data, t_bracket **bracket, int *remove);
-int			add_bracket_last_pipe(t_data *data, \
-t_bracket **bracket, int *remove);
+// create exec list
+int			create_exec(char *str, t_exec **exec, t_data *data);
 
 // free utils
 void		free_split(char **split);
-
-// execute brackets
-void		exec_brackets(t_minishell *minishell);
 
 // split words
 char		**split_not_quotes(char *str);
 
 
 
-
-
-void	print_bracket(t_bracket *bracket, int what);
+void	print_exec(t_exec *exec);
 #endif

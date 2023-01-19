@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:57:20 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/17 15:54:05 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 15:04:19 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 static char	**split_path(char *str)
 {
-	char	**path;
+	char	**path_all;
+	char	**path_after_equal;
 
-	path = ft_split(str, '=');
-	if (!path)
+	path_all = ft_split(str, '=');
+	if (!path_all)
 		return (perror("Get path: "), NULL);
-	path = ft_split(path[1], ':');
-	if (!path)
+	path_after_equal = ft_split(path_all[1], ':');
+	free_split(path_all);
+	if (!path_after_equal)
 		return (perror("Get path: "), NULL);
-	return (path);
+	return (path_after_equal);
 }
 
 char	**get_path(char **envp)

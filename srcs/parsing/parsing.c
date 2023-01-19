@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/18 19:53:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 17:19:26 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,15 @@ static char	*parse_word_quotes(char *str, char **envp)
 	return (word_parsed);
 }
 
-static int	parse_quotes(t_bracket **bracket, char **envp)
+static int	parse_quotes(t_exec **exec, char **envp)
 {
-	t_bracket	*current;
-	char		*word_parsed;
-	int			i;
+	t_exec	*current;
+	char	*word_parsed;
+	int		i;
 
-	current = *bracket;
+	current = *exec;
 	while (current)
 	{
-		if (current->child)
-			if (!parse_quotes(&current->child, envp))
-				return (0);
-		if (current->pipe)
-			if (!parse_quotes(&current->pipe, envp))
-				return (0);
 		i = 0;
 		while (current->words[i])
 		{
@@ -60,20 +54,14 @@ static int	parse_quotes(t_bracket **bracket, char **envp)
 	return (1);
 }
 
-static int	parse_words(t_bracket **bracket)
+static int	parse_words(t_exec **exec)
 {
-	char		**split_words;
-	t_bracket	*current;
+	char	**split_words;
+	t_exec	*current;
 
-	current = *bracket;
+	current = *exec;
 	while (current)
 	{
-		if (current->child)
-			if (!parse_words(&current->child))
-				return (0);
-		if (current->pipe)
-			if (!parse_words(&current->pipe))
-				return (0);
 		split_words = split_not_quotes(current->str);
 		if (!split_words)
 			return (0);
@@ -83,10 +71,27 @@ static int	parse_words(t_bracket **bracket)
 	return (1);
 }
 
-int	parse(char *str, t_bracket **bracket, char **envp)
+static int	find_function(t_exec **exec)
 {
-	if (!create_brackets(str, bracket) || !parse_words(bracket) \
-	|| !parse_quotes(bracket, envp))
+	t_exec	*current;
+
+	current = *exec;
+	while (current)
+	{
+		current->function = ft_strdup(current->words[0]);
+		free(current->words[0]);
+		if (!delete_slash_symbol(current, current->words[0]))
+			return (0);
+		current = current->next;
+	}
+	return (1);
+}
+
+int	parse(char *str, t_exec **exec, t_data *data)
+{
+	if (!create_exec(str, exec, data) || !parse_words(exec) || \
+	!parse_quotes(exec, data->envp) || !find_redirections(exec) || \
+	!find_function(exec))
 		return (0);
 	return (1);
 }
