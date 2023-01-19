@@ -1,84 +1,76 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_bracket_utils.c                                :+:      :+:    :+:   */
+/*   lst_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/18 20:02:06 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 17:00:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bracket	*new_bracket(char *str, enum e_type type)
+t_exec	*new_exec(char *str, t_data *data)
 {
-	t_bracket	*new;
+	t_exec	*new;
 
-	new = malloc(sizeof(t_bracket));
+	new = malloc(sizeof(t_exec));
 	if (!new)
 		return (perror("New_bracket: "), NULL);
 	new->str = str;
-	new->prev_exit = -1;
-	new->type = type;
-	new->next = NULL;
-	new->child = NULL;
-	new->pipe = NULL;
+	new->data = data;
+	new->function = NULL;
+	new->input = NULL;
+	new->output = NULL;
 	new->words = NULL;
-	new->standin = 0;
-	new->standout = 1;
-	new->standerror = 2;
+	new->delimiter = NULL;
+	new->next = NULL;
+	new->prev = NULL;
+	new->arg = NULL;
 	return (new);
 }
 
-void	bracket_clear_data(t_bracket **bracket)
+void	exec_clear_data(t_exec **exec)
 {
-	t_bracket	*clear;
-	t_bracket	*tmp;
+	t_exec	*clear;
+	t_exec	*tmp;
 
-	if (!bracket)
+	if (!exec)
 		return ;
-	clear = *bracket;
+	clear = *exec;
 	while (clear)
 	{
-		if (clear->child)
-			bracket_clear_data(&clear->child);
-		if (clear->pipe)
-			bracket_clear_data(&clear->pipe);
 		tmp = clear;
 		clear = clear->next;
 		if (tmp->words)
 			free_split(tmp->words);
+		if (tmp->delimiter)
+			free(tmp->delimiter);
+		if (tmp->input)
+			input_clear_data(&tmp->input);
+		if (tmp->output)
+			output_clear_data(&tmp->output);
+		if (tmp->function)
+			free(tmp->function);
 		free(tmp->str);
 		free(tmp);
 	}
-	*bracket = NULL;
+	*exec = NULL;
 }
 
-void	bracket_add_back(t_bracket **bracket, t_bracket *new)
+void	exec_add_back(t_exec **exec, t_exec *new)
 {
-	t_bracket	*current;
+	t_exec	*current;
 
-	if (bracket && *bracket)
+	if (exec && *exec)
 	{
-		current = *bracket;
+		current = *exec;
 		while (current->next)
 			current = current->next;
 		current->next = new;
 	}
-	else if (bracket)
-		*bracket = new;
-}
-
-t_bracket	*last_bracket(t_bracket *bracket)
-{
-	t_bracket	*current;
-
-	if (!bracket)
-		return (NULL);
-	current = bracket;
-	while (current->next)
-		current = current->next;
-	return (current);
+	else if (exec)
+		*exec = new;
 }

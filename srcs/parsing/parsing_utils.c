@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/18 20:02:16 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 17:38:16 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,68 +34,60 @@ char	*str_add(char *str, char c)
 	return (copy);
 }
 
-void	initialize_data(t_data *data, char*str)
-{
-	data->i = 0;
-	data->save = 0;
-	data->str = str;
-	data->type = always;
-}
-
-char	*create_copy(t_data *data, int remove)
+char	*create_copy(char *str, int save, int i)
 {
 	char	*copy;
-	int		less_char;
+	int		j;
 
-	less_char = 1;
-	if (remove != -1)
-		less_char = 0;
-	copy = malloc(sizeof(char) * (data->i - data->save + less_char));
+	copy = malloc(sizeof(char) * (i - save + 1));
 	if (!copy)
 		return (perror("Create_copy: "), NULL);
-	copy[0] = '\0';
-	while (data->save != data->i)
-	{
-		if (data->save != remove)
-			copy = str_add(copy, data->str[data->save]);
-		if (!copy)
-			return (NULL);
-		data->save += 1;
-	}
+	j = 0;
+	while (save != i)
+		copy[j++] = str[save++];
+	copy[j] = '\0';
 	return (copy);
 }
 
-int	init_minishell(t_minishell *minishell, char **envp)
+int	init_data(t_data *data, char **envp)
 {
 	char	**path;
 
 	path = get_path(envp);
 	if (envp[0] && !path)
 		return (0);
-	minishell->path = path;
-	minishell->bracket = NULL;
-	minishell->envp = envp;
+	data->path = path;
+	data->path = NULL;
+	data->envp = envp;
+	data->exit_status = 0;
 	return (1);
 }
 
-int	has_pipe_child(t_bracket **bracket)
+int	delete_slash_symbol(t_exec *exec, char *str)
 {
-	int	index_pipe;
-	int	index_and_or;
+	int		i;
+	int		save;
+	char	*function;
 
-	index_pipe = has_pipe_symbol((*bracket)->str);
-	index_and_or = has_and_or_symbols((*bracket)->str);
-	if ((index_pipe != -1 && index_and_or == -1) || \
-	(index_pipe != -1 && index_and_or != -1 && index_pipe < index_and_or))
+	i = 0;
+	save = 0;
+	while (str[i])
 	{
-		if (!create_bracket_pipe((*bracket)->str, &(*bracket)->pipe))
-			return (0);
+		if (str[i] == '/' && !is_in_quote(str, i) && str[i + 1])
+			save = i + 1;
+		i++;
 	}
-	else if ((index_pipe == -1 && index_and_or != -1) || \
-	(index_pipe != -1 && index_and_or != -1 && index_and_or < index_pipe))
-	{
-		if (!create_brackets((*bracket)->str, &(*bracket)->child))
-			return (0);
-	}
+	function = create_copy(str, save, i);
+	exec->words[0] = function;
 	return (1);
+}
+
+int	size_arg(char **arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+		i++;
+	return (i);
 }
