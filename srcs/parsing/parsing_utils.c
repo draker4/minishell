@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 17:38:16 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 20:00:25 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	init_data(t_data *data, char **envp)
 	if (envp[0] && !path)
 		return (0);
 	data->path = path;
-	data->path = NULL;
 	data->envp = envp;
 	data->exit_status = 0;
 	return (1);
@@ -78,7 +77,7 @@ int	delete_slash_symbol(t_exec *exec, char *str)
 		i++;
 	}
 	function = create_copy(str, save, i);
-	exec->words[0] = function;
+	exec->arg[0] = function;
 	return (1);
 }
 

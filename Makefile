@@ -92,7 +92,7 @@ all					:
 # ---------  Compiled Rules  --------- #
 
 ${NAME}				:	${OBJS} ${OBJS_P} ${OBJS_E}
-						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} ${OBJS} ${OBJS_P} ${OBJS_E} -o ${NAME}
+						${CC} ${CFLAGS}  ${OBJS} ${OBJS_P} ${OBJS_E} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} -o ${NAME}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@

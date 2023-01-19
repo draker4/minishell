@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 17:00:37 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 20:09:07 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@ t_exec	*new_exec(char *str, t_data *data)
 	return (new);
 }
 
+static void	del_one_exec(t_exec *exec)
+{
+	if (exec->words)
+		free_split(exec->words);
+	if (exec->delimiter)
+		free(exec->delimiter);
+	if (exec->input)
+		input_clear_data(&exec->input);
+	if (exec->output)
+		output_clear_data(&exec->output);
+	if (exec->function)
+		free(exec->function);
+	if (exec->arg[0])
+		free(exec->arg[0]);
+	if (exec->arg)
+		free(exec->arg);
+	free(exec->str);
+	free(exec);
+}
+
 void	exec_clear_data(t_exec **exec)
 {
 	t_exec	*clear;
@@ -44,18 +64,7 @@ void	exec_clear_data(t_exec **exec)
 	{
 		tmp = clear;
 		clear = clear->next;
-		if (tmp->words)
-			free_split(tmp->words);
-		if (tmp->delimiter)
-			free(tmp->delimiter);
-		if (tmp->input)
-			input_clear_data(&tmp->input);
-		if (tmp->output)
-			output_clear_data(&tmp->output);
-		if (tmp->function)
-			free(tmp->function);
-		free(tmp->str);
-		free(tmp);
+		del_one_exec(tmp);
 	}
 	*exec = NULL;
 }
