@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 23:20:24 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 00:03:30 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	print_exec(t_exec *exec)
 	while (current)
 	{
 		printf("current = %s\n", current->str);
-		i = 0;
-		while (current->words[i])
-		printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
+		// i = 0;
+		// while (current->words[i])
+		// 	printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
 		input = current->input;
 		while (input)
 		{
@@ -40,9 +40,12 @@ void	print_exec(t_exec *exec)
 			output = output->next;
 		}
 		printf("\n");
-		i = 0;
-		while (current->arg[i])
-			printf("detail arg = %s\n", current->arg[i++]);
+		if (current->arg)
+		{
+			i = 0;
+			while (current->arg[i])
+				printf("detail arg = %s\n", current->arg[i++]);
+		}
 		printf("\n");
 		printf("detail function = %s\n", current->function);
 		printf("\n");

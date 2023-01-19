@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 20:09:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 00:05:17 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ static void	del_one_exec(t_exec *exec)
 		output_clear_data(&exec->output);
 	if (exec->function)
 		free(exec->function);
-	if (exec->arg[0])
-		free(exec->arg[0]);
 	if (exec->arg)
+	{
+		free(exec->arg[0]);
 		free(exec->arg);
+	}
 	free(exec->str);
 	free(exec);
 }

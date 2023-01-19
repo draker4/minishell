@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 20:00:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 23:39:27 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ int	init_data(t_data *data, char **envp)
 	data->path = path;
 	data->envp = envp;
 	data->exit_status = 0;
+// 	if (sigemptyset(&sa->sa_mask) == -1 
+// || sigaddset(&sa->sa_mask, SIGUSR1) == -1 
+// 	|| sigaddset(&sa->sa_mask, SIGUSR2) == -1)
+// 		return (ft_msg_error(2));
+// 	sa->sa_flags = flag;
+// 	if (sigaction(SIGUSR1, sa, NULL) == -1 
+// 	|| sigaction(SIGUSR2, sa, NULL) == -1)
+// 		return (ft_msg_error(5));
+// 	return (1);
 	return (1);
 }
 

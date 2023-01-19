@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 10:49:45 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 23:35:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ typedef struct s_output
 // structure used for saving every data from minishell
 typedef struct s_data
 {
-	char	**path;
-	char	**envp;
-	int		exit_status;
+	char				**path;
+	char				**envp;
+	int					exit_status;
+	struct sigaction	sa;
 }	t_data;
 
 // structure saving each steps on from the read line
