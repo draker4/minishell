@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_char.c                                      :+:      :+:    :+:   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 03:08:46 by bperriol         ###   ########lyon.fr   */
+/*   Created: 2023/01/20 02:57:34 by bperriol          #+#    #+#             */
+/*   Updated: 2023/01/20 03:20:36 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_in_quote(char *str, int index)
+void	is_built_in(t_exec	*exec)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	while (str[i])
+	str = exec->function;
+	if (!str || !exec->arg)
 	{
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] && str[i] != '"')
-				if (i++ == index)
-					return (1);
-		}
-		else if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				if (i++ == index)
-					return (1);
-		}
-		if (str[i])
-			i++;
-		else
-			return (1);
+		exec->cmd = null;
+		return ;
 	}
-	return (0);
+	if (!ft_strncmp(str, "echo", 5) || !ft_strncmp(str, "cd", 3) \
+	|| !ft_strncmp(str, "pwd", 4) || !ft_strncmp(str, "export", 6) \
+	|| !ft_strncmp(str, "unset", 6) || !ft_strncmp(str, "env", 4) \
+	|| !ft_strncmp(str, "exit", 5))
+		exec->cmd = builtin;
+	else
+		exec->cmd = path;
 }

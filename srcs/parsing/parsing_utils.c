@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 23:39:27 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 00:54:45 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,14 @@ int	init_data(t_data *data, char **envp)
 	data->path = path;
 	data->envp = envp;
 	data->exit_status = 0;
-// 	if (sigemptyset(&sa->sa_mask) == -1 
-// || sigaddset(&sa->sa_mask, SIGUSR1) == -1 
-// 	|| sigaddset(&sa->sa_mask, SIGUSR2) == -1)
-// 		return (ft_msg_error(2));
-// 	sa->sa_flags = flag;
-// 	if (sigaction(SIGUSR1, sa, NULL) == -1 
-// 	|| sigaction(SIGUSR2, sa, NULL) == -1)
-// 		return (ft_msg_error(5));
-// 	return (1);
+	if (sigemptyset(&data->sa.sa_mask) == -1)
+		return (write(2, "Sigemptyset function error!\n", 28), 0);
+	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1)
+		return (perror("Init data - Sigaddset:"), 0);
+	data->sa.sa_flags = 0;
+	data->sa.sa_handler = &handler;
+	if (sigaction(SIGINT, &data->sa, NULL) == -1)
+		return (perror("Init data - Sigaction:"), 0);
 	return (1);
 }
 
