@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 00:05:17 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 06:00:58 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ t_exec	*new_exec(char *str, t_data *data)
 	new->words = NULL;
 	new->delimiter = NULL;
 	new->next = NULL;
-	new->prev = NULL;
 	new->arg = NULL;
+	new->cmd_path = NULL;
 	return (new);
 }
 
@@ -49,6 +49,8 @@ static void	del_one_exec(t_exec *exec)
 		free(exec->arg[0]);
 		free(exec->arg);
 	}
+	if (exec->cmd_path)
+		free_split(exec->cmd_path);
 	free(exec->str);
 	free(exec);
 }

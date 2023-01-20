@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 03:31:43 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 06:00:02 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 # define ERROR_ARG "Please don't enter any argument!\n"
 
@@ -63,7 +64,6 @@ typedef struct s_input
 	char			*str;
 	enum e_in		in;
 	struct s_input	*next;
-	struct s_input	*prev;
 }	t_input;
 
 // structure used to save all outputs
@@ -73,7 +73,6 @@ typedef struct s_output
 	char			*str;
 	enum e_out		out;
 	struct s_output	*next;
-	struct s_output	*prev;
 }	t_output;
 
 // structure used for saving every data from minishell
@@ -95,7 +94,7 @@ typedef struct s_exec
 	char			**words;
 	char			**arg;
 	int				fd_pipe[2];
-	char			*cmd_path;
+	char			**cmd_path;
 	int				save_stdin;
 	int				save_stdout;
 	pid_t			pid;
@@ -103,7 +102,6 @@ typedef struct s_exec
 	t_output		*output;
 	t_data			*data;
 	struct s_exec	*next;
-	struct s_exec	*prev;
 }	t_exec;
 
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
@@ -167,6 +165,9 @@ char		**split_not_quotes(char *str);
 
 // is_built_in
 void		is_built_in(t_exec *exec);
+
+// create path cmd
+int			create_path_cmd(t_exec **exec);
 
 void print_exec(t_exec *exec);
 

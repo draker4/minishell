@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 15:59:49 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 05:08:50 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ int	change_input(t_input *input)
 	if (input->in == in_file)
 	{
 		if (access(input->str, F_OK))
-			return (perror("Change_in_file - access"), FAIL);
+			return (perror("Change_input - access"), FAIL);
 		input->file = open(input->str, O_RDONLY);
 		if (input->file < 0)
-			return (perror("Change_in_file - Open"), FAIL);
+			return (perror("Change_input - Open"), FAIL);
 	}
 	else if (input->in == delimiter)
 		if (change_delimiter(input))
-			return (perror("Change_in_file - access"), FAIL);
+			return (perror("Change_input - access"), FAIL);
 	if (dup2(input->file, STDIN_FILENO) < 0)
-		return (perror("Change_in_file - Dup2"),
+		return (perror("Change_input - Dup2"),
 			unlink(".delimiter_tmp"), FAIL);
 	if (input->next)
 	{

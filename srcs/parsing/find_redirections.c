@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:27:05 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 23:54:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 05:07:27 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	create_input(t_exec *current, int *index)
 	if (!input)
 		return (perror("Create_input - Malloc:"), 0);
 	input->next = NULL;
-	input->prev = NULL;
+	input->file = -1;
 	*index += 1;
 	if (!ft_strncmp(current->words[*index], "<", 1))
 	{
@@ -48,7 +48,7 @@ static int	create_output(t_exec *current, int *index)
 	if (!output)
 		return (perror("Create_output - Malloc:"), 0);
 	output->next = NULL;
-	output->prev = NULL;
+	output->file = -1;
 	*index += 1;
 	if (!ft_strncmp(current->words[*index], ">", 1))
 	{
