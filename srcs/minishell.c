@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 03:34:34 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 04:03:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	read_line(t_data *data)
 	if (check_line(line))
 	{
 		parse(line, &exec, data);
-		//print_exec(exec);
+		// print_exec(exec);
 		execute(exec);
 	}
 	free(line);
@@ -74,7 +74,7 @@ static void	read_line(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	int		boucle = 3;
+	int		boucle = 5;
 
 	(void) argv;
 	if (argc != 1)

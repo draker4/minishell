@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 15:45:07 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 04:01:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	handle_pipe(t_exec *exec)
 			return (perror("Handle_pipe (exec) - Close"));
 		return (execute_commande(exec));
 		close_file(exec);
+		exit(1);
 	}
 	else
 	{
@@ -77,8 +78,7 @@ void	handle_pipe(t_exec *exec)
 			return (perror("Handle_pipe (next) - Dup2"));
 		if (close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (next) - Close"));
-		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
-			return (perror("Handle_pipe (next) - Waitpid"));
+		waitpid(exec->pid, &exec->data->exit_status, 0);
 		close_file(exec);
 		return (handle_commande(exec->next));
 	}
@@ -93,11 +93,11 @@ void	last_commande(t_exec *exec)
 	{
 		execute_commande(exec);
 		close_file(exec);
+		exit(1);
 	}
 	else
 	{
-		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
-			perror("Last_commande - Waitpid");
+		waitpid(exec->pid, &exec->data->exit_status, 0);
 		close_file(exec);
 	}
 }
