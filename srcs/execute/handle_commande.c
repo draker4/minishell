@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 19:01:00 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 09:32:12 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,12 @@ void	handle_commande(t_exec *exec)
 			return ;
 	if (exec->next)
 		return (handle_pipe(exec));
-	execute_commande(exec);
+	exec->pid = fork();
+	if (exec->pid < 0)
+		return (perror("Fork: "));
+	else if (!exec->pid)
+		execute_commande(exec);
+	else
+		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
+			return (perror("Handle_pipe (next) - Waitpid: "));
 }
