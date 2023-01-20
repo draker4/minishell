@@ -1,42 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_char.c                                      :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 03:08:46 by bperriol         ###   ########lyon.fr   */
+/*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
+/*   Updated: 2023/01/20 02:48:43 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_in_quote(char *str, int index)
+int	echo(t_exec *exec)
 {
 	int	i;
+	int	size;
+	int	new_line;
 
-	i = 0;
-	while (str[i])
+	size = size_arg(exec->arg);
+	if (size == 1)
+		return (printf("\n"), 0);
+	i = 1;
+	new_line = 1;
+	if (!ft_strncmp(exec->arg[1], "-n", 2) && !exec->arg[1][2])
 	{
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] && str[i] != '"')
-				if (i++ == index)
-					return (1);
-		}
-		else if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				if (i++ == index)
-					return (1);
-		}
-		if (str[i])
-			i++;
-		else
-			return (1);
+		new_line = 0;
+		i++;
 	}
+	while (exec->arg[i])
+	{
+		printf("%s", exec->arg[i]);
+		if (exec->arg[++i])
+			printf(" ");
+	}
+	if (new_line)
+		printf("\n");
 	return (0);
 }

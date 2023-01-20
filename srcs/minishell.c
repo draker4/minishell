@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 00:03:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 03:20:54 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	print_exec(t_exec *exec)
 		}
 		printf("\n");
 		printf("detail function = %s\n", current->function);
+		printf("is built in = %d\n", exec->cmd);
 		printf("\n");
 		current = current->next;
 	}
@@ -73,15 +74,16 @@ static void	read_line(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	// int		boucle = 1;
+	int		boucle = 3;
 
 	(void) argv;
 	if (argc != 1)
 		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
 	if (!init_data(&data, envp))
 		return (1);
-	while (1)
+	while (boucle--)
 		read_line(&data);
 	free_split(data.path);
+	rl_clear_history();
 	return (0);
 }

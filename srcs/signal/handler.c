@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_char.c                                      :+:      :+:    :+:   */
+/*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 03:08:46 by bperriol         ###   ########lyon.fr   */
+/*   Created: 2023/01/20 00:19:29 by bperriol          #+#    #+#             */
+/*   Updated: 2023/01/20 02:22:49 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_in_quote(char *str, int index)
+void	handler(int sig)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (sig == SIGINT)
 	{
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] && str[i] != '"')
-				if (i++ == index)
-					return (1);
-		}
-		else if (str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				if (i++ == index)
-					return (1);
-		}
-		if (str[i])
-			i++;
-		else
-			return (1);
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	return (0);
 }

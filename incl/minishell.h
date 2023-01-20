@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 23:35:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 03:19:23 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ enum e_out
 {
 	out_file,
 	append,
+};
+
+enum e_cmd
+{
+	null,
+	path,
+	builtin,
 };
 
 /* ------------------------------  STRUCTURE  ------------------------------- */
@@ -83,6 +90,7 @@ typedef struct s_exec
 {
 	char			*str;
 	char			*function;
+	enum e_cmd		cmd;
 	char			*delimiter;
 	char			**words;
 	char			**arg;
@@ -157,7 +165,10 @@ void		free_split(char **split);
 // split words
 char		**split_not_quotes(char *str);
 
-void		print_exec(t_exec *exec);
+// is_built_in
+void		is_built_in(t_exec *exec);
+
+void print_exec(t_exec *exec);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
@@ -170,4 +181,9 @@ int			change_input(t_exec *exec, t_input *input);
 int			change_output(t_exec *exec, t_output *output);
 void		handle_commande(t_exec *exec);
 void		close_file(t_exec *exec);
+
+/* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
+
+void		handler(int sig);
+
 #endif

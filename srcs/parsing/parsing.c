@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 23:58:17 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 03:15:26 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	find_function(t_exec **exec)
 		}
 		else
 			current->function = NULL;
+		is_built_in(current);
 		current = current->next;
 	}
 	return (1);
