@@ -40,8 +40,8 @@ SRCS_P			=	parsing.c				parsing_utils.c			\
 					lst_exec_utils.c		lst_in_out_utils.c		\
 					find_redirections.c
 
-SRCS_E			=	change_in_out_put.c	\
-					close_file.c		\
+SRCS_E			=	close_file.c		\
+					define_file.c		\
 					get_delimiter.c		\
 					handle_commande.c	
 

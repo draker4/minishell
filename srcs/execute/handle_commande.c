@@ -6,7 +6,7 @@
 /*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 10:56:33 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 15:45:07 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	execute_commande(t_exec *exec)
 	int	i;
 
 	i = 0;
-	while (exec->arg && exec->arg[i])
-		printf("%s\n", exec->arg[i++]);
-	i = 0;
 	if (ft_strchr(exec->function, '/'))
 	{
 		execve(exec->function, exec->arg, exec->data->envp);
@@ -64,32 +61,24 @@ void	handle_pipe(t_exec *exec)
 	pipe(exec->fd_pipe);
 	exec->pid = fork();
 	if (exec->pid < 0)
-		return (perror("Fork: "));
-	if (!exec->pid)
+		return (perror("Handle_pipe - Fork: "));
+	else if (!exec->pid)
 	{
 		if (dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
 			return (perror("Handle_pipe (exec) - Dup2"));
 		if (close(exec->fd_pipe[0]))
 			return (perror("Handle_pipe (exec) - Close"));
 		return (execute_commande(exec));
+		close_file(exec);
 	}
 	else
 	{
 		if (dup2(exec->fd_pipe[0], STDIN_FILENO) < 0)
-		{
-			close_file(exec);
 			return (perror("Handle_pipe (next) - Dup2"));
-		}
 		if (close(exec->fd_pipe[1]))
-		{
-			close_file(exec);
 			return (perror("Handle_pipe (next) - Close"));
-		}
 		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
-		{
-			close_file(exec);
 			return (perror("Handle_pipe (next) - Waitpid"));
-		}
 		close_file(exec);
 		return (handle_commande(exec->next));
 	}
@@ -101,19 +90,23 @@ void	last_commande(t_exec *exec)
 	if (exec->pid < 0)
 		return (perror("Last_commande - Fork"));
 	else if (!exec->pid)
+	{
 		execute_commande(exec);
+		close_file(exec);
+	}
 	else
+	{
 		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
 			perror("Last_commande - Waitpid");
+		close_file(exec);
+	}
 }
 
 void	handle_commande(t_exec *exec)
 {
-	if (!exec)
-		return ;
 	if (exec->input)
 	{
-		if (change_input(exec, exec->input))
+		if (change_input(exec->input))
 		{
 			if (exec->next)
 				return (handle_commande(exec->next));
@@ -121,11 +114,20 @@ void	handle_commande(t_exec *exec)
 		}
 	}
 	if (exec->output)
-		if (change_output(exec, exec->output))
+		if (change_output(exec->output))
 			return ;
 	if (exec->next)
 		return (handle_pipe(exec));
-	if (exec->function)
-		last_commande(exec);
-	close_file(exec);
+	last_commande(exec);
+}
+
+void	execute(t_exec *exec)
+{
+	if (!exec)
+		return ;
+	exec->save_stdin = dup(STDIN_FILENO);
+	exec->save_stdout = dup(STDOUT_FILENO);
+	handle_commande(exec);
+	dup2(exec->save_stdin, STDIN_FILENO);
+	dup2(exec->save_stdout, STDOUT_FILENO);
 }

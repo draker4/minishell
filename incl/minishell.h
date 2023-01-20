@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 23:35:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 15:16:59 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ typedef struct s_exec
 	char			**arg;
 	int				fd_pipe[2];
 	char			*cmd_path;
-	int				infile;
-	int				outfile;
+	int				save_stdin;
+	int				save_stdout;
 	pid_t			pid;
 	t_input			*input;
 	t_output		*output;
@@ -164,10 +164,11 @@ void		print_exec(t_exec *exec);
 // strjoin with the s1 being free at the end;
 char		*gnl_strjoin(char *s1, char *s2);
 // get_next_line which update directly the line and handle perror
-int			get_delimiter(int fd, char *line);
+int			get_delimiter(int fd, char **line);
 
-int			change_input(t_exec *exec, t_input *input);
-int			change_output(t_exec *exec, t_output *output);
+int			change_input(t_input *input);
+int			change_output(t_output *output);
 void		handle_commande(t_exec *exec);
 void		close_file(t_exec *exec);
+void		execute(t_exec *exec);
 #endif

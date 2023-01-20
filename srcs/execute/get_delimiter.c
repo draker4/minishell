@@ -6,7 +6,7 @@
 /*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 10:06:06 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 14:50:38 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	reset_str(char *tmp, char *str, size_t start)
 	str[i] = '\0';
 }
 
-static int	ret_line(char *tmp, char *str, char *line)
+static int	ret_line(char *tmp, char *str, char **line)
 {
 	size_t	i;
 
@@ -65,24 +65,24 @@ static int	ret_line(char *tmp, char *str, char *line)
 		return (free(tmp), 0);
 	while (tmp[i] && tmp[i] != '\n')
 		i++;
-	line = malloc(sizeof(char) * (i + 2));
-	if (!line)
+	*line = malloc(sizeof(char) * (i + 2));
+	if (!(*line))
 		return (free(tmp), perror("Ret_line - Malloc (line)"), FAIL);
 	i = 0;
 	while (tmp[i] && tmp[i] != '\n')
 	{
-		line[i] = tmp[i];
+		(*line)[i] = tmp[i];
 		i++;
 	}
-	line[i] = tmp[i];
-	line[i + 1] = '\0';
+	(*line)[i] = tmp[i];
+	(*line)[i + 1] = '\0';
 	if (tmp[i++] != '\0')
 		reset_str(tmp, str, i);
 	free(tmp);
 	return (0);
 }
 
-int	get_delimiter(int fd, char *line)
+int	get_delimiter(int fd, char **line)
 {
 	static char	str[BUFFER_SIZE + 1];
 	char		*tmp;
