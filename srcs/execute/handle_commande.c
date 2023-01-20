@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 06:02:06 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 06:13:57 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	last_commande(t_exec *exec)
 
 void	handle_commande(t_exec *exec)
 {
+	if (!exec)
+		return ;
 	if (exec->input)
 	{
 		if (change_input(exec->input))
@@ -90,7 +92,7 @@ void	handle_commande(t_exec *exec)
 	if (exec->next)
 	{
 		handle_pipe(exec);
-		close_file(exec);
+		return (close_file(exec));
 	}
 	last_commande(exec);
 	close_file(exec);
