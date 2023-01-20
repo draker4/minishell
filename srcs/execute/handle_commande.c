@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 06:13:57 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 06:22:18 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	handle_pipe(t_exec *exec)
 		if (close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (next) - Close"));
 		waitpid(exec->pid, &exec->data->exit_status, 0);
-		close_file(exec);
-		handle_commande(exec->next);
 	}
 }
 
@@ -92,7 +90,8 @@ void	handle_commande(t_exec *exec)
 	if (exec->next)
 	{
 		handle_pipe(exec);
-		return (close_file(exec));
+		close_file(exec);
+		return (handle_commande(exec->next));
 	}
 	last_commande(exec);
 	close_file(exec);
