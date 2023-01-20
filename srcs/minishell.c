@@ -6,7 +6,7 @@
 /*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 09:32:32 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 09:55:23 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	print_exec(t_exec *exec)
 	while (current)
 	{
 		printf("current = %s\n", current->str);
-		// i = 0;
-		// while (current->words[i])
-		// 	printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
+		i = 0;
+		while (current->words[i])
+		printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
 		input = current->input;
 		while (input)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 19:39:17 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 10:49:45 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_parse
 // structure used to save all inputs
 typedef struct s_input
 {
+	int				file;
 	char			*str;
 	enum e_in		in;
 	struct s_input	*next;
@@ -61,6 +62,7 @@ typedef struct s_input
 // structure used to save all outputs
 typedef struct s_output
 {
+	int				file;
 	char			*str;
 	enum e_out		out;
 	struct s_output	*next;
@@ -166,4 +168,5 @@ int			get_delimiter(int fd, char *line);
 int			change_input(t_exec *exec, t_input *input);
 int			change_output(t_exec *exec, t_output *output);
 void		handle_commande(t_exec *exec);
+void		close_file(t_exec *exec);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_delimiter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 18:44:40 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 10:06:06 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 
 	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (new == NULL)
-		return (free(s1), perror("Gnl_strjoin - Malloc: "), NULL);
+		return (free(s1), perror("Gnl_strjoin - Malloc"), NULL);
 	i = 0;
 	while (s1 && s1[i])
 	{
@@ -67,7 +67,7 @@ static int	ret_line(char *tmp, char *str, char *line)
 		i++;
 	line = malloc(sizeof(char) * (i + 2));
 	if (!line)
-		return (free(tmp), perror("Ret_line - Malloc (line): "), FAIL);
+		return (free(tmp), perror("Ret_line - Malloc (line)"), FAIL);
 	i = 0;
 	while (tmp[i] && tmp[i] != '\n')
 	{
@@ -98,7 +98,7 @@ int	get_delimiter(int fd, char *line)
 		if (nbc < 0)
 		{
 			str[0] = '\0';
-			return (free(tmp), perror("Get_next_line - read: "), FAIL);
+			return (free(tmp), perror("Get_next_line - read"), FAIL);
 		}
 		str[nbc] = '\0';
 		tmp = gnl_strjoin(tmp, str);

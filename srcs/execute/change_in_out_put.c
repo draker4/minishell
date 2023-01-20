@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_in_out_put.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/19 18:59:05 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 10:30:39 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ int	change_delimiter(t_exec *exec, t_input *input)
 int	change_in_file(t_exec *exec, t_input *input)
 {
 	if (access(input->str, F_OK))
-		return (perror("Change_in_file - access:"), FAIL);
-	exec->infile = open(input->str, O_RDONLY);
-	if (exec->infile < 0)
-		return (perror("Change_in_file - Open:"), FAIL);
+		return (perror("Change_in_file - access"), FAIL);
+	input->file = open(input->str, O_RDONLY);
+	if (input->file < 0)
+		return (perror("Change_in_file - Open"), FAIL);
+	exec->infile = input->file;
 	if (dup2(exec->infile, STDIN_FILENO) < 0)
-		return (perror("Change_in_file - Dup2: "), FAIL);
+		return (perror("Change_in_file - Dup2"), FAIL);
 	if (input->next)
 		return (change_input(exec, input->next));
 	return (0);
@@ -66,13 +67,14 @@ int	change_input(t_exec *exec, t_input *input)
 int	change_output(t_exec *exec, t_output *output)
 {
 	if (output->out == out_file)
-		exec->outfile = open(output->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		output->file = open(output->str, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else if (output->out == append)
-		exec->outfile = open(output->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (exec->outfile < 0)
-		return (perror("Change_output - Open:"), FAIL);
+		output->file = open(output->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (output->file < 0)
+		return (perror("Change_output - Open"), FAIL);
+	exec->outfile = output->file;
 	if (dup2(exec->outfile, STDOUT_FILENO) < 0)
-		return (perror("Change_output - Dup2: "), FAIL);
+		return (perror("Change_output - Dup2"), FAIL);
 	if (output->next)
 		return (change_output(exec, output->next));
 	return (0);

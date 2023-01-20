@@ -6,7 +6,7 @@
 /*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 09:32:12 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 10:56:33 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,23 @@ void	execute_commande(t_exec *exec)
 	int	i;
 
 	i = 0;
+	while (exec->arg && exec->arg[i])
+		printf("%s\n", exec->arg[i++]);
+	i = 0;
 	if (ft_strchr(exec->function, '/'))
 	{
-		exec->arg[0] = ft_strrchr(exec->function, '/');
 		execve(exec->function, exec->arg, exec->data->envp);
-		return (perror("Execution: "));
+		return (perror("Execute_commande - Execution (Path)"));
 	}
 	while (exec->data->path[i])
 	{
 		exec->cmd_path = join_cmd_path(exec->data->path[i++],
 				exec->function);
 		if (!exec->cmd_path)
-			return (perror("Execute_commande - Join_cmd_path: "));
+			return (perror("Execute_commande - Join_cmd_path"));
 		execve(exec->cmd_path, exec->arg, exec->data->envp);
 	}
-	return (perror("Execution: "));
+	return (perror("Execute_commande - Execution (no path)"));
 }
 
 void	handle_pipe(t_exec *exec)
@@ -66,21 +68,43 @@ void	handle_pipe(t_exec *exec)
 	if (!exec->pid)
 	{
 		if (dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
-			return (perror("Handle_pipe (main) - Dup2: "));
+			return (perror("Handle_pipe (exec) - Dup2"));
 		if (close(exec->fd_pipe[0]))
-			return (perror("Handle_pipe (main) - Close: "));
+			return (perror("Handle_pipe (exec) - Close"));
 		return (execute_commande(exec));
 	}
 	else
 	{
 		if (dup2(exec->fd_pipe[0], STDIN_FILENO) < 0)
-			return (perror("Handle_pipe (next) - Dup2: "));
+		{
+			close_file(exec);
+			return (perror("Handle_pipe (next) - Dup2"));
+		}
 		if (close(exec->fd_pipe[1]))
-			return (perror("Handle_pipe (next) - Close: "));
+		{
+			close_file(exec);
+			return (perror("Handle_pipe (next) - Close"));
+		}
 		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
-			return (perror("Handle_pipe (next) - Waitpid: "));
+		{
+			close_file(exec);
+			return (perror("Handle_pipe (next) - Waitpid"));
+		}
+		close_file(exec);
 		return (handle_commande(exec->next));
 	}
+}
+
+void	last_commande(t_exec *exec)
+{
+	exec->pid = fork();
+	if (exec->pid < 0)
+		return (perror("Last_commande - Fork"));
+	else if (!exec->pid)
+		execute_commande(exec);
+	else
+		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
+			perror("Last_commande - Waitpid");
 }
 
 void	handle_commande(t_exec *exec)
@@ -101,12 +125,7 @@ void	handle_commande(t_exec *exec)
 			return ;
 	if (exec->next)
 		return (handle_pipe(exec));
-	exec->pid = fork();
-	if (exec->pid < 0)
-		return (perror("Fork: "));
-	else if (!exec->pid)
-		execute_commande(exec);
-	else
-		if (waitpid(exec->pid, &exec->data->exit_status, 0) == -1)
-			return (perror("Handle_pipe (next) - Waitpid: "));
+	if (exec->function)
+		last_commande(exec);
+	close_file(exec);
 }
