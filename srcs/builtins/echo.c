@@ -6,13 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 02:48:43 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:48:40 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	echo(t_exec *exec)
+void	echo(t_exec *exec)
 {
 	int	i;
 	int	size;
@@ -20,7 +20,7 @@ int	echo(t_exec *exec)
 
 	size = size_arg(exec->arg);
 	if (size == 1)
-		return (printf("\n"), 0);
+		return (printf("\n"), exit(0));
 	i = 1;
 	new_line = 1;
 	if (!ft_strncmp(exec->arg[1], "-n", 2) && !exec->arg[1][2])
@@ -36,5 +36,5 @@ int	echo(t_exec *exec)
 	}
 	if (new_line)
 		printf("\n");
-	return (0);
+	exit(0);
 }

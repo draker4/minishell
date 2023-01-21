@@ -6,13 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 05:08:50 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:57:04 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	confirm_end(const char *s1, const char *s2)
+static int	confirm_end(const char *s1, const char *s2)
 {
 	int	i;
 	int	size_s1;
@@ -30,7 +30,7 @@ int	confirm_end(const char *s1, const char *s2)
 	return (0);
 }
 
-int	change_delimiter(t_input *input)
+static int	change_delimiter(t_input *input)
 {
 	char	*line;
 

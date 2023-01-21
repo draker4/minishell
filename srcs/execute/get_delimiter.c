@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_delimiter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 14:50:38 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:59:34 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # define BUFFER_SIZE 10
 #endif
 
-char	*gnl_strjoin(char *s1, char *s2)
+// strjoin with the s1 being free at the end;
+static char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*new;
 	size_t	i;

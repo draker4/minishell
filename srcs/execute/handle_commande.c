@@ -6,33 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/21 16:03:38 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 17:00:54 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_commande(t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strchr(exec->function, '/'))
-		execve(exec->function, exec->arg, exec->data->envp);
-	else
-	{
-		while (exec->cmd_path[i])
-		{
-			if (!access(exec->cmd_path[i], F_OK))
-				execve(exec->cmd_path[i], exec->arg, exec->data->envp);
-			i++;
-		}
-	}
-	perror("Execute_commande - commande introuvable");
-	exit (1);
-}
-
-void	handle_pipe(t_exec *exec)
+static void	handle_pipe(t_exec *exec)
 {
 	pipe(exec->fd_pipe);
 	exec->pid = fork();
@@ -56,16 +36,13 @@ void	handle_pipe(t_exec *exec)
 	}
 }
 
-void	last_commande(t_exec *exec)
+static void	last_commande(t_exec *exec)
 {
 	exec->pid = fork();
 	if (exec->pid < 0)
 		return (perror("Last_commande - Fork"));
 	else if (!exec->pid)
-	{
 		execute_commande(exec);
-		exit(1);
-	}
 	else
 		waitpid(exec->pid, &exec->data->exit_status, 0);
 }
@@ -95,18 +72,4 @@ void	handle_commande(t_exec *exec)
 	}
 	last_commande(exec);
 	close_file(exec);
-}
-
-void	execute(t_exec *exec)
-{
-	if (!exec)
-		return ;
-	exec->save_stdin = dup(STDIN_FILENO);
-	exec->save_stdout = dup(STDOUT_FILENO);
-	if (exec->save_stdin == -1 || exec->save_stdout == -1)
-		return (perror("Execut - Dup:"));
-	handle_commande(exec);
-	if (dup2(exec->save_stdin, STDIN_FILENO) == -1 || \
-	dup2(exec->save_stdout, STDOUT_FILENO) == -1)
-		return (perror("Execut - Dup2:"));
 }

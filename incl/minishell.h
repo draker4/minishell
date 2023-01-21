@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 06:00:02 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 17:00:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,19 +173,29 @@ void print_exec(t_exec *exec);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
-// strjoin with the s1 being free at the end;
-char		*gnl_strjoin(char *s1, char *s2);
-// get_next_line which update directly the line and handle perror
+// get delimoiter
 int			get_delimiter(int fd, char **line);
 
+// define file
 int			change_input(t_input *input);
 int			change_output(t_output *output);
+
+// handle commande
 void		handle_commande(t_exec *exec);
+
+// close file
 void		close_file(t_exec *exec);
+
+// execute cmd
+void		execute_commande(t_exec *exec);
 void		execute(t_exec *exec);
 
 /* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
 
 void		handler(int sig);
+
+/* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
+
+void		echo(t_exec *exec);
 
 #endif

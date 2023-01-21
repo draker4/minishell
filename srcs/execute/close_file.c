@@ -6,13 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 06:16:34 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:56:05 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_input(t_exec *exec, t_input *input)
+static void	close_input(t_exec *exec, t_input *input)
 {
 	if (input->file > 0)
 		if (close (input->file))
@@ -23,7 +23,7 @@ void	close_input(t_exec *exec, t_input *input)
 		return (close_input(exec, input->next));
 }
 
-void	close_output(t_exec *exec, t_output *output)
+static void	close_output(t_exec *exec, t_output *output)
 {
 	if (output->file > 0)
 	{

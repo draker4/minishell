@@ -47,10 +47,9 @@ SRCS_P			=	parsing.c				parsing_utils.c			\
 					find_redirections.c		is_builtin.c			\
 					create_path_cmd.c
 
-SRCS_E			=	close_file.c		\
-					define_file.c		\
-					get_delimiter.c		\
-					handle_commande.c	
+SRCS_E			=	close_file.c			define_file.c			\
+					get_delimiter.c			handle_commande.c		\
+					execute_cmd.c
 
 SRCS_S			=	handler.c
 
