@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 06:22:55 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:13:04 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,35 +54,39 @@ void	print_exec(t_exec *exec)
 	}
 }
 
-static void	read_line(t_data *data)
+static int	read_line(t_data *data)
 {
 	char	*line;
 	t_exec	*exec;
+	int		check;
 
 	exec = NULL;
 	line = readline("minishell > ");
-	if (check_line(line))
+	check = check_line(line);
+	if (check > 0)
 	{
 		parse(line, &exec, data);
 		// print_exec(exec);
 		execute(exec);
+		exec_clear_data(&exec);
 	}
 	free(line);
-	exec_clear_data(&exec);
+	line = NULL;
+	return (check);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	int		boucle = 10;
 
 	(void) argv;
 	if (argc != 1)
 		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
 	if (!init_data(&data, envp))
 		return (1);
-	while (boucle--)
-		read_line(&data);
+	while (1)
+		if (read_line(&data) == -1)
+			break ;
 	free_split(data.path);
 	rl_clear_history();
 	return (0);

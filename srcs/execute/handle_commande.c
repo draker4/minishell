@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/20 06:22:18 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:03:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void	execute_commande(t_exec *exec)
 
 	i = 0;
 	if (ft_strchr(exec->function, '/'))
-	{
 		execve(exec->function, exec->arg, exec->data->envp);
-		return (perror("Execute_commande - Execution (Path)"));
-	}
-	while (exec->cmd_path[i])
+	else
 	{
-		if (!access(exec->cmd_path[i], F_OK))
-			execve(exec->cmd_path[i], exec->arg, exec->data->envp);
-		i++;
+		while (exec->cmd_path[i])
+		{
+			if (!access(exec->cmd_path[i], F_OK))
+				execve(exec->cmd_path[i], exec->arg, exec->data->envp);
+			i++;
+		}
 	}
-	perror("Execute_commande - Execution (no path)");
+	perror("Execute_commande - commande introuvable");
 	exit (1);
 }
 
