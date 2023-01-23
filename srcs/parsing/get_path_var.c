@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:57:20 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 14:11:25 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 14:42:14 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

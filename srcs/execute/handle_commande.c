@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 12:42:02 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 14:01:30 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	handle_commande(t_exec *exec)
 		}
 	}
 	if (exec->output)
+	{
 		if (change_output(exec->output))
 			return (close_file(exec));
+	}
 	if (exec->next)
 	{
 		handle_pipe(exec);
