@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 00:54:45 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 15:09:52 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,8 @@ char	*create_copy(char *str, int save, int i)
 
 int	init_data(t_data *data, char **envp)
 {
-	char	**path;
-
-	path = get_path(envp);
-	if (envp[0] && !path)
-		return (0);
-	data->path = path;
+	data->path = NULL;
+	data->home = NULL;
 	data->envp = envp;
 	data->exit_status = 0;
 	if (sigemptyset(&data->sa.sa_mask) == -1)
@@ -66,7 +62,7 @@ int	init_data(t_data *data, char **envp)
 	data->sa.sa_flags = 0;
 	data->sa.sa_handler = &handler;
 	if (sigaction(SIGINT, &data->sa, NULL) == -1)
-		return (perror("Init data - Sigaction:"), 0);
+		return (perror("Init data - Sigaction"), 0);
 	return (1);
 }
 

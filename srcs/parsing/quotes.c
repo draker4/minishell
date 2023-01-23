@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 16:27:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 15:19:18 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:07:42 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	single_quote(char *str, char **word_parsed, int *i)
 	return (1);
 }
 
-static int	double_quotes(char *str, char **word_parsed, int *i, char **envp)
+static int	double_quotes(char *str, char **word_parsed, int *i)
 {
 	while (str[*i] && str[*i] != '"')
 	{
@@ -32,7 +32,7 @@ static int	double_quotes(char *str, char **word_parsed, int *i, char **envp)
 		|| str[*i + 1] == '_' || str[*i + 1] == '{'))
 		{
 			*i += 1;
-			if (!check_env(str, word_parsed, i, envp))
+			if (!check_env(str, word_parsed, i))
 				return (0);
 		}
 		else
@@ -46,7 +46,7 @@ static int	double_quotes(char *str, char **word_parsed, int *i, char **envp)
 	return (1);
 }
 
-static int	adapt_line(char *str, char **word_parsed, int *i, char **envp)
+static int	adapt_line(char *str, char **word_parsed, int *i)
 {
 	if (str[*i] == '\'')
 	{
@@ -57,19 +57,19 @@ static int	adapt_line(char *str, char **word_parsed, int *i, char **envp)
 	else if (str[*i] == '"')
 	{
 		*i += 1;
-		if (!double_quotes(str, word_parsed, i, envp))
+		if (!double_quotes(str, word_parsed, i))
 			return (0);
 	}
 	else if (str[*i] == '$')
 	{
 		*i += 1;
-		if (!check_env(str, word_parsed, i, envp))
+		if (!check_env(str, word_parsed, i))
 			return (0);
 	}
 	return (1);
 }
 
-int	parse_quotes_env(char *str, char **word_parsed, char **envp)
+int	parse_quotes_env(char *str, char **word_parsed)
 {
 	int	i;
 
@@ -80,7 +80,7 @@ int	parse_quotes_env(char *str, char **word_parsed, char **envp)
 		&& str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_' || \
 		str[i + 1] == '{')))
 		{
-			if (!adapt_line(str, word_parsed, &i, envp))
+			if (!adapt_line(str, word_parsed, &i))
 				return (0);
 		}
 		else

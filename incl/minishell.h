@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 13:18:01 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:09:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_output
 typedef struct s_data
 {
 	char				**path;
+	char				*home;
 	char				**envp;
 	int					exit_status;
 	struct sigaction	sa;
@@ -114,7 +115,7 @@ int			check_line(char *str);
 int			parse(char *str, t_exec **exec, t_data *data);
 
 // quotes
-int			parse_quotes_env(char *str, char **line_parsed, char **envp);
+int			parse_quotes_env(char *str, char **line_parsed);
 
 // parsing utils
 char		*str_add(char *str, char c);
@@ -135,11 +136,8 @@ int			check_and_or(char *str);
 // check redirections (< and > symbols)
 int			check_redirections(char *str);
 
-// get path variable
-char		**get_path(char **envp);
-
 // environment variables
-int			check_env(char *str, char **line_parsed, int *i, char **envp);
+int			check_env(char *str, char **line_parsed, int *i);
 
 // exec list utils
 t_exec		*new_exec(char *str, t_data *data);
@@ -160,6 +158,7 @@ int			create_exec(char *str, t_exec **exec, t_data *data);
 
 // free utils
 void		free_split(char **split);
+void		free_all(char *str, t_data *data, t_exec **exec);
 
 // split words
 char		**split_not_quotes(char *str);
