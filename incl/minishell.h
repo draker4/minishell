@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 12:38:22 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 13:18:01 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,6 @@ void		is_built_in(t_exec *exec);
 // create path cmd
 int			create_path_cmd(t_exec **exec);
 
-void print_exec(t_exec *exec);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
