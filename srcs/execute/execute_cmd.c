@@ -6,13 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 10:46:04 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 12:38:06 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	execute_builtin(t_exec *exec)
+void	execute_builtin(t_exec *exec)
 {
 	if (!ft_strncmp(exec->function, "cd", 3))
 		return (ft_cd(exec));
@@ -38,8 +38,6 @@ void	execute_commande(t_exec *exec)
 	i = 0;
 	if (exec->function == NULL)
 		exit(1);
-	if (exec->cmd == builtin)
-		return (execute_builtin(exec));
 	if (ft_strchr(exec->function, '/'))
 		execve(exec->function, exec->arg, exec->data->envp);
 	else

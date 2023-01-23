@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 11:17:23 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 12:38:22 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void		handle_commande(t_exec *exec);
 void		close_file(t_exec *exec);
 
 // execute cmd
+void		execute_builtin(t_exec *exec);
 void		execute_commande(t_exec *exec);
 void		execute(t_exec *exec);
 

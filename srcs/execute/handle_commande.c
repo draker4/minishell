@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/21 17:00:54 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 12:42:02 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	handle_pipe(t_exec *exec)
 
 static void	last_commande(t_exec *exec)
 {
+	if (exec->cmd == builtin)
+		return (execute_builtin(exec));
 	exec->pid = fork();
 	if (exec->pid < 0)
 		return (perror("Last_commande - Fork"));

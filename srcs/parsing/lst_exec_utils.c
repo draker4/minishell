@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 06:00:58 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 12:54:01 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_exec	*new_exec(char *str, t_data *data)
 	new->next = NULL;
 	new->arg = NULL;
 	new->cmd_path = NULL;
+	new->pid = 1;
 	return (new);
 }
 
