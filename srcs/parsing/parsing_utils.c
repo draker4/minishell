@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 15:09:52 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:20:23 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	size_arg(char **arg)
 	int	i;
 
 	i = 0;
+	if (!arg)
+		return (0);
 	while (arg[i])
 		i++;
 	return (i);
