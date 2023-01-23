@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 14:17:33 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 18:51:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	ft_env(t_exec *exec)
 	i = 0;
 	while (exec->data->envp[i])
 	{
-		write(1, exec->data->envp[i], ft_strlen(exec->data->envp[i]));
-		write(1, "\n", 1);
+		if (has_equal(exec->data->envp[i]))
+		{
+			write(1, exec->data->envp[i], ft_strlen(exec->data->envp[i]));
+			write(1, "\n", 1);
+		}
 		i++;
 	}
 	if (!exec->pid)

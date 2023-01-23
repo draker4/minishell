@@ -6,9 +6,11 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:09:09 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/19 15:19:54 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 19:32:53 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 

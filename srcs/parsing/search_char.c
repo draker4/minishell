@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/20 03:08:46 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 18:52:05 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ int	is_in_quote(char *str, int index)
 			i++;
 		else
 			return (1);
+	}
+	return (0);
+}
+
+int	has_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
 	}
 	return (0);
 }

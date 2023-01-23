@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:50:18 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/21 16:59:06 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:37:46 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	join_all_path(t_exec *exec)
 	if (!cmd_path)
 		return (perror("Create_path_cmd - Malloc:"), 0);
 	i = 0;
-	while (exec->data->path[i])
+	while (exec->data->path && exec->data->path[i])
 	{
 		cmd_path[i] = join_cmd_path(exec->data->path[i], exec->function);
 		if (!cmd_path[i++])

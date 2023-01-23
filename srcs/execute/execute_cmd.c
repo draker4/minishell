@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 13:56:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 14:52:39 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	execute(t_exec *exec)
 	exec->save_stdin = dup(STDIN_FILENO);
 	exec->save_stdout = dup(STDOUT_FILENO);
 	if (exec->save_stdin == -1 || exec->save_stdout == -1)
-		return (perror("Execut - Dup:"));
+		return (perror("Execute - Dup"));
 	handle_commande(exec);
 	if (dup2(exec->save_stdin, STDIN_FILENO) == -1 || \
 	dup2(exec->save_stdout, STDOUT_FILENO) == -1)
-		return (perror("Execut - Dup2:"));
+		return (perror("Execute - Dup2"));
 }

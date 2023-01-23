@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 13:18:01 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 20:08:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_output
 typedef struct s_data
 {
 	char				**path;
+	char				*home;
 	char				**envp;
 	int					exit_status;
 	struct sigaction	sa;
@@ -125,6 +126,7 @@ int			size_arg(char **arg);
 
 // search character
 int			is_in_quote(char *str, int index);
+int			has_equal(char *str);
 
 // check around parenthesis
 int			check_around_parenthesis(char *str);
@@ -134,9 +136,6 @@ int			check_and_or(char *str);
 
 // check redirections (< and > symbols)
 int			check_redirections(char *str);
-
-// get path variable
-char		**get_path(char **envp);
 
 // environment variables
 int			check_env(char *str, char **line_parsed, int *i, char **envp);
@@ -160,6 +159,7 @@ int			create_exec(char *str, t_exec **exec, t_data *data);
 
 // free utils
 void		free_split(char **split);
+void		free_all(char *str, t_data *data, t_exec **exec);
 
 // split words
 char		**split_not_quotes(char *str);
@@ -170,6 +170,20 @@ void		is_built_in(t_exec *exec);
 // create path cmd
 int			create_path_cmd(t_exec **exec);
 
+// copy_env
+char		**copy_env(char **envp);
+int			manage_shlvl(t_data *data);
+int			which_env_add(t_data *data);
+
+// add_env
+char		**add_pwd(char **env);
+char		**add_shlvl(char **env);
+int			shlvl_plus_one(char **env);
+char		**add_last_cmd(char **env);
+char		**add_oldpwd(char **env);
+
+// get path variable
+char		**get_path(char **envp);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
