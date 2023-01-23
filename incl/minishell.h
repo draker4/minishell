@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/21 17:00:38 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 10:01:28 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,18 @@ void		handler(int sig);
 
 /* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
 
-void		echo(t_exec *exec);
+void		ft_cd(t_exec *exec);
+
+void		ft_echo(t_exec *exec);
+
+void		ft_env(t_exec *exec);
+
+void		ft_exit(t_exec *exec);
+
+void		ft_export(t_exec *exec);
+
+void		ft_pwd(t_exec *exec);
+
+void		ft_unset(t_exec *exec);
 
 #endif

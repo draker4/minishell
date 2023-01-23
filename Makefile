@@ -48,12 +48,16 @@ SRCS_P			=	parsing.c				parsing_utils.c			\
 					create_path_cmd.c
 
 SRCS_E			=	close_file.c			define_file.c			\
-					get_delimiter.c			handle_commande.c		\
-					execute_cmd.c
+					execute_cmd.c			get_delimiter.c			\
+					handle_commande.c
+					
 
 SRCS_S			=	handler.c
 
-SRCS_B			=	echo.c
+SRCS_B			=	ft_cd.c					ft_echo.c				\
+					ft_env.c				ft_exit.c				\
+					ft_export.c				ft_pwd.c				\
+					ft_unset.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_P			=	${SRCS_P:%.c=${DIR_OBJS_P}%.o}

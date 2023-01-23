@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/21 17:00:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 10:00:19 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,21 @@
 
 static void	execute_builtin(t_exec *exec)
 {
-	if (!ft_strncmp(exec->function, "echo", 5))
-		return (echo(exec));
+	if (!ft_strncmp(exec->function, "cd", 5))
+		return (ft_cd(exec));
+	else if (!ft_strncmp(exec->function, "echo", 5))
+		return (ft_echo(exec));
+	else if (!ft_strncmp(exec->function, "env", 5))
+		return (ft_env(exec));
+	else if (!ft_strncmp(exec->function, "exit", 5))
+		return (ft_exit(exec));
+	else if (!ft_strncmp(exec->function, "export", 5))
+		return (ft_export(exec));
+	else if (!ft_strncmp(exec->function, "pwd", 5))
+		return (ft_pwd(exec));
+	else if (!ft_strncmp(exec->function, "unset", 5))
+		return (ft_unset(exec));
+	write(2, "Builtin not found\n", 18);
 }
 
 void	execute_commande(t_exec *exec)
