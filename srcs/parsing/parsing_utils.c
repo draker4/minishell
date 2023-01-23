@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 19:47:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 20:29:34 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ char	*create_copy(char *str, int save, int i)
 
 int	init_data(t_data *data, char **envp)
 {
-	data->path = NULL;
 	data->home = NULL;
+	data->path = get_path(envp);
+	if (!data->path && !envp[0])
+		return (perror("Init_data - get_path"), 0);
 	data->envp = copy_env(envp);
 	if (!data->envp)
 		return (0);
