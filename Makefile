@@ -97,6 +97,8 @@ LIBFT			=	-lft
 LIBFT_D			=	-lft_debug
 MMD				=	-MMD
 READLINE		=	-lreadline
+L_READ			=	-L/Users/bperriol/.brew/opt/readline/lib
+I_READ			=	-I/Users/bperriol/.brew/opt/readline/include
 
 # ------------  Commands  ------------ #
 
@@ -115,22 +117,22 @@ all					:
 # ---------  Compiled Rules  --------- #
 
 ${NAME}				:	${OBJS} ${OBJS_P} ${OBJS_E} ${OBJS_S} ${OBJS_B}
-						${CC} ${CFLAGS}  ${OBJS} ${OBJS_P} ${OBJS_E} ${OBJS_S} ${OBJS_B} -L ${DIR_LIBFT} ${LIBFT} ${READLINE} -o ${NAME}
+						${CC} ${CFLAGS}  ${OBJS} ${OBJS_P} ${OBJS_E} ${OBJS_S} ${OBJS_B} -L ${DIR_LIBFT} ${L_READ} ${LIBFT} ${READLINE} -o ${NAME}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -c $< -o $@
 
 ${DIR_OBJS_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -c $< -o $@
 
 ${DIR_OBJS_E}%.o	:	${DIR_SRCS_E}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -c $< -o $@
 
 ${DIR_OBJS_S}%.o	:	${DIR_SRCS_S}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -c $< -o $@
 
 ${DIR_OBJS_B}%.o	:	${DIR_SRCS_B}%.c Makefile | ${DIR_OBJS}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -c $< -o $@
 
 ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS}
@@ -148,22 +150,22 @@ ${DIR_OBJS}			:
 # ------  Compiled Rules Debug  ------ #
 
 ${DEBUG}			:	${OBJS_D} ${OBJS_D_P} ${OBJS_D_E} ${OBJS_D_S} ${OBJS_D_B}
-						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${READLINE} ${OBJS_D} ${OBJS_D_P} ${OBJS_D_E} ${OBJS_D_S} ${OBJS_D_B} -g3 ${FSANITIZE} -o ${DEBUG}
+						${CC} ${CFLAGS} -L ${DIR_LIBFT} ${LIBFT_D} ${L_READ} ${READLINE} ${OBJS_D} ${OBJS_D_P} ${OBJS_D_E} ${OBJS_D_S} ${OBJS_D_B} -g3 ${FSANITIZE} -o ${DEBUG}
 
 ${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS_D}
-						${CC} ${CFLAGS} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${MMD} -g3 ${FSANITIZE} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D_P}%.o	:	${DIR_SRCS_P}%.c Makefile | ${DIR_OBJS_D}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D_E}%.o	:	${DIR_SRCS_E}%.c Makefile | ${DIR_OBJS_D}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D_S}%.o	:	${DIR_SRCS_S}%.c Makefile | ${DIR_OBJS_D}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D_B}%.o	:	${DIR_SRCS_B}%.c Makefile | ${DIR_OBJS_D}
-						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} -c $< -o $@
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ} -g3 ${FSANITIZE} -c $< -o $@
 
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}
