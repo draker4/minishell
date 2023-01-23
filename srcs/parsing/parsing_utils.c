@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 16:20:23 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 19:47:11 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	init_data(t_data *data, char **envp)
 {
 	data->path = NULL;
 	data->home = NULL;
-	data->envp = envp;
+	data->envp = copy_env(envp);
+	if (!data->envp)
+		return (0);
+	if (!which_env_add(data) || !manage_shlvl(data))
+		return (0);
 	data->exit_status = 0;
 	if (sigemptyset(&data->sa.sa_mask) == -1)
 		return (write(2, "Sigemptyset function error!\n", 28), 0);

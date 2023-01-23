@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 16:17:39 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 20:07:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ static int	read_line(t_data *data)
 	int		check;
 
 	exec = NULL;
-	data->path = ft_split(getenv("PATH"), ':');
-	data->home = getenv("HOME");
+	data->path = get_path(data->envp);
+	if (!data->path)
+		return (perror("Read_line - get_path"), -1);
 	line = readline("minishell > ");
 	check = check_line(line);
 	if (check > 0)
@@ -88,5 +89,6 @@ int	main(int argc, char **argv, char **envp)
 		if (read_line(&data) == -1)
 			break ;
 	rl_clear_history();
+	free_split(data.envp);
 	return (0);
 }

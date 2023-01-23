@@ -45,7 +45,8 @@ SRCS_P			=	parsing.c				parsing_utils.c			\
 					check_line.c			split_words.c			\
 					lst_exec_utils.c		lst_in_out_utils.c		\
 					find_redirections.c		is_builtin.c			\
-					create_path_cmd.c		\
+					create_path_cmd.c		copy_env.c				\
+					add_env.c				get_path_var.c
 
 SRCS_E			=	close_file.c			define_file.c			\
 					execute_cmd.c			get_delimiter.c			\

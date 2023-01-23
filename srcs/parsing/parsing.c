@@ -6,13 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 16:10:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 19:27:45 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*parse_word_quotes(char *str)
+static char	*parse_word_quotes(char *str, char **envp)
 {
 	char	*word_parsed;
 
@@ -23,7 +23,7 @@ static char	*parse_word_quotes(char *str)
 		return (NULL);
 	}
 	word_parsed[0] = '\0';
-	if (!parse_quotes_env(str, &word_parsed))
+	if (!parse_quotes_env(str, &word_parsed, envp))
 	{
 		free(word_parsed);
 		return (NULL);
@@ -43,7 +43,8 @@ static int	parse_quotes(t_exec **exec)
 		i = 0;
 		while (current->words[i])
 		{
-			word_parsed = parse_word_quotes(current->words[i]);
+			word_parsed = parse_word_quotes(current->words[i], \
+			(*exec)->data->envp);
 			if (!word_parsed)
 				return (0);
 			free(current->words[i]);
