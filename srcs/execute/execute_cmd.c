@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 10:00:19 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 10:46:04 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static void	execute_builtin(t_exec *exec)
 {
-	if (!ft_strncmp(exec->function, "cd", 5))
+	if (!ft_strncmp(exec->function, "cd", 3))
 		return (ft_cd(exec));
 	else if (!ft_strncmp(exec->function, "echo", 5))
 		return (ft_echo(exec));
-	else if (!ft_strncmp(exec->function, "env", 5))
+	else if (!ft_strncmp(exec->function, "env", 4))
 		return (ft_env(exec));
-	else if (!ft_strncmp(exec->function, "exit", 5))
+	else if (!ft_strncmp(exec->function, "exit", 6))
 		return (ft_exit(exec));
-	else if (!ft_strncmp(exec->function, "export", 5))
+	else if (!ft_strncmp(exec->function, "export", 7))
 		return (ft_export(exec));
-	else if (!ft_strncmp(exec->function, "pwd", 5))
+	else if (!ft_strncmp(exec->function, "pwd", 4))
 		return (ft_pwd(exec));
-	else if (!ft_strncmp(exec->function, "unset", 5))
+	else if (!ft_strncmp(exec->function, "unset", 6))
 		return (ft_unset(exec));
 	write(2, "Builtin not found\n", 18);
 }
