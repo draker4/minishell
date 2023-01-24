@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 12:23:06 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:18:39 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,24 @@ void	ft_unset(t_exec *exec)
 	return ;
 }
 
-void	ft_unset(t_exec *exec)
-{
-	int		i;
-	int		j;
-	char	*value;
+// void	ft_unset(t_exec *exec)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*value;
 
-	if (size_arg(exec->arg) == 1)
-	{
-		if (!exec->pid)
-			exit(0);
-		return ;
-	}
-	i = 1;
-	while (exec->arg[i])
-	{
-		if (ft)
-	}
-	if (!exec->pid)
-		exit(0);
-	return ;
-}
+// 	if (size_arg(exec->arg) == 1)
+// 	{
+// 		if (!exec->pid)
+// 			exit(0);
+// 		return ;
+// 	}
+// 	i = 1;
+// 	while (exec->arg[i])
+// 	{
+// 		if (ft)
+// 	}
+// 	if (!exec->pid)
+// 		exit(0);
+// 	return ;
+// }

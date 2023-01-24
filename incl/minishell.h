@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 13:31:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:56:51 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,9 +195,6 @@ char		**add_shlvl(char **env);
 int			shlvl_plus_one(char **env);
 char		**add_last_cmd(char **env);
 char		**add_oldpwd(char **env);
-
-// get home variable
-int			get_home(t_data *data);
 
 // get path variable
 int			ft_split_data(char ***new, char const *s, char c);

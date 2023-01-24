@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 12:42:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:57:01 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	read_line(t_data *data)
 	int		check;
 
 	exec = NULL;
-	if (get_path(data) || get_home(data))
+	if (get_path(data))
 		return (-1);
 	line = readline("minishell > ");
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
