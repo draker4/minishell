@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 13:31:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:00:02 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ void		is_built_in(t_exec *exec);
 int			create_path_cmd(t_exec **exec);
 
 // copy_env
-char		**copy_env(char **envp);
+void		copy_env(char **envp, t_data *data);
 int			manage_shlvl(t_data *data);
 int			which_env_add(t_data *data);
 
@@ -242,5 +242,15 @@ void		ft_export(t_exec *exec);
 void		ft_pwd(t_exec *exec);
 
 void		ft_unset(t_exec *exec);
+
+/* -------------------------- PROTOTYPE UTILS  --------------------------- */
+
+// prototypes env list utils
+t_env		*new_env(char *var, char *value, int has_equal);
+void		env_clear_data(t_env **env);
+void		env_add_back(t_env **env, t_env *new);
+
+// prototype split environment variable
+char		**split_var(char *s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 12:42:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:41:23 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ char	*create_copy(char *str, int save, int i)
 
 int	init_data(t_data *data, char **envp)
 {
-	data->envp = copy_env(envp);
+	data->env = NULL;
+	if (!copy_env(envp, data))
+		return (0);
 	if (tcgetattr(STDIN_FILENO, &data->term))
 		return (perror("Init_data - tcgetattr"), 0);
 	data->term.c_lflag &= ~ECHOCTL;

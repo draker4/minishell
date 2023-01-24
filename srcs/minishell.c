@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 12:42:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:36:08 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	(void) argv;
-	// if (RL_VERSION_MAJOR >= 8)
-	// 	rl_variable_bind("enable-bracketed-paste", "off");
+	if (RL_VERSION_MAJOR >= 8)
+		rl_variable_bind("enable-bracketed-paste", "off");
 	if (argc != 1)
 		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), FAIL);
 	if (init_data(&data, envp))

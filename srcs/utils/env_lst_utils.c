@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:32:11 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 13:35:26 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:55:29 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ void	env_clear_data(t_env **env)
 	{
 		tmp = clear;
 		clear = clear->next;
+		if (tmp->var)
+			free(tmp->var);
+		if (tmp->value)
+			free(tmp->value);
 		free(tmp);
 	}
 	*env = NULL;
