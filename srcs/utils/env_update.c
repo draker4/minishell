@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 14:34:54 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:47:16 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ int	remove_var(t_env **full_env, char *search_var)
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (0);
 }
-
 
 t_env	*in_env(t_env *full_env, char *search_var)
 {
@@ -46,7 +45,7 @@ t_env	*in_env(t_env *full_env, char *search_var)
 		return (NULL);
 	while (full_env)
 	{
-		if (ft_strncmp(full_env->var, search_var, ft_strlen(full_env->var)))
+		if (!ft_strncmp(full_env->var, search_var, ft_strlen(full_env->var)))
 			return (full_env);
 		full_env = full_env->next;
 	}

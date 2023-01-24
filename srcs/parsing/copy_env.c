@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:20:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 14:24:10 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:10:47 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,19 @@ int	manage_shlvl(t_data *data)
 
 int	which_env_add(t_data *data)
 {
-	if (!getenv("PWD"))
+	if (!in_env(data->env, "PWD"))
 	{
-		data->envp = add_pwd(data->envp);
-		if (!data->envp)
+		if (!add_pwd(&data->env))
 			return (0);
 	}
-	if (!getenv("_"))
+	if (!in_env(data->env, "_"))
 	{
-		data->envp = add_last_cmd(data->envp);
-		if (!data->envp)
+		if (!add_last(&data->env))
 			return (0);
 	}
-	if (!getenv("OLDPWD"))
+	if (!in_env(data->env, "OLDPWD"))
 	{
-		data->envp = add_oldpwd(data->envp);
-		if (!data->envp)
+		if (!add_oldpwd(&data->env))
 			return (0);
 	}
 	return (1);
@@ -74,8 +71,10 @@ int	copy_env(char **envp, t_data *data)
 		new->has_equal = 0;
 		if (split[1])
 			new->has_equal = 1;
+		printf("new->var = %s et new->value = %s\n", new->var, new->value);
 		env_add_back(&data->env, new);
 		i++;
 	}
+	printf("FFFINNNN\n");
 	return (1);
 }

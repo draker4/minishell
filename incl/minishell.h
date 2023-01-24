@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 14:06:58 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:42:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,5 +249,8 @@ void		env_add_back(t_env **env, t_env *new);
 
 // prototype split environment variable
 char		**split_var(char *s);
+
+// prototype env_update
+t_env		*in_env(t_env *full_env, char *search_var);
 
 #endif

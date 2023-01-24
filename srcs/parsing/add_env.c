@@ -6,36 +6,31 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:41:18 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 19:44:18 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:12:35 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**add_pwd(char **env)
+int	add_pwd(t_env **env)
 {
-	char	**copy;
 	char	*buf;
-	int		i;
+	char	*var;
+	t_env	*new;
 
-	i = 0;
-	copy = malloc(sizeof(char *) * (size_arg(env) + 2));
-	if (!copy)
-		return (free_split(env), perror("Add_env - Malloc"), NULL);
-	while (env[i])
-	{
-		copy[i] = env[i];
-		i++;
-	}
 	buf = getcwd(NULL, 0);
 	if (!buf)
-		return (free_split(env), perror("Add_env - Getcwd"), NULL);
-	copy[i] = ft_strjoin("PWD=", buf);
-	free(buf);
-	if (!copy[i++])
-		return (free_split(env), perror("Add_env - ft_strjoin"), NULL);
-	copy[i] = NULL;
-	return (copy);
+		return (env_clear_data(env), perror("Add_pwd - Getcwd"), 0);
+	var = ft_strdup("PWD");
+	if (!var)
+		return (env_clear_data(env), free(buf), \
+		perror("Add_pwd - ft_strdup"), 0);
+	new = new_env(var, buf, 1);
+	if (!new)
+		return (env_clear_data(env), free(buf), \
+		free(var), perror("Add_pwd - ft_strdup"), 0);
+	env_add_back(env, new);
+	return (1);
 }
 
 char	**add_shlvl(char **env)
@@ -86,44 +81,46 @@ int	shlvl_plus_one(char **env)
 	return (1);
 }
 
-char	**add_last_cmd(char **env)
+int	add_last(t_env **env)
 {
-	char	**copy;
-	int		i;
+	char	*var;
+	char	*value;
+	t_env	*new;
 
-	i = 0;
-	copy = malloc(sizeof(char *) * (size_arg(env) + 2));
-	if (!copy)
-		return (free_split(env), perror("Add_last_cmd - Malloc"), NULL);
-	while (env[i])
+	var = ft_strdup("_");
+	if (!var)
+		return (env_clear_data(env), perror("Add_last - ft_strdup"), 0);
+	value = ft_strdup("/usr/bin/env");
+	if (!value)
+		return (free(var), env_clear_data(env), \
+		perror("Add_last - ft_strdup"), 0);
+	new = new_env(var, value, 1);
+	if (!new)
 	{
-		copy[i] = env[i];
-		i++;
+		free(var);
+		free(value);
+		env_clear_data(env);
+		return (0);
 	}
-	copy[i] = ft_strdup("_=/usr/bin/env");
-	if (!copy[i++])
-		return (free_split(env), perror("Add_last_cmd - ft_strdup"), NULL);
-	copy[i] = NULL;
-	return (copy);
+	env_add_back(env, new);
+	return (1);
 }
 
-char	**add_oldpwd(char **env)
+int	add_oldpwd(char **env)
 {
-	char	**copy;
-	int		i;
+	char	**var;
+	t_env	*new;
 
-	i = 0;
-	copy = malloc(sizeof(char *) * (size_arg(env) + 2));
-	if (!copy)
-		return (free_split(env), perror("Add_oldpwd - Malloc"), NULL);
-	while (env[i])
+	var = ft_strdup("OLDPWD");
+	if (!var)
+		return (env_clear_data(env), perror("Add_oldpwd - ft_strdup"), 0);
+	new = new_env(var, NULL, 1);
+	if (!new)
 	{
-		copy[i] = env[i];
-		i++;
+		free(var);
+		env_clear_data(env);
+		return (0);
 	}
-	copy[i] = ft_strdup("OLDPWD");
-	if (!copy[i++])
-		return (free_split(env), perror("Add_oldpwd - ft_strdup"), NULL);
-	copy[i] = NULL;
-	return (copy);
+	env_add_back(env, new);
+	return (1);
 }
