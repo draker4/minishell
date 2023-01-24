@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 12:54:01 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:33:07 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_exec	*new_exec(char *str, t_data *data)
 
 	new = malloc(sizeof(t_exec));
 	if (!new)
-		return (perror("New_bracket: "), NULL);
+		return (perror("New_exec: "), NULL);
 	new->str = str;
 	new->data = data;
 	new->function = NULL;
