@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:35:44 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:49:52 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	include_value(t_env *full_env, char **var)
 {
 	t_env	*tmp;
 
-	if (size_arg(var) == 2)
+	if (size_arg(var) == 1)
 		return ;
 	tmp = in_env(full_env, var[0]);
 	if (tmp->value)
 		free (tmp->value);
 	tmp->has_equal = 1;
-	tmp->value = var[2];
+	tmp->value = var[1];
 }
 
 void	include_var(t_data *data, char **var)

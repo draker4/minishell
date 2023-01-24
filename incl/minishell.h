@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 17:41:07 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:45:36 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,9 @@ void		free_data(t_data *data);
 // split words
 char		**split_not_quotes(char *str);
 
+// init_data
+int			init_data(t_data *data, char **envp);
+
 // is_built_in
 void		is_built_in(t_exec *exec);
 
@@ -247,7 +250,7 @@ int			remove_var(t_env **full_env, char *search_var);
 
 // free utils
 void		free_split(char **split);
-void		free_all(char *str, t_data *data, t_exec **exec);
+void		free_all(char *str, t_exec **exec);
 
 // get path variable
 int			ft_split_data(char ***new, char const *s, char c);
