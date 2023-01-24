@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:38:56 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:41:54 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	remove_var(t_env **full_env, char *search_var)
 	prev = NULL;
 	while ((tmp))
 	{
-		if (ft_strncmp(tmp->var, search_var, ft_strlen(tmp->var)))
+		if (!ft_strncmp(tmp->var, search_var, ft_strlen(tmp->var) + 1))
 		{
 			if (!prev)
 				*full_env = tmp->next;
@@ -82,7 +82,7 @@ int	remove_var(t_env **full_env, char *search_var)
 				free(tmp->var);
 			if (tmp->value)
 				free(tmp->value);
-			free (tmp);
+			free(tmp);
 			return (0);
 		}
 		prev = tmp;

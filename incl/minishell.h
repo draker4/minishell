@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 16:23:14 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:41:07 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct s_env
 typedef struct s_data
 {
 	char				**path;
-	char				*home;
 	char				**envp;
 	int					exit_status;
 	t_env				*env;
@@ -156,6 +155,13 @@ void		close_file(t_exec *exec);
 int			change_input(t_input *input);
 int			change_output(t_output *output);
 
+// handle commande
+void		handle_cmd(t_exec *exec);
+void		handle_cmd_list(t_exec *exec);
+
+// close file
+void		close_file(t_exec *exec);
+
 // execute cmd
 void		execute_builtin(t_exec *exec);
 void		execute_commande(t_exec *exec);
@@ -163,9 +169,6 @@ void		execute(t_exec *exec);
 
 // get delimiter
 int			get_delimiter(int fd, char **line);
-
-// handle commande
-void		handle_commande(t_exec *exec);
 
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
 
@@ -202,8 +205,16 @@ int			check_env(char *str, char **line_parsed, int *i, char **envp);
 // find redirections
 int			find_redirections(t_exec **exec);
 
-// initialize data structure
-int			init_data(t_data *data, char **envp);
+// create exec list
+int			create_exec(char *str, t_exec **exec, t_data *data);
+
+// free utils
+void		free_split(char **split);
+void		free_all(char *str, t_exec **exec);
+void		free_data(t_data *data);
+
+// split words
+char		**split_not_quotes(char *str);
 
 // is_built_in
 void		is_built_in(t_exec *exec);

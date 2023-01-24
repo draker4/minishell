@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 16:12:23 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:40:51 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	execute_builtin(t_exec *exec)
 		return (ft_export(exec));
 	else if (!ft_strncmp(exec->function, "pwd", 4))
 		return (ft_pwd(exec));
-	// else if (!ft_strncmp(exec->function, "unset", 6))
-	// 	return (ft_unset(exec));
+	else if (!ft_strncmp(exec->function, "unset", 6))
+		return (ft_unset(exec));
 	write(2, "Builtin not found\n", 18);
 }
 
@@ -38,6 +38,8 @@ void	execute_commande(t_exec *exec)
 	i = 0;
 	if (exec->function == NULL)
 		exit(1);
+	if (exec->cmd == builtin)
+		return (execute_builtin(exec));
 	if (ft_strchr(exec->function, '/'))
 		execve(exec->function, exec->arg, exec->data->envp);
 	else
@@ -61,7 +63,10 @@ void	execute(t_exec *exec)
 	exec->save_stdout = dup(STDOUT_FILENO);
 	if (exec->save_stdin == -1 || exec->save_stdout == -1)
 		return (perror("Execute - Dup"));
-	handle_commande(exec);
+	if (!exec->next)
+		handle_cmd(exec);
+	else
+		handle_cmd_list(exec);
 	if (dup2(exec->save_stdin, STDIN_FILENO) == -1 || \
 	dup2(exec->save_stdout, STDOUT_FILENO) == -1)
 		return (perror("Execute - Dup2"));
