@@ -6,11 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:19:29 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:30:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 18:26:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 void	handler(int sig)
 {
@@ -25,10 +27,17 @@ void	handler(int sig)
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
+			g_exit_status = 1;
 		}
 		else
+		{
 			printf("\n");
+			g_exit_status = 130;
+		}
 	}
-	if (sig == SIGQUIT)
+	if (sig == SIGQUIT && pid != -1)
+	{
+		g_exit_status = 131;
 		printf("Quit\n");
+	}
 }

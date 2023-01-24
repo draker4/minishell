@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:46:08 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:21:21 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 18:15:24 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	init_data(t_data *data, char **envp)
 	data->path = NULL;
 	if (update_envp(data) || get_path(data))
 		return (FAIL);
-	data->exit_status = 0;
 	if (sigemptyset(&data->sa.sa_mask) == -1)
 		return (write(2, "Sigemptyset function error!\n", 28), FAIL);
 	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1 || \

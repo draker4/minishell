@@ -6,11 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 16:50:36 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 18:45:49 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 static void	handle_pipe(t_exec *exec)
 {
@@ -32,7 +34,6 @@ static void	handle_pipe(t_exec *exec)
 			return (perror("Handle_pipe (next) - Dup2"));
 		if (close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (next) - Close"));
-		waitpid(exec->pid, &exec->data->exit_status, 0);
 	}
 }
 
@@ -44,13 +45,18 @@ static void	exec_cmd(t_exec *exec)
 	else if (!exec->pid)
 		execute_commande(exec);
 	else
-		waitpid(exec->pid, &exec->data->exit_status, 0);
+	{
+		waitpid(exec->pid, &g_exit_status, 0);
+		g_exit_status = WEXITSTATUS(g_exit_status);
+		printf("g_exit = %d\n", g_exit_status);
+	}
 }
 
 void	handle_cmd_list(t_exec *exec)
 {
 	if (!exec)
 		return ;
+	//ici fonction parse $?
 	if (exec->input)
 	{
 		if (change_input(exec->input))
@@ -78,6 +84,7 @@ void	handle_cmd_list(t_exec *exec)
 
 void	handle_cmd(t_exec *exec)
 {
+	//ici fonction parse $?
 	if (exec->input)
 		if (change_input(exec->input))
 			return (close_file(exec));
