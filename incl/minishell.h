@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 14:06:58 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:08:33 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,42 @@ typedef struct s_exec
 	struct s_exec	*next;
 }	t_exec;
 
+/* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
+
+void		ft_cd(t_exec *exec);
+
+void		ft_echo(t_exec *exec);
+
+void		ft_env(t_exec *exec);
+
+void		ft_exit(t_exec *exec);
+
+void		ft_export(t_exec *exec);
+
+void		ft_pwd(t_exec *exec);
+
+void		ft_unset(t_exec *exec);
+
+/* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
+
+// get delimoiter
+int			get_delimiter(int fd, char **line);
+
+// define file
+int			change_input(t_input *input);
+int			change_output(t_output *output);
+
+// handle commande
+void		handle_commande(t_exec *exec);
+
+// close file
+void		close_file(t_exec *exec);
+
+// execute cmd
+void		execute_builtin(t_exec *exec);
+void		execute_commande(t_exec *exec);
+void		execute(t_exec *exec);
+
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
 
 // check line
@@ -200,45 +236,9 @@ char		**add_oldpwd(char **env);
 int			ft_split_data(char ***new, char const *s, char c);
 int			get_path(t_data *data);
 
-/* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
-
-// get delimoiter
-int			get_delimiter(int fd, char **line);
-
-// define file
-int			change_input(t_input *input);
-int			change_output(t_output *output);
-
-// handle commande
-void		handle_commande(t_exec *exec);
-
-// close file
-void		close_file(t_exec *exec);
-
-// execute cmd
-void		execute_builtin(t_exec *exec);
-void		execute_commande(t_exec *exec);
-void		execute(t_exec *exec);
-
 /* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
 
 void		handler(int sig);
-
-/* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
-
-void		ft_cd(t_exec *exec);
-
-void		ft_echo(t_exec *exec);
-
-void		ft_env(t_exec *exec);
-
-void		ft_exit(t_exec *exec);
-
-void		ft_export(t_exec *exec);
-
-void		ft_pwd(t_exec *exec);
-
-void		ft_unset(t_exec *exec);
 
 /* -------------------------- PROTOTYPE UTILS  --------------------------- */
 
@@ -246,6 +246,11 @@ void		ft_unset(t_exec *exec);
 t_env		*new_env(char *var, char *value, int has_equal);
 void		env_clear_data(t_env **env);
 void		env_add_back(t_env **env, t_env *new);
+
+// prototypes env update
+int			update_envp(t_data *data);
+int			remove_var(t_env **full_env, char *search_var);
+t_env		*in_env(t_env *full_env, char *search_var);
 
 // prototype split environment variable
 char		**split_var(char *s);

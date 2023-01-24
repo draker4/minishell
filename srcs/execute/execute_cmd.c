@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 11:00:08 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:09:51 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	execute_builtin(t_exec *exec)
 		return (ft_export(exec));
 	else if (!ft_strncmp(exec->function, "pwd", 4))
 		return (ft_pwd(exec));
-	else if (!ft_strncmp(exec->function, "unset", 6))
-		return (ft_unset(exec));
+	// else if (!ft_strncmp(exec->function, "unset", 6))
+	// 	return (ft_unset(exec));
 	write(2, "Builtin not found\n", 18);
 }
 
