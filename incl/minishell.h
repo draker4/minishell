@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 10:28:08 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:59:30 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <termios.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -83,6 +84,7 @@ typedef struct s_data
 	char				*home;
 	char				**envp;
 	int					exit_status;
+	struct termios		term;
 	struct sigaction	sa;
 }	t_data;
 
