@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 20:29:34 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:41:43 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,25 @@ char	*create_copy(char *str, int save, int i)
 
 int	init_data(t_data *data, char **envp)
 {
-	data->home = NULL;
-	data->path = get_path(envp);
-	if (!data->path && !envp[0])
-		return (perror("Init_data - get_path"), 0);
 	data->envp = copy_env(envp);
 	if (!data->envp)
-		return (0);
+		return (FAIL);
 	if (!which_env_add(data) || !manage_shlvl(data))
-		return (0);
+		return (FAIL);
+	data->home = NULL;
+	data->path = NULL;
+	if (get_path(data))
+		return (FAIL);
 	data->exit_status = 0;
 	if (sigemptyset(&data->sa.sa_mask) == -1)
-		return (write(2, "Sigemptyset function error!\n", 28), 0);
+		return (write(2, "Sigemptyset function error!\n", 28), FAIL);
 	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1)
-		return (perror("Init data - Sigaddset:"), 0);
+		return (perror("Init data - Sigaddset:"), FAIL);
 	data->sa.sa_flags = 0;
 	data->sa.sa_handler = &handler;
 	if (sigaction(SIGINT, &data->sa, NULL) == -1)
-		return (perror("Init data - Sigaction"), 0);
-	return (1);
+		return (perror("Init data - Sigaction"), FAIL);
+	return (0);
 }
 
 int	delete_slash_symbol(t_exec *exec, char *str)

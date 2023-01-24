@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 14:42:19 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:43:52 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_echo(t_exec *exec)
 	int	new_line;
 
 	if (size_arg(exec->arg) == 1)
-		ft_echo_no_arg(exec);
+		return (ft_echo_no_arg(exec));
 	i = 1;
 	new_line = 1;
 	if (!ft_strncmp(exec->arg[1], "-n", 2) && !exec->arg[1][2])

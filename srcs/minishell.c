@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 10:34:37 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:41:58 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (argc != 1)
 		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
-	if (!init_data(&data, envp))
+	if (init_data(&data, envp))
 		return (1);
 	while (1)
 		if (read_line(&data) == -1)
