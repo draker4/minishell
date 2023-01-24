@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:46:08 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:46:15 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:21:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ int	init_data(t_data *data, char **envp)
 	data->exit_status = 0;
 	if (sigemptyset(&data->sa.sa_mask) == -1)
 		return (write(2, "Sigemptyset function error!\n", 28), FAIL);
-	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1)
+	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1 || \
+	sigaddset(&data->sa.sa_mask, SIGQUIT) == -1)
 		return (perror("Init data - Sigaddset:"), FAIL);
 	data->sa.sa_flags = 0;
 	data->sa.sa_handler = &handler;
-	if (sigaction(SIGINT, &data->sa, NULL) == -1)
+	if (sigaction(SIGINT, &data->sa, NULL) == -1 || \
+	sigaction(SIGQUIT, &data->sa, NULL) == -1)
 		return (perror("Init data - Sigaction"), FAIL);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:19:29 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 10:46:37 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:30:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ void	handler(int sig)
 		else
 			printf("\n");
 	}
+	if (sig == SIGQUIT)
+		printf("Quit\n");
 }
