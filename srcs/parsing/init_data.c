@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:46:08 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 18:15:24 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 20:03:09 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	init_data(t_data *data, char **envp)
 		return (perror("Init_data - tcsetattr"), FAIL);
 	data->env = NULL;
 	data->envp = NULL;
+	data->pid = NULL;
 	if (!copy_env(envp, data) || !which_env_add(data) || !manage_shlvl(data))
 		return (FAIL);
 	data->path = NULL;

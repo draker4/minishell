@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 13:33:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 20:03:01 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_exec	*new_exec(char *str, t_data *data)
 	new->next = NULL;
 	new->arg = NULL;
 	new->cmd_path = NULL;
-	new->pid = 1;
 	return (new);
 }
 
@@ -86,4 +85,19 @@ void	exec_add_back(t_exec **exec, t_exec *new)
 	}
 	else if (exec)
 		*exec = new;
+}
+
+int	exec_size(t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	if (!exec)
+		return (0);
+	while (exec)
+	{
+		i++;
+		exec = exec->next;
+	}
+	return (i);
 }

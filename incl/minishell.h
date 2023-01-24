@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 18:12:45 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 20:02:56 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_data
 	char				**envp;
 	t_env				*env;
 	int					modify_env;
+	pid_t				*pid;
 	struct termios		term;
 	struct sigaction	sa;
 }	t_data;
@@ -111,7 +112,6 @@ typedef struct s_exec
 	char			**cmd_path;
 	int				save_stdin;
 	int				save_stdout;
-	pid_t			pid;
 	t_input			*input;
 	t_output		*output;
 	t_data			*data;
@@ -155,8 +155,8 @@ int			change_input(t_input *input);
 int			change_output(t_output *output);
 
 // handle commande
-void		handle_cmd(t_exec *exec);
-void		handle_cmd_list(t_exec *exec);
+void		handle_cmd(t_exec *exec, int *i);
+void		handle_cmd_list(t_exec *exec, int *i);
 
 // close file
 void		close_file(t_exec *exec);
@@ -241,6 +241,7 @@ void		handler(int sig);
 t_env		*new_env(char *var, char *value, int has_equal);
 void		env_clear_data(t_env **env);
 void		env_add_back(t_env **env, t_env *new);
+int			exec_size(t_exec *exec);
 
 // env_update
 t_env		*in_env(t_env *full_env, char *search_var);

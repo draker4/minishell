@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 18:45:49 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 20:09:07 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 extern int	g_exit_status;
 
-static void	handle_pipe(t_exec *exec)
+static void	handle_pipe(t_exec *exec, int *i)
 {
 	pipe(exec->fd_pipe);
-	exec->pid = fork();
-	if (exec->pid < 0)
+	printf("i = %d\n", *i);
+	exec->data->pid[*i] = fork();
+	if (exec->data->pid[*i] < 0)
 		return (perror("Handle_pipe - Fork: "));
-	else if (!exec->pid)
+	else if (!exec->data->pid[*i])
 	{
 		if (close(exec->fd_pipe[0]))
 			return (perror("Handle_pipe (exec) - Close"), exit (1));
@@ -30,32 +31,36 @@ static void	handle_pipe(t_exec *exec)
 	}
 	else
 	{
+		g_exit_status = 0;
 		if (dup2(exec->fd_pipe[0], STDIN_FILENO) < 0)
 			return (perror("Handle_pipe (next) - Dup2"));
 		if (close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (next) - Close"));
+		printf("i = fin %d\n", *i);
 	}
 }
 
-static void	exec_cmd(t_exec *exec)
+static void	last_cmd(t_exec *exec, int *i)
 {
-	exec->pid = fork();
-	if (exec->pid < 0)
+	int	j;
+
+	exec->data->pid[*i] = fork();
+	if (exec->data->pid[*i] < 0)
 		return (perror("Last_commande - Fork"));
-	else if (!exec->pid)
+	else if (!exec->data->pid[*i])
 		execute_commande(exec);
 	else
 	{
-		waitpid(exec->pid, &g_exit_status, 0);
+		j = 0;
+		while (j <= *i)
+			waitpid(exec->data->pid[j++], &g_exit_status, 0);
 		g_exit_status = WEXITSTATUS(g_exit_status);
-		printf("g_exit = %d\n", g_exit_status);
+		// printf("g_exit = %d\n", g_exit_status);
 	}
 }
 
-void	handle_cmd_list(t_exec *exec)
+void	handle_cmd_list(t_exec *exec, int *i)
 {
-	if (!exec)
-		return ;
 	//ici fonction parse $?
 	if (exec->input)
 	{
@@ -63,7 +68,10 @@ void	handle_cmd_list(t_exec *exec)
 		{
 			close_file(exec);
 			if (exec->next)
-				handle_cmd_list(exec->next);
+			{
+				*i += 1;
+				handle_cmd_list(exec->next, i);
+			}
 			return ;
 		}
 	}
@@ -74,15 +82,16 @@ void	handle_cmd_list(t_exec *exec)
 	}
 	if (exec->next)
 	{
-		handle_pipe(exec);
+		handle_pipe(exec, i);
 		close_file(exec);
-		return (handle_cmd_list(exec->next));
+		*i += 1;
+		return (handle_cmd_list(exec->next, i));
 	}
-	exec_cmd(exec);
+	last_cmd(exec, i);
 	close_file(exec);
 }
 
-void	handle_cmd(t_exec *exec)
+void	handle_cmd(t_exec *exec, int *i)
 {
 	//ici fonction parse $?
 	if (exec->input)
@@ -94,6 +103,6 @@ void	handle_cmd(t_exec *exec)
 	if (exec->cmd == builtin)
 		return (execute_builtin(exec));
 	else
-		exec_cmd(exec);
+		last_cmd(exec, i);
 	close_file(exec);
 }

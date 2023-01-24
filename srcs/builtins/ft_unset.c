@@ -6,30 +6,30 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:04:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 20:06:23 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_unset(t_exec *exec)
-{
-	int		i;
+// void	ft_unset(t_exec *exec)
+// {
+// 	int		i;
 
-	exec->data->modify_env = 1;
-	if (size_arg(exec->arg) == 1)
-	{
-		if (!exec->pid)
-			exit(0);
-		return ;
-	}
-	i = 1;
-	while (exec->arg[i])
-	{
-		if (in_env(exec->data->env, exec->arg[i]))
-			remove_var(&exec->data->env, exec->arg[i]);
-		i++;
-	}
-	if (!exec->pid)
-		exit(0);
-}
+// 	exec->data->modify_env = 1;
+// 	if (size_arg(exec->arg) == 1)
+// 	{
+// 		if (!exec->pid)
+// 			exit(0);
+// 		return ;
+// 	}
+// 	i = 1;
+// 	while (exec->arg[i])
+// 	{
+// 		if (in_env(exec->data->env, exec->arg[i]))
+// 			remove_var(&exec->data->env, exec->arg[i]);
+// 		i++;
+// 	}
+// 	if (!exec->pid)
+// 		exit(0);
+// }
