@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 14:00:52 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:06:58 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ void		is_built_in(t_exec *exec);
 int			create_path_cmd(t_exec **exec);
 
 // copy_env
-void		copy_env(char **envp, t_data *data);
+int			copy_env(char **envp, t_data *data);
 int			manage_shlvl(t_data *data);
 int			which_env_add(t_data *data);
 

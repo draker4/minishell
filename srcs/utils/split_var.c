@@ -6,76 +6,69 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:47:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 14:07:16 by bboisson         ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_words.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 12:08:33 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 16:50:32 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:35:48 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_find_next_var(char *s, int *i)
+static char	**ft_cut_value(char *s, char **split, int i)
 {
-	while (s[*i])
+	int	k;
+
+	k = 0;
+	split[1] = malloc(sizeof(char) * (ft_strlen(s) - i + 1));
+	if (!split[1])
 	{
-		if (s[*i] == '=' && !is_in_quote(s, *i))
-			return ;
-		*i += 1;
+		free(split[0]);
+		return (NULL);
 	}
-	return ;
+	while (s[i])
+		split[1][k++] = s[i++];
+	split[2] = NULL;
+	return (split);
+	
 }
 
 static char	**ft_cut_var(char *s, char **split)
 {
 	int	i;
-	int	save;
-	int	nb;
 	int	k;
 
 	i = 0;
-	nb = 0;
-	while (s[i])
+	while (s[i] && s[i] != '=')
+		i++;
+	split[0] = malloc(sizeof(**split) * (i + 1));
+	if (split[0] == NULL)
+		return (perror("Ft_cut_var - Malloc"), NULL);
+	k = 0;
+	while (k < i)
 	{
-		save = i;
-		ft_find_next(s, &i);
-		if (i - save)
-		{
-			split[nb] = malloc(sizeof(**split) * (i - save + 1));
-			if (split[nb] == NULL)
-				return (perror("Ft_cut_var - Malloc"), free_split(split), NULL);
-			k = 0;
-			while (save < i)
-				split[nb][k++] = s[save++];
-			split[nb++][k] = '\0';
-		}
-		i += 1;
+		split[0][k] = s[k];
+		k++;
 	}
-	return (split);
+	if (!s[i])
+	{
+		split[1] = NULL;
+		return (split);
+	}
+	else
+		return (ft_cut_value(s, split, ++i));
 }
 
 char	**split_var(char *s)
 {
 	char	**split;
 	int		i;
-	int		save;
-	int		next;
 
 	i = 0;
 	if (s == NULL)
 		return (NULL);
-	split = malloc(sizeof(*split) * 3);
+	if (has_equal(s))
+		split = malloc(sizeof(*split) * 3);
+	else
+		split = malloc(sizeof(*split) * 2);
 	if (split == NULL)
 		return (perror("Split_var - Malloc"), NULL);
-	split[3] = NULL;
 	return (ft_cut_var(s, split));
 }

@@ -66,8 +66,7 @@ SRCS_P			=	add_env.c				\
 					is_builtin.c			\
 					parsing.c				\
 					quotes.c				\
-					search_char.c			\
-					split_words.c
+					search_char.c
 
 SRCS_S			=	handler.c
 
@@ -77,7 +76,9 @@ SRCS_U			=	env_lst_utils.c			\
 					get_path_var.c			\
 					lst_exec_utils.c		\
 					lst_in_out_utils.c		\
-					parsing_utils.c
+					parsing_utils.c			\
+					split_var.c				\
+					split_words.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_B			=	${SRCS_B:%.c=${DIR_OBJS_B}%.o}
