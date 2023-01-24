@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:32:11 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 14:03:24 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:04:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_env	*new_env(char *var, char *value, int has_equal)
 {
-	t_env	*env;
+	t_env	*new;
 
 	new = malloc(sizeof(t_env));
 	if (!new)

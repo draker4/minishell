@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:20:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 13:59:17 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:24:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	which_env_add(t_data *data)
 	return (1);
 }
 
-void	copy_env(char **envp, t_data *data)
+int	copy_env(char **envp, t_data *data)
 {
 	int		i;
 	t_env	*new;
@@ -63,17 +63,19 @@ void	copy_env(char **envp, t_data *data)
 		split = split_var(envp[i]);
 		if (!split)
 			return (perror("Copy_env - Malloc"), \
-			env_clear_data(&data->env), NULL);
+			env_clear_data(&data->env), 0);
 		if (split[0] && split[1])
 			new = new_env(split[0], split[1], 1);
 		else
 			new = new_env(split[0], NULL, 0);
 		if (!new)
-		{
-			free_split(split);
-			perror("Copy_env - Malloc");
-			env_clear_data(&data->env);
-		}
+			return (free_split(split), perror("Copy_env - Malloc"), \
+			env_clear_data(&data->env), 0);
+		new->has_equal = 0;
+		if (split[1])
+			new->has_equal = 1;
 		env_add_back(&data->env, new);
+		i++;
 	}
+	return (1);
 }
