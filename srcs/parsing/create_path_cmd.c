@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_path_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 05:50:18 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 16:37:46 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 11:30:53 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ static int	join_all_path(t_exec *exec)
 
 	cmd_path = malloc(sizeof(char *) * (size_arg(exec->data->path) + 1));
 	if (!cmd_path)
-		return (perror("Create_path_cmd - Malloc:"), 0);
+		return (perror("Create_path_cmd - Malloc:"), 1);
 	i = 0;
 	while (exec->data->path && exec->data->path[i])
 	{
 		cmd_path[i] = join_cmd_path(exec->data->path[i], exec->function);
 		if (!cmd_path[i++])
-			return (perror("Create_path_cmd - Join_cmd_path"), 0);
+			return (perror("Create_path_cmd - Join_cmd_path"), 1);
 	}
 	cmd_path[i] = NULL;
 	exec->cmd_path = cmd_path;
-	return (1);
+	return (0);
 }
 
 int	create_path_cmd(t_exec **exec)

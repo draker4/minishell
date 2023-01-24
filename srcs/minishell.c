@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 10:41:58 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 12:04:52 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ static int	read_line(t_data *data)
 	int		check;
 
 	exec = NULL;
-	if (get_path(data))
+	if (get_path(data) || get_home(data))
 		return (-1);
 	line = readline("minishell > ");
 	check = check_line(line);
 	if (check > 0)
 	{
-		parse(line, &exec, data);
+		if (parse(line, &exec, data))
+			execute(exec);
 		// print_exec(exec);
-		execute(exec);
 	}
 	free_all(line, data, &exec);
 	return (check);
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argv;
 	if (argc != 1)
-		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), 1);
+		return (ft_putstr_color(COLOR_RED, ERROR_ARG, 2), FAIL);
 	if (init_data(&data, envp))
 		return (1);
 	while (1)

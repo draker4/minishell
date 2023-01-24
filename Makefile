@@ -37,27 +37,42 @@ HEAD			=	minishell.h
 
 SRCS			=	minishell.c
 
-SRCS_P			=	parsing.c				parsing_utils.c			\
-					quotes.c				env_var.c				\
-					create_exec.c			ft_split_path.c			\
-					check_and_or_symbols.c	check_redirections.c	\
-					free_utils.c			search_char.c			\
-					check_line.c			split_words.c			\
-					lst_exec_utils.c		lst_in_out_utils.c		\
-					find_redirections.c		is_builtin.c			\
-					create_path_cmd.c		copy_env.c				\
-					add_env.c				get_path_var.c
+SRCS_P			=	add_env.c				\
+					check_and_or_symbols.c	\
+					check_line.c			\
+					check_redirections.c	\
+					copy_env.c				\
+					create_exec.c			\
+					create_path_cmd.c		\
+					env_var.c				\
+					find_redirections.c		\
+					free_utils.c			\
+					get_home_var.c			\
+					get_path_var.c			\
+					is_builtin.c			\
+					lst_exec_utils.c		\
+					lst_in_out_utils.c		\
+					parsing_utils.c			\
+					parsing.c				\
+					quotes.c				\
+					search_char.c			\
+					split_words.c
 
-SRCS_E			=	close_file.c			define_file.c			\
-					execute_cmd.c			get_delimiter.c			\
+SRCS_E			=	close_file.c			\
+					define_file.c			\
+					execute_cmd.c			\
+					get_delimiter.c			\
 					handle_commande.c
 					
 
 SRCS_S			=	handler.c
 
-SRCS_B			=	ft_cd.c					ft_echo.c				\
-					ft_env.c				ft_exit.c				\
-					ft_export.c				ft_pwd.c				\
+SRCS_B			=	ft_cd.c					\
+					ft_echo.c				\
+					ft_env.c				\
+					ft_exit.c				\
+					ft_export.c				\
+					ft_pwd.c				\
 					ft_unset.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}

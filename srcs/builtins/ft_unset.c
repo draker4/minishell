@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 17:18:45 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 12:23:06 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	ft_unset(t_exec *exec)
 					exit(1);
 				return ;
 			}
+			printf("la\n");
 			if (!ft_strncmp(getenv(exec->arg[i]), value, ft_strlen(value) + 1))
 			{
 				if (!remove_var(exec, exec->data->envp[j]))
@@ -80,10 +81,33 @@ void	ft_unset(t_exec *exec)
 					return ;
 				}
 			}
+			printf("la\n");
 			free(value);
 			j++;
 		}
 		i++;
+	}
+	if (!exec->pid)
+		exit(0);
+	return ;
+}
+
+void	ft_unset(t_exec *exec)
+{
+	int		i;
+	int		j;
+	char	*value;
+
+	if (size_arg(exec->arg) == 1)
+	{
+		if (!exec->pid)
+			exit(0);
+		return ;
+	}
+	i = 1;
+	while (exec->arg[i])
+	{
+		if (ft)
 	}
 	if (!exec->pid)
 		exit(0);

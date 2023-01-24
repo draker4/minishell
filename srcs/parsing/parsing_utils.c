@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 10:41:43 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 11:46:10 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	init_data(t_data *data, char **envp)
 	if (!which_env_add(data) || !manage_shlvl(data))
 		return (FAIL);
 	data->home = NULL;
+	if (get_home(data))
+		return (FAIL);
 	data->path = NULL;
 	if (get_path(data))
 		return (FAIL);
