@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:41:18 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:23:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:18:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	add_oldpwd(t_env **env)
 	var = ft_strdup("OLDPWD");
 	if (!var)
 		return (env_clear_data(env), perror("Add_oldpwd - ft_strdup"), 0);
-	new = new_env(var, NULL, 1);
+	new = new_env(var, NULL, 0);
 	if (!new)
 	{
 		free(var);

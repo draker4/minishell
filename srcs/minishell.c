@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 16:19:21 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:31:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ static int	read_line(t_data *data)
 		if (update_envp(data) || get_path(data))
 			return (FAIL);
 	line = readline("minishell > ");
-	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
-	if (tcsetattr(0, TCSANOW, &data->term))
-		return (perror("Read_line - tcsetattr"), -1);
 	check = check_line(line);
 	if (check > 0)
 	{
@@ -75,9 +72,6 @@ static int	read_line(t_data *data)
 			execute(exec);
 	}
 	free_all(line, &exec);
-	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
-	if (tcsetattr(0, TCSANOW, &data->term))
-		return (perror("Read_line - tcsetattr"), -1);
 	return (check);
 }
 
