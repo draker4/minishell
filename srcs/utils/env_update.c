@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:13:20 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:43:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	join_var_value(char **envp, t_env *env)
 	if (env->has_equal)
 		(*envp)[i++] = '=';
 	j = 0;
-	while (env->value[j])
+	while (env->value && env->value[j])
 		(*envp)[i++] = env->value[j++];
 	(*envp)[i] = '\0';
 	return (0);
@@ -41,7 +41,7 @@ int	update_envp(t_data *data)
 
 	i = 0;
 	tmp = data->env;
-	while ((tmp))
+	while (tmp)
 	{
 		tmp = tmp->next;
 		i++;
@@ -53,12 +53,13 @@ int	update_envp(t_data *data)
 		return (perror("Update_envp - malloc"), FAIL);
 	i = 0;
 	tmp = data->env;
-	while ((tmp))
+	while (tmp)
 	{
 		if (join_var_value(&data->envp[i++], tmp))
 			return (free_split(data->envp), FAIL);
 		tmp = tmp->next;
 	}
+	data->envp[i] = NULL;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 14:29:05 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:46:50 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,6 @@ char	*create_copy(char *str, int save, int i)
 		copy[j++] = str[save++];
 	copy[j] = '\0';
 	return (copy);
-}
-
-int	init_data(t_data *data, char **envp)
-{
-	if (tcgetattr(STDIN_FILENO, &data->term))
-		return (perror("Init_data - tcgetattr"), FAIL);
-	data->term.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(0, TCSANOW, &data->term))
-		return (perror("Init_data - tcsetattr"), FAIL);
-	data->env = NULL;
-	if (!copy_env(envp, data))
-		return (FAIL);
-	if (!which_env_add(data) || !manage_shlvl(data))
-		return (FAIL);
-	data->path = NULL;
-	if (get_path(data))
-		return (FAIL);
-	data->exit_status = 0;
-	if (sigemptyset(&data->sa.sa_mask) == -1)
-		return (write(2, "Sigemptyset function error!\n", 28), FAIL);
-	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1)
-		return (perror("Init data - Sigaddset:"), FAIL);
-	data->sa.sa_flags = 0;
-	data->sa.sa_handler = &handler;
-	if (sigaction(SIGINT, &data->sa, NULL) == -1)
-		return (perror("Init data - Sigaction"), FAIL);
-	return (0);
 }
 
 int	delete_slash_symbol(t_exec *exec, char *str)

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:41:18 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:12:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:23:42 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,51 +33,45 @@ int	add_pwd(t_env **env)
 	return (1);
 }
 
-char	**add_shlvl(char **env)
+int	add_shlvl(t_env **env)
 {
-	char	**copy;
-	int		i;
+	char	*var;
+	char	*value;
+	t_env	*new;
 
-	i = 0;
-	copy = malloc(sizeof(char *) * (size_arg(env) + 2));
-	if (!copy)
-		return (free_split(env), perror("Add_shlvl - Malloc"), NULL);
-	while (env[i])
+	var = ft_strdup("SHLVL");
+	if (!var)
+		return (env_clear_data(env), perror("Add_shlvl- ft_strdup"), 0);
+	value = ft_strdup("1");
+	if (!value)
+		return (free(var), env_clear_data(env), \
+		perror("Add_shlvl - ft_strdup"), 0);
+	new = new_env(var, value, 1);
+	if (!new)
 	{
-		copy[i] = env[i];
-		i++;
+		free(var);
+		free(value);
+		env_clear_data(env);
+		return (0);
 	}
-	copy[i] = ft_strdup("SHLVL=1");
-	if (!copy[i++])
-		return (free_split(env), perror("Add_shlvl - ft_strdup"), NULL);
-	copy[i] = NULL;
-	return (copy);
+	env_add_back(env, new);
+	return (1);
 }
 
-int	shlvl_plus_one(char **env)
+int	shlvl_plus_one(t_env **env)
 {
+	t_env	*tmp;
 	int		nb_atoi;
-	int		i;
 	char	*nb_itoa;
-	char	*nb_join;
 
-	nb_atoi = (ft_atoi(getenv("SHLVL")));
+	tmp = in_env(*env, "SHLVL");
+	nb_atoi = (ft_atoi(tmp->value));
 	nb_atoi++;
 	nb_itoa = ft_itoa(nb_atoi);
 	if (!nb_itoa)
-		return (free_split(env), perror("Shlvl_plus_one - ft_itoa"), 0);
-	nb_join = ft_strjoin("SHLVL=", nb_itoa);
-	if (!nb_join)
-		return (free_split(env), perror("Shlvl_plus_one - ft_strjoin"), 0);
-	i = 0;
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], "SHLVL=", 6))
-			break ;
-		i++;
-	}
-	free(env[i]);
-	env[i] = nb_join;
+		return (env_clear_data(env), perror("Shlvl_plus_one - ft_itoa"), 0);
+	free(tmp->value);
+	tmp->value = nb_itoa;
 	return (1);
 }
 
@@ -106,9 +100,9 @@ int	add_last(t_env **env)
 	return (1);
 }
 
-int	add_oldpwd(char **env)
+int	add_oldpwd(t_env **env)
 {
-	char	**var;
+	char	*var;
 	t_env	*new;
 
 	var = ft_strdup("OLDPWD");

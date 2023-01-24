@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 15:13:08 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:47:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,13 +167,6 @@ int			parse(char *str, t_exec **exec, t_data *data);
 // quotes
 int			parse_quotes_env(char *str, char **line_parsed, char **envp);
 
-// parsing utils
-char		*str_add(char *str, char c);
-char		*create_copy(char *str, int save, int i);
-int			init_data(t_data *data, char **envp);
-int			delete_slash_symbol(t_exec *exec, char *str);
-int			size_arg(char **arg);
-
 // search character
 int			is_in_quote(char *str, int index);
 int			has_equal(char *str);
@@ -226,15 +219,18 @@ int			manage_shlvl(t_data *data);
 int			which_env_add(t_data *data);
 
 // add_env
-char		**add_pwd(char **env);
-char		**add_shlvl(char **env);
-int			shlvl_plus_one(char **env);
-char		**add_last_cmd(char **env);
-char		**add_oldpwd(char **env);
+int			add_pwd(t_env **env);
+int			add_shlvl(t_env **env);
+int			shlvl_plus_one(t_env **env);
+int			add_last(t_env **env);
+int			add_oldpwd(t_env **env);
 
 // get path variable
 int			ft_split_data(char ***new, char const *s, char c);
 int			get_path(t_data *data);
+
+// initialize data structure
+int			init_data(t_data *data, char **envp);
 
 /* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
 
@@ -252,10 +248,18 @@ int			update_envp(t_data *data);
 int			remove_var(t_env **full_env, char *search_var);
 t_env		*in_env(t_env *full_env, char *search_var);
 
+// parsing utils
+char		*str_add(char *str, char c);
+char		*create_copy(char *str, int save, int i);
+int			delete_slash_symbol(t_exec *exec, char *str);
+int			size_arg(char **arg);
+
 // prototype split environment variable
 char		**split_var(char *s);
 
 // prototype env_update
 t_env		*in_env(t_env *full_env, char *search_var);
+int			update_envp(t_data *data);
+int			remove_var(t_env **full_env, char *search_var);
 
 #endif

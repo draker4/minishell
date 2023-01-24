@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:20:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:10:47 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:32:23 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 int	manage_shlvl(t_data *data)
 {
-	if (getenv("SHLVL"))
+	if (in_env(data->env, "SHLVL"))
 	{
-		if (!shlvl_plus_one(data->envp))
+		if (!shlvl_plus_one(&data->env))
 			return (0);
 	}
 	else
 	{
-		data->envp = add_shlvl(data->envp);
-		if (!data->envp)
+		if (!add_shlvl(&data->env))
 			return (0);
 	}
 	return (1);
@@ -71,10 +70,8 @@ int	copy_env(char **envp, t_data *data)
 		new->has_equal = 0;
 		if (split[1])
 			new->has_equal = 1;
-		printf("new->var = %s et new->value = %s\n", new->var, new->value);
 		env_add_back(&data->env, new);
 		i++;
 	}
-	printf("FFFINNNN\n");
 	return (1);
 }
