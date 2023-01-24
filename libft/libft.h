@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 13:08:10 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:26:25 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,6 @@ int		ft_printf(const char *str, ...);
 	/* --------- ft_split.c -------- */
 
 void	ft_free_split(char **str);
-
-		/*Separe s par c en comptabiliasant le nombre de mots.*/
-int		ft_divide(char const *s, char c);
 
 		/*Retourne un tableau de chaînes de caractères (malloc) en séparant la
 		chaine s a chaque caractère c*/

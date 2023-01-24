@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 20:08:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:28:08 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,8 @@ char		**add_last_cmd(char **env);
 char		**add_oldpwd(char **env);
 
 // get path variable
-char		**get_path(char **envp);
+int			ft_split_data(char ***new, char const *s, char c);
+int			get_path(t_data *data);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 

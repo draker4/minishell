@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 20:07:15 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:30:11 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ static int	read_line(t_data *data)
 	int		check;
 
 	exec = NULL;
-	data->path = get_path(data->envp);
-	if (!data->path)
-		return (perror("Read_line - get_path"), -1);
+	if (get_path(data))
+		return (-1);
 	line = readline("minishell > ");
 	check = check_line(line);
 	if (check > 0)

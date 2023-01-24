@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/16 12:33:22 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 10:25:52 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	**ft_free_double(char **str, int i)
 }
 
 /*Separe s par c en comptabiliasant le nombre de mots.*/
-int	ft_divide(char const *s, char c)
+static int	ft_divide(char const *s, char c)
 {
 	int	i;
 	int	j;
