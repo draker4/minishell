@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 13:36:08 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:01:03 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	read_line(t_data *data)
 	int		check;
 
 	exec = NULL;
-	if (get_path(data) || get_home(data))
+	if (get_path(data))
 		return (-1);
 	line = readline("minishell > ");
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
