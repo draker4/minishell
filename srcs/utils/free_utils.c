@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 15:36:18 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:52:25 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,20 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_all(char *str, t_data *data, t_exec **exec)
+void	free_all(char *str, t_exec **exec)
 {
-	(void)str;
-	(void)data;
 	if (!str)
 		free(str);
 	str = NULL;
+	exec_clear_data(exec);
+}
+
+void	free_data(t_data *data)
+{
 	if (data->path)
 		free_split(data->path);
-	data->path = NULL;
-	// if (data->home)
-	// 	free(data->home);
-	// data->home = NULL;
-	exec_clear_data(exec);
+	if (data->envp)
+		free_split(data->envp);
+	if (data->env)
+		env_clear_data(&data->env);
 }

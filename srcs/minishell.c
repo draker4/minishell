@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:45:48 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 16:19:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,8 @@ static int	read_line(t_data *data)
 
 	exec = NULL;
 	if (data->modify_env)
-	{
 		if (update_envp(data) || get_path(data))
 			return (FAIL);
-	}
-	if (get_path(data))
-		return (-1);
 	line = readline("minishell > ");
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
 	if (tcsetattr(0, TCSANOW, &data->term))
@@ -77,9 +73,8 @@ static int	read_line(t_data *data)
 	{
 		if (parse(line, &exec, data))
 			execute(exec);
-		// print_exec(exec);
 	}
-	// free_all(line, data, &exec);
+	free_all(line, &exec);
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
 	if (tcsetattr(0, TCSANOW, &data->term))
 		return (perror("Read_line - tcsetattr"), -1);
@@ -101,6 +96,6 @@ int	main(int argc, char **argv, char **envp)
 		if (read_line(&data) == -1)
 			break ;
 	rl_clear_history();
-	// free_split(data.envp);
+	free_data(&data);
 	return (0);
 }

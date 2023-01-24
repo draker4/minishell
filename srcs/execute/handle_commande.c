@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/23 14:01:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 16:50:36 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ static void	handle_pipe(t_exec *exec)
 	}
 }
 
-static void	last_commande(t_exec *exec)
+static void	exec_cmd(t_exec *exec)
 {
-	if (exec->cmd == builtin)
-		return (execute_builtin(exec));
 	exec->pid = fork();
 	if (exec->pid < 0)
 		return (perror("Last_commande - Fork"));
@@ -49,7 +47,7 @@ static void	last_commande(t_exec *exec)
 		waitpid(exec->pid, &exec->data->exit_status, 0);
 }
 
-void	handle_commande(t_exec *exec)
+void	handle_cmd_list(t_exec *exec)
 {
 	if (!exec)
 		return ;
@@ -59,7 +57,7 @@ void	handle_commande(t_exec *exec)
 		{
 			close_file(exec);
 			if (exec->next)
-				handle_commande(exec->next);
+				handle_cmd_list(exec->next);
 			return ;
 		}
 	}
@@ -72,8 +70,23 @@ void	handle_commande(t_exec *exec)
 	{
 		handle_pipe(exec);
 		close_file(exec);
-		return (handle_commande(exec->next));
+		return (handle_cmd_list(exec->next));
 	}
-	last_commande(exec);
+	exec_cmd(exec);
+	close_file(exec);
+}
+
+void	handle_cmd(t_exec *exec)
+{
+	if (exec->input)
+		if (change_input(exec->input))
+			return (close_file(exec));
+	if (exec->output)
+		if (change_output(exec->output))
+			return (close_file(exec));
+	if (exec->cmd == builtin)
+		return (execute_builtin(exec));
+	else
+		exec_cmd(exec);
 	close_file(exec);
 }

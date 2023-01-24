@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 15:47:37 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 16:50:07 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct s_env
 typedef struct s_data
 {
 	char				**path;
-	char				*home;
 	char				**envp;
 	int					exit_status;
 	t_env				*env;
@@ -146,7 +145,8 @@ int			change_input(t_input *input);
 int			change_output(t_output *output);
 
 // handle commande
-void		handle_commande(t_exec *exec);
+void		handle_cmd(t_exec *exec);
+void		handle_cmd_list(t_exec *exec);
 
 // close file
 void		close_file(t_exec *exec);
@@ -202,7 +202,8 @@ int			create_exec(char *str, t_exec **exec, t_data *data);
 
 // free utils
 void		free_split(char **split);
-void		free_all(char *str, t_data *data, t_exec **exec);
+void		free_all(char *str, t_exec **exec);
+void		free_data(t_data *data);
 
 // split words
 char		**split_not_quotes(char *str);
