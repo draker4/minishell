@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 12:42:26 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 13:31:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,15 @@ typedef struct s_output
 	struct s_output	*next;
 }	t_output;
 
+// structre saving the environment variables
+typedef struct s_env
+{
+	char			*var;
+	char			*value;
+	int				has_equal;
+	struct s_env	*next;
+}	t_env;
+
 // structure used for saving every data from minishell
 typedef struct s_data
 {
@@ -84,9 +93,12 @@ typedef struct s_data
 	char				*home;
 	char				**envp;
 	int					exit_status;
+	t_env				*env;
+	int					modify_env;
 	struct termios		term;
 	struct sigaction	sa;
 }	t_data;
+
 
 // structure saving each steps on from the read line
 typedef struct s_exec
