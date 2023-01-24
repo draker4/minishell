@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:47:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 13:51:34 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 14:07:16 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

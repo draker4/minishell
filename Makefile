@@ -72,6 +72,7 @@ SRCS_P			=	add_env.c				\
 SRCS_S			=	handler.c
 
 SRCS_U			=	env_lst_utils.c			\
+					env_update.c			\
 					free_utils.c			\
 					get_path_var.c			\
 					lst_exec_utils.c		\
