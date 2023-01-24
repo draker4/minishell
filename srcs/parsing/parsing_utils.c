@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 11:46:10 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 12:42:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ char	*create_copy(char *str, int save, int i)
 int	init_data(t_data *data, char **envp)
 {
 	data->envp = copy_env(envp);
+	if (tcgetattr(STDIN_FILENO, &data->term))
+		return (perror("Init_data - tcgetattr"), 0);
+	data->term.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(0, TCSANOW, &data->term))
+		return (perror("Init_data - tcsetattr"), 0);
 	if (!data->envp)
 		return (FAIL);
 	if (!which_env_add(data) || !manage_shlvl(data))

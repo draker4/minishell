@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:50:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 19:52:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 11:50:29 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,13 @@ static int	check_nb_quotes(char *str)
 int	check_line(char *str)
 {
 	if (!str)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		// rl_redisplay();
+		write(1, "exit\n", 5);
 		return (-1);
+	}
 	if (!*str || !is_space_tab(str))
 		return (0);
 	add_history(str);
