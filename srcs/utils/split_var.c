@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:47:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 14:35:48 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:33:18 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char	**ft_cut_value(char *s, char **split, int i)
 		split[1][k++] = s[i++];
 	split[2] = NULL;
 	return (split);
-	
 }
 
 static char	**ft_cut_var(char *s, char **split)

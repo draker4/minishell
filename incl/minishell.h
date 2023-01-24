@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 15:47:37 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 16:23:14 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,44 +122,91 @@ typedef struct s_exec
 
 /* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
 
+// cd builtin
 void		ft_cd(t_exec *exec);
 
+// echo builtin
 void		ft_echo(t_exec *exec);
 
+// env builtin
 void		ft_env(t_exec *exec);
 
+// exit builtin
 void		ft_exit(t_exec *exec);
 
+// export builtin utils
+
+void		print_export(t_exec *exec);
+
+// export builtin
 void		ft_export(t_exec *exec);
 
+// pwd builtin
 void		ft_pwd(t_exec *exec);
 
+// unset builtin
 void		ft_unset(t_exec *exec);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
-// get delimoiter
-int			get_delimiter(int fd, char **line);
+// close file
+void		close_file(t_exec *exec);
 
 // define file
 int			change_input(t_input *input);
 int			change_output(t_output *output);
-
-// handle commande
-void		handle_commande(t_exec *exec);
-
-// close file
-void		close_file(t_exec *exec);
 
 // execute cmd
 void		execute_builtin(t_exec *exec);
 void		execute_commande(t_exec *exec);
 void		execute(t_exec *exec);
 
+// get delimiter
+int			get_delimiter(int fd, char **line);
+
+// handle commande
+void		handle_commande(t_exec *exec);
+
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
+
+// add_env
+int			add_pwd(t_env **env);
+int			add_shlvl(t_env **env);
+int			shlvl_plus_one(t_env **env);
+int			add_last(t_env **env);
+int			add_oldpwd(t_env **env);
+
+// check and (&&), or (||) symbols
+int			check_and_or(char *str);
 
 // check line
 int			check_line(char *str);
+
+// check redirections (< and > symbols)
+int			check_redirections(char *str);
+
+// copy_env
+int			copy_env(char **envp, t_data *data);
+int			manage_shlvl(t_data *data);
+int			which_env_add(t_data *data);
+
+// create exec list
+int			create_exec(char *str, t_exec **exec, t_data *data);
+
+// create path cmd
+int			create_path_cmd(t_exec **exec);
+
+// environment variables
+int			check_env(char *str, char **line_parsed, int *i, char **envp);
+
+// find redirections
+int			find_redirections(t_exec **exec);
+
+// initialize data structure
+int			init_data(t_data *data, char **envp);
+
+// is_built_in
+void		is_built_in(t_exec *exec);
 
 // parsing
 int			parse(char *str, t_exec **exec, t_data *data);
@@ -170,67 +217,6 @@ int			parse_quotes_env(char *str, char **line_parsed, char **envp);
 // search character
 int			is_in_quote(char *str, int index);
 int			has_equal(char *str);
-
-// check around parenthesis
-int			check_around_parenthesis(char *str);
-
-// check and (&&), or (||) symbols
-int			check_and_or(char *str);
-
-// check redirections (< and > symbols)
-int			check_redirections(char *str);
-
-// environment variables
-int			check_env(char *str, char **line_parsed, int *i, char **envp);
-
-// exec list utils
-t_exec		*new_exec(char *str, t_data *data);
-void		exec_clear_data(t_exec **exec);
-void		exec_add_back(t_exec **bracket, t_exec *new);
-
-// input output list utils
-t_input		*last_input(t_input *input);
-t_output	*last_output(t_output *output);
-void		input_clear_data(t_input **input);
-void		output_clear_data(t_output **output);
-
-// find redirections
-int			find_redirections(t_exec **exec);
-
-// create exec list
-int			create_exec(char *str, t_exec **exec, t_data *data);
-
-// free utils
-void		free_split(char **split);
-void		free_all(char *str, t_data *data, t_exec **exec);
-
-// split words
-char		**split_not_quotes(char *str);
-
-// is_built_in
-void		is_built_in(t_exec *exec);
-
-// create path cmd
-int			create_path_cmd(t_exec **exec);
-
-// copy_env
-int			copy_env(char **envp, t_data *data);
-int			manage_shlvl(t_data *data);
-int			which_env_add(t_data *data);
-
-// add_env
-int			add_pwd(t_env **env);
-int			add_shlvl(t_env **env);
-int			shlvl_plus_one(t_env **env);
-int			add_last(t_env **env);
-int			add_oldpwd(t_env **env);
-
-// get path variable
-int			ft_split_data(char ***new, char const *s, char c);
-int			get_path(t_data *data);
-
-// initialize data structure
-int			init_data(t_data *data, char **envp);
 
 /* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
 
@@ -243,10 +229,29 @@ t_env		*new_env(char *var, char *value, int has_equal);
 void		env_clear_data(t_env **env);
 void		env_add_back(t_env **env, t_env *new);
 
-// prototypes env update
+// env_update
+t_env		*in_env(t_env *full_env, char *search_var);
 int			update_envp(t_data *data);
 int			remove_var(t_env **full_env, char *search_var);
-t_env		*in_env(t_env *full_env, char *search_var);
+
+// free utils
+void		free_split(char **split);
+void		free_all(char *str, t_data *data, t_exec **exec);
+
+// get path variable
+int			ft_split_data(char ***new, char const *s, char c);
+int			get_path(t_data *data);
+
+// exec list utils
+t_exec		*new_exec(char *str, t_data *data);
+void		exec_clear_data(t_exec **exec);
+void		exec_add_back(t_exec **bracket, t_exec *new);
+
+// input output list utils
+t_input		*last_input(t_input *input);
+t_output	*last_output(t_output *output);
+void		input_clear_data(t_input **input);
+void		output_clear_data(t_output **output);
 
 // parsing utils
 char		*str_add(char *str, char c);
@@ -257,9 +262,7 @@ int			size_arg(char **arg);
 // prototype split environment variable
 char		**split_var(char *s);
 
-// prototype env_update
-t_env		*in_env(t_env *full_env, char *search_var);
-int			update_envp(t_data *data);
-int			remove_var(t_env **full_env, char *search_var);
+// split words
+char		**split_not_quotes(char *str);
 
 #endif

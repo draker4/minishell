@@ -6,85 +6,67 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 19:48:21 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 17:35:44 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sort_env_var(char ***env_var, int size)
+void	include_value(t_env *full_env, char **var)
 {
-	int		i;
-	int		j;
-	char	**tmp;
+	t_env	*tmp;
 
-	i = 1;
-	while (i < size)
-	{
-		j = 0;
-		while (j < i)
-		{
-			if (ft_strncmp(env_var[j][0], env_var[i][0],
-			ft_strlen(env_var[j][0])) > 0)
-			{
-				tmp = env_var[j];
-				env_var[j] = env_var[i];
-				env_var[i] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
+	if (size_arg(var) == 2)
+		return ;
+	tmp = in_env(full_env, var[0]);
+	if (tmp->value)
+		free (tmp->value);
+	tmp->has_equal = 1;
+	tmp->value = var[2];
 }
 
-void	print_env_var(char ***env_var)
+void	include_var(t_data *data, char **var)
 {
-	int		i;
-	int		j;
+	t_env	*new;
 
-	i = 0;
-	while (env_var[i])
+	if (size_arg(var) == 1)
+		new = new_env(var[0], var[1], 0);
+	else if (size_arg(var) == 2)
+		new = new_env(var[0], var[1], 1);
+	else
+		return ;
+	if (!new)
 	{
-		j = 0;
-		if (!(env_var[i][j][0] == '_' && !env_var[i][j][1]))
-		{
-			printf("declare -x %s", env_var[i][j]);
-			if (env_var[i][++j])
-			{
-				printf("=\"");
-				while (env_var[i][j])
-					printf("%s", env_var[i][j++]);
-				printf("\"");
-			}
-			printf("\n");
-		}
-		i++;
+		free_split(var);
+		return ;
 	}
-}
-
-void	print_export(t_exec *exec)
-{
-	int		i;
-	char	***env_var;
-
-	env_var = malloc(sizeof(char **) * (size_arg(exec->data->envp) + 1));
-	if (!env_var)
-		return (perror("ft_export"));
-	i = 0;
-	while (exec->data->envp[i])
-	{
-		env_var[i] = ft_split(exec->data->envp[i], '=');
-		i++;
-	}
-	env_var[i] = NULL;
-	sort_env_var(env_var, i);
-	print_env_var(env_var);
+	env_add_back(&data->env, new);
 }
 
 void	ft_export(t_exec *exec)
 {
+	int		i;
+	char	**var;
+
 	if (size_arg(exec->arg) == 1)
-		print_export(exec);
+		return (print_export(exec));
+	i = 1;
+	exec->data->modify_env = 1;
+	while (exec->arg[i])
+	{
+		var = split_var(exec->arg[i]);
+		if (!var)
+		{
+			if (!exec->pid)
+				exit(FAIL);
+			return ;
+		}
+		if (in_env(exec->data->env, var[0]))
+			include_value(exec->data->env, var);
+		else
+			include_var(exec->data, var);
+		i++;
+	}
 	if (!exec->pid)
 		exit(0);
 }
