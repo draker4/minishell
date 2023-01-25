@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 14:42:44 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:46:00 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	handle_cmd(t_exec *exec)
 		return ;
 	if (exec->input)
 		if (change_input(exec->input))
-			return (close_file(exec));
+			return (g_exit_status = 1, close_file(exec));
 	if (exec->output)
 		if (change_output(exec->output))
 			return (close_file(exec));
