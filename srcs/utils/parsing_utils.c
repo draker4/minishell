@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 15:46:50 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:10:30 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	delete_slash_symbol(t_exec *exec, char *str)
 		i++;
 	}
 	function = create_copy(str, save, i);
+	free(exec->arg[0]);
 	exec->arg[0] = function;
 	return (1);
 }
