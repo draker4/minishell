@@ -6,13 +6,21 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 12:48:04 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:35:35 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_exit_status;
+
+static void	handle_error(t_exec *exec)
+{
+	g_exit_status = 1;
+	if (!exec->data->pid[exec->nb])
+		exit(1);
+	return ;
+}
 
 void	include_value(t_env *full_env, char **var)
 {
@@ -56,16 +64,15 @@ void	update_env(t_exec *exec)
 	{
 		var = split_var(exec->arg[i]);
 		if (!var)
-		{
-			g_exit_status = 1;
-			if (!exec->data->pid[exec->nb])
-				exit(FAIL);
-			return ;
-		}
-		if (in_env(exec->data->env, var[0]))
+			return (handle_error(exec));
+		if (ft_isdigit(var[0][0]))
+			ft_perror("minishell: export: `", exec->arg[i],
+				"': not a valid identifier");
+		else if (in_env(exec->data->env, var[0]))
 			include_value(exec->data->env, var);
 		else
 			include_var(exec->data, var);
+		free(var);
 		i++;
 	}
 	g_exit_status = 0;
