@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_find.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:27:58 by bboisson          #+#    #+#             */
-/*   Updated: 2022/12/20 15:07:50 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 19:03:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ size_t	ft_strlen(const char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	while (*(str + i))
+	while (str[i])
 		i++;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 18:53:22 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 19:19:46 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ void	include_var(t_data *data, char **var)
 {
 	t_env	*new;
 
+	new = NULL;
 	if (size_arg(var) == 1)
 		new = new_env(var[0], var[1], 0);
 	else if (size_arg(var) == 2)
 		new = new_env(var[0], var[1], 1);
-	else
-		return ;
 	if (!new)
 	{
 		free_split(var);
@@ -72,7 +71,7 @@ void	update_env(t_exec *exec)
 			include_value(exec->data->env, var);
 		else
 			include_var(exec->data, var);
-		free_split(var);
+		free(var);
 		i++;
 	}
 	g_exit_status = 0;
