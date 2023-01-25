@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 11:04:37 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:52:20 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	change_var(t_exec *exec)
 	t_env	*pwd;
 	char	*buf;
 
-	buf = getcwd(NULL, 0);
+	buf = ft_strdup(getcwd(NULL, 0));
 	if (!buf)
-		return (perror("Change_var - Getcwd"));
+		return (perror("Change_var - ft_strdup"));
 	oldpwd = in_env(exec->data->env, "OLDPWD");
 	pwd = in_env(exec->data->env, "PWD");
 	if (pwd && oldpwd)
@@ -38,7 +38,7 @@ void	no_arg(t_exec *exec)
 	if (!in_env(exec->data->env, "HOME"))
 		write(2, "HOME not set\n", 13);
 	else if (chdir(in_env(exec->data->env, "HOME")->value))
-		perror("Ft_cd - chdir");
+		ft_perror("minishell: cd :", "HOME", NULL);
 	else
 		change_var(exec);
 	g_exit_status = 0;
@@ -54,7 +54,7 @@ void	ft_cd(t_exec *exec)
 		return (no_arg(exec));
 	if (chdir(exec->arg[1]))
 	{
-		perror("Ft_cd - chdir");
+		ft_perror("minishell: cd :", exec->arg[1], NULL);
 		g_exit_status = 1;
 		if (!exec->data->pid[exec->nb])
 			exit(1);
