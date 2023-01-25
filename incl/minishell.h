@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/24 20:02:56 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 09:19:40 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_exec
 	char			**cmd_path;
 	int				save_stdin;
 	int				save_stdout;
+	int				nb;
 	t_input			*input;
 	t_output		*output;
 	t_data			*data;
@@ -155,8 +156,8 @@ int			change_input(t_input *input);
 int			change_output(t_output *output);
 
 // handle commande
-void		handle_cmd(t_exec *exec, int *i);
-void		handle_cmd_list(t_exec *exec, int *i);
+void		handle_cmd(t_exec *exec);
+void		handle_cmd_list(t_exec *exec);
 
 // close file
 void		close_file(t_exec *exec);
@@ -257,7 +258,7 @@ int			ft_split_data(char ***new, char const *s, char c);
 int			get_path(t_data *data);
 
 // exec list utils
-t_exec		*new_exec(char *str, t_data *data);
+t_exec		*new_exec(char *str, t_data *data, int nb);
 void		exec_clear_data(t_exec **exec);
 void		exec_add_back(t_exec **bracket, t_exec *new);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:39:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 14:47:43 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 09:13:13 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_parse	*init_parse(char *str)
 	return (parse);
 }
 
-static int	add_exec(t_exec **exec, t_parse *parse, t_data *data)
+static int	add_exec(t_exec **exec, t_parse *parse, t_data *data, int nb)
 {
 	t_exec	*new;
 	char	*copy;
@@ -36,7 +36,7 @@ static int	add_exec(t_exec **exec, t_parse *parse, t_data *data)
 	copy = create_copy(parse->str, parse->save, parse->i);
 	if (!copy)
 		return (0);
-	new = new_exec(copy, data);
+	new = new_exec(copy, data, nb);
 	if (!new)
 	{
 		free(copy);
@@ -48,21 +48,24 @@ static int	add_exec(t_exec **exec, t_parse *parse, t_data *data)
 
 int	create_exec(char *str, t_exec **exec, t_data *data)
 {
+	int		nb;
 	t_parse	*parse;
 
 	parse = init_parse(str);
+	nb = 0;
 	while (str[parse->i])
 	{
 		if (str[parse->i] == '|' && !is_in_quote(str, parse->i))
 		{
-			if (!add_exec(exec, parse, data))
+			if (!add_exec(exec, parse, data, nb))
 				return (free(parse), 0);
 			parse->save = parse->i + 1;
+			nb++;
 		}
 		if (str[parse->i])
 			parse->i += 1;
 	}
-	if (!add_exec(exec, parse, data))
+	if (!add_exec(exec, parse, data, nb))
 		return (free(parse), 0);
 	free(parse);
 	return (1);

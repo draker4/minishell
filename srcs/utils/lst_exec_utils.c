@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lst_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 20:03:01 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 09:11:13 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_exec	*new_exec(char *str, t_data *data)
+t_exec	*new_exec(char *str, t_data *data, int nb)
 {
 	t_exec	*new;
 
@@ -21,6 +21,7 @@ t_exec	*new_exec(char *str, t_data *data)
 		return (perror("New_exec: "), NULL);
 	new->str = str;
 	new->data = data;
+	new->nb = nb;
 	new->function = NULL;
 	new->input = NULL;
 	new->output = NULL;
