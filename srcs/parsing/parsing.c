@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 16:15:39 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:43:51 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ static int	find_function(t_exec **exec)
 
 int	parse(char *str, t_exec **exec, t_data *data)
 {
-	if (!create_exec(str, exec, data) || !parse_words(exec) || \
-	!parse_quotes(exec) || !find_redirections(exec) || \
-	!find_function(exec) || !create_path_cmd(exec))
+	if (!create_exec(str, exec, data) || !parse_words(exec)
+		|| !parse_quotes(exec) || !find_redirections(exec)
+		|| !find_function(exec) || !create_path_cmd(exec))
 		return (0);
 	return (1);
 }

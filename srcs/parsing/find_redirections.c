@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:27:05 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:34:11 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:02:52 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	add_arg(t_exec *current, char *str)
 		new_arg = malloc(sizeof(char *) * 2);
 		if (!new_arg)
 			return (free(copy), perror("Add_arg - Malloc:"), 0);
-		new_arg[++i] = str;
+		new_arg[++i] = copy;
 		new_arg[++i] = NULL;
 	}
 	current->arg = new_arg;
@@ -69,8 +69,8 @@ static int	create_in_out_arg(t_exec *current)
 			if (!create_input(current, &i))
 				return (0);
 		}
-		else if (!ft_strncmp(current->words[i], ">", 1) \
-		&& current->words[i + 1])
+		else if (!ft_strncmp(current->words[i], ">", 1)
+			&& current->words[i + 1])
 		{
 			if (!create_output(current, &i))
 				return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_input_output.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 12:04:01 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 12:50:01 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:45:48 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	create_input(t_exec *current, int *index)
 		input->in = in_file;
 	input->str = ft_strdup(current->words[*index]);
 	if (!input->str)
-		return (perror("Create_input - ft_strdup"), 0);
+		return (free(input), perror("Create_input - ft_strdup"), 0);
 	last = last_input(current->input);
 	if (last)
 		last->next = input;
@@ -61,7 +61,7 @@ int	create_output(t_exec *current, int *index)
 		output->out = out_file;
 	output->str = current->words[*index];
 	if (!output->str)
-		return (perror("Create_output - ft_strdup"), 0);
+		return (free (output), perror("Create_output - ft_strdup"), 0);
 	last = last_output(current->output);
 	if (last)
 		last->next = output;
