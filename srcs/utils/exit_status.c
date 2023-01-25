@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:53:43 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 12:52:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:38:09 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	change_exit_status(t_exec *exec)
 	char	*str;
 
 	i = -1;
-	while (exec->arg[++i])
+	while (exec->arg && exec->arg[++i])
 	{
 		if (has_exit_status(exec->arg[i]))
 		{
@@ -78,7 +78,7 @@ int	change_exit_status(t_exec *exec)
 			exec->arg[i] = str;
 		}
 	}
-	if (has_exit_status(exec->function))
+	if (exec->function && has_exit_status(exec->function))
 	{
 		str = parse_exit_status(exec->function);
 		if (!str)
