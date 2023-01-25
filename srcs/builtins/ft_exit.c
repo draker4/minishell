@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 14:40:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:48:52 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_exit(t_exec *exec)
 	else if (!ft_is_num(exec->arg[1]))
 	{
 		write(2, "minishell: exit: ", 17);
-		write(2, exec->arg[2], ft_strlen(exec->arg[2]));
+		write(2, exec->arg[1], ft_strlen(exec->arg[1]));
 		write(2, ": numeric argument required\n", 28);
 		exit(255);
 	}
