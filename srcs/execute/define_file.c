@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 14:39:36 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 20:15:41 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	confirm_end(const char *s1, const char *s2)
 	return (0);
 }
 
-static int	change_delimiter(t_input *input)
+static int	change_delimiter(t_input *input, t_exec *exec)
 {
 	char	*line;
 
@@ -41,7 +41,7 @@ static int	change_delimiter(t_input *input)
 	while (1)
 	{
 		write(1, " > ", 3);
-		if (get_delimiter(0, &line))
+		if (get_delimiter(0, &line, exec))
 		{
 			close(input->file);
 			unlink(".delimiter_tmp");
@@ -57,7 +57,7 @@ static int	change_delimiter(t_input *input)
 	return (0);
 }
 
-int	change_input(t_input *input)
+int	change_input(t_input *input, t_exec *exec)
 {
 	if (input->in == in_file)
 	{
@@ -68,7 +68,7 @@ int	change_input(t_input *input)
 			return (perror("Change_input - Open"), FAIL);
 	}
 	else if (input->in == delimiter)
-		if (change_delimiter(input))
+		if (change_delimiter(input, exec))
 			return (perror("Change_input - access"), FAIL);
 	if (dup2(input->file, STDIN_FILENO) < 0)
 		return (perror("Change_input - Dup2"),
@@ -76,7 +76,7 @@ int	change_input(t_input *input)
 	if (input->next)
 	{
 		unlink(".delimiter_tmp");
-		return (change_input(input->next));
+		return (change_input(input->next, exec));
 	}
 	return (0);
 }

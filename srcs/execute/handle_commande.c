@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 16:15:26 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 19:59:17 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	handle_cmd_list(t_exec *exec)
 		return ;
 	if (exec->input)
 	{
-		if (change_input(exec->input))
+		if (change_input(exec->input, exec))
 		{
 			g_exit_status = 1;
 			close_file(exec);
@@ -103,7 +103,7 @@ void	handle_cmd(t_exec *exec)
 {
 	if (!change_exit_status(exec))
 		return ;
-	if (exec->input && change_input(exec->input))
+	if (exec->input && change_input(exec->input, exec))
 		return (g_exit_status = 1, close_file(exec));
 	if (exec->output && change_output(exec->output))
 		return (close_file(exec));

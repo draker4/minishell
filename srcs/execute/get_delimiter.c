@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/21 16:59:34 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 20:00:31 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ static void	reset_str(char *tmp, char *str, size_t start)
 	str[i] = '\0';
 }
 
-static int	ret_line(char *tmp, char *str, char **line)
+static int	ret_line(char *tmp, char *str, char **line, t_exec *exec)
 {
 	size_t	i;
+	char	*line_parsed;
 
 	i = 0;
 	if (tmp[0] == '\0')
@@ -80,10 +81,14 @@ static int	ret_line(char *tmp, char *str, char **line)
 	if (tmp[i++] != '\0')
 		reset_str(tmp, str, i);
 	free(tmp);
+	line_parsed = parse_word_quotes(*line, exec->data->envp);
+	if (!line_parsed)
+		return (free(*line), FAIL);
+	*line = line_parsed;
 	return (0);
 }
 
-int	get_delimiter(int fd, char **line)
+int	get_delimiter(int fd, char **line, t_exec *exec)
 {
 	static char	str[BUFFER_SIZE + 1];
 	char		*tmp;
@@ -106,5 +111,5 @@ int	get_delimiter(int fd, char **line)
 		if (!tmp)
 			return (FAIL);
 	}
-	return (ret_line(tmp, str, line));
+	return (ret_line(tmp, str, line, exec));
 }

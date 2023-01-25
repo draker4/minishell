@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:43:51 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 20:29:03 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*parse_word_quotes(char *str, char **envp)
+char	*parse_word_quotes(char *str, char **envp)
 {
 	char	*word_parsed;
 
@@ -96,8 +96,9 @@ static int	find_function(t_exec **exec)
 int	parse(char *str, t_exec **exec, t_data *data)
 {
 	if (!create_exec(str, exec, data) || !parse_words(exec)
-		|| !parse_quotes(exec) || !find_redirections(exec)
-		|| !find_function(exec) || !create_path_cmd(exec))
+		|| !parse_quotes(exec) /*|| parse_space(exec)*/
+		|| !find_redirections(exec) || !find_function(exec)
+		|| !create_path_cmd(exec))
 		return (0);
 	return (1);
 }

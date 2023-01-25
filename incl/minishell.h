@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 16:48:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 19:58:49 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void		ft_unset(t_exec *exec);
 void		close_file(t_exec *exec);
 
 // define file
-int			change_input(t_input *input);
+int			change_input(t_input *input, t_exec *exec);
 int			change_output(t_output *output);
 
 // handle commande
@@ -169,7 +169,7 @@ void		execute_commande(t_exec *exec);
 void		execute(t_exec *exec);
 
 // get delimiter
-int			get_delimiter(int fd, char **line);
+int			get_delimiter(int fd, char **line, t_exec *exec);
 
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
 
@@ -232,6 +232,7 @@ void		is_built_in(t_exec *exec);
 
 // parsing
 int			parse(char *str, t_exec **exec, t_data *data);
+char		*parse_word_quotes(char *str, char **envp);
 
 // quotes
 int			parse_quotes_env(char *str, char **line_parsed, char **envp);
