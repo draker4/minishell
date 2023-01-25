@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 14:48:52 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:11:50 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	ft_is_num(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] && str[i] == '-')
+		i++;
 	while (str[i])
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
@@ -46,5 +48,5 @@ void	ft_exit(t_exec *exec)
 		g_exit_status = 1;
 	}
 	else if (size_arg(exec->arg) == 2)
-		exit(ft_atoi(exec->arg[1]));
+		exit((ft_atoi(exec->arg[1]) * 1) % 256);
 }
