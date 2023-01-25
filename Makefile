@@ -56,6 +56,7 @@ SRCS_E			=	close_file.c			\
 					handle_commande.c
 
 SRCS_P			=	add_env.c				\
+					add_input_output.c		\
 					check_and_or_symbols.c	\
 					check_line.c			\
 					check_redirections.c	\
@@ -67,18 +68,19 @@ SRCS_P			=	add_env.c				\
 					init_data.c				\
 					is_builtin.c			\
 					parsing.c				\
-					quotes.c				\
-					search_char.c
+					quotes.c
 
 SRCS_S			=	handler.c
 
 SRCS_U			=	env_lst_utils.c			\
 					env_update.c			\
+					exit_status.c			\
 					free_utils.c			\
 					get_path_var.c			\
 					lst_exec_utils.c		\
 					lst_in_out_utils.c		\
 					parsing_utils.c			\
+					search_char.c			\
 					split_var.c				\
 					split_words.c
 

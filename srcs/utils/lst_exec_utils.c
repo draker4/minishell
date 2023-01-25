@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 09:11:13 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 11:34:07 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ static void	del_one_exec(t_exec *exec)
 	if (exec->function)
 		free(exec->function);
 	if (exec->arg)
-	{
-		free(exec->arg[0]);
-		free(exec->arg);
-	}
+		free_split(exec->arg);
 	if (exec->cmd_path)
 		free_split(exec->cmd_path);
 	free(exec->str);

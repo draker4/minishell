@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/23 18:52:05 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 12:50:28 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ int	has_equal(char *str)
 	while (str[i])
 	{
 		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	has_exit_status(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && str[i + 1] && str[i + 1] == '?')
 			return (1);
 		i++;
 	}

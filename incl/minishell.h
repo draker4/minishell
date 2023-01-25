@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 09:19:40 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 12:52:51 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct s_data
 	struct sigaction	sa;
 }	t_data;
 
-
 // structure saving each steps on from the read line
 typedef struct s_exec
 {
@@ -179,6 +178,12 @@ int			shlvl_plus_one(t_env **env);
 int			add_last(t_env **env);
 int			add_oldpwd(t_env **env);
 
+// add input output list
+int			create_input(t_exec *current, int *index);
+int			create_output(t_exec *current, int *index);
+int			exit_status_input(t_exec *exec);
+int			exit_status_output(t_exec *exec);
+
 // check and (&&), or (||) symbols
 int			check_and_or(char *str);
 
@@ -228,10 +233,6 @@ int			parse(char *str, t_exec **exec, t_data *data);
 // quotes
 int			parse_quotes_env(char *str, char **line_parsed, char **envp);
 
-// search character
-int			is_in_quote(char *str, int index);
-int			has_equal(char *str);
-
 /* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
 
 void		handler(int sig);
@@ -248,6 +249,10 @@ int			exec_size(t_exec *exec);
 t_env		*in_env(t_env *full_env, char *search_var);
 int			update_envp(t_data *data);
 int			remove_var(t_env **full_env, char *search_var);
+
+// exit status
+int			change_exit_status(t_exec *exec);
+char		*parse_exit_status(char *str);
 
 // free utils
 void		free_split(char **split);
@@ -273,6 +278,11 @@ char		*str_add(char *str, char c);
 char		*create_copy(char *str, int save, int i);
 int			delete_slash_symbol(t_exec *exec, char *str);
 int			size_arg(char **arg);
+
+// search character
+int			is_in_quote(char *str, int index);
+int			has_equal(char *str);
+int			has_exit_status(char *str);
 
 // prototype split environment variable
 char		**split_var(char *s);
