@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 10:50:54 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 11:58:44 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	execute_commande(t_exec *exec)
 			i++;
 		}
 	}
-	perror("Execute_commande - commande introuvable");
+	ft_perror("minishell", exec->arg[0], "command not found");
 	exit (1);
 }
 
@@ -63,10 +63,11 @@ void	execute(t_exec *exec)
 	exec->save_stdout = dup(STDOUT_FILENO);
 	if (exec->save_stdin == -1 || exec->save_stdout == -1)
 		return (perror("Execute - Dup"));
-	exec->data->pid = ft_calloc(exec_size(exec), sizeof(pid_t));
-	memset(exec->data->pid, 1, exec_size(exec));
+	exec->data->pid = malloc(sizeof(pid_t) * exec_size(exec));
 	if (!exec->data->pid)
-		return (perror("Execute - Malloc"));
+		return (close(exec->save_stdin), close(exec->save_stdout),
+			perror("Execute"));
+	memset(exec->data->pid, 1, exec_size(exec));
 	if (!exec->next)
 		handle_cmd(exec);
 	else
@@ -74,7 +75,8 @@ void	execute(t_exec *exec)
 	free(exec->data->pid);
 	if (dup2(exec->save_stdin, STDIN_FILENO) == -1
 		|| dup2(exec->save_stdout, STDOUT_FILENO) == -1)
-		return (perror("Execute - Dup2"));
+		return (close(exec->save_stdin), close(exec->save_stdout),
+			perror("Execute"));
 	close(exec->save_stdin);
 	close(exec->save_stdout);
 }

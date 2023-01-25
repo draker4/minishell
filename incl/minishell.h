@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 09:19:40 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 11:54:46 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,5 +279,7 @@ char		**split_var(char *s);
 
 // split words
 char		**split_not_quotes(char *str);
+
+void		ft_perror(char *info, char *ft, char *error);
 
 #endif
