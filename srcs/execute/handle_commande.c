@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 12:09:46 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 13:57:43 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static void	last_cmd(t_exec *exec)
 
 void	handle_cmd_list(t_exec *exec)
 {
-	//ici fonction parse $?
+	if (!change_exit_status(exec))
+		return ;
 	if (exec->input)
 	{
 		if (change_input(exec->input))
@@ -100,7 +101,8 @@ void	handle_cmd_list(t_exec *exec)
 
 void	handle_cmd(t_exec *exec)
 {
-	//ici fonction parse $?
+	if (!change_exit_status(exec))
+		return ;
 	if (exec->input)
 		if (change_input(exec->input))
 			return (close_file(exec));

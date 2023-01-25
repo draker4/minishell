@@ -80,6 +80,7 @@ SRCS_U			=	env_lst_utils.c			\
 					lst_exec_utils.c		\
 					lst_in_out_utils.c		\
 					parsing_utils.c			\
+					print_error.c			\
 					search_char.c			\
 					split_var.c				\
 					split_words.c
