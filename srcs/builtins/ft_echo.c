@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 10:51:53 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 11:05:35 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern int	g_exit_status;
+
 static void	ft_echo_no_arg(t_exec *exec)
 {
 	write(1, "\n", 1);
+	g_exit_status = 0;
 	if (!exec->data->pid[exec->nb])
 		exit(0);
 	return ;
@@ -42,6 +45,7 @@ void	ft_echo(t_exec *exec)
 	}
 	if (new_line)
 		write(1, "\n", 1);
+	g_exit_status = 0;
 	if (!exec->data->pid[exec->nb])
 		exit(0);
 }

@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 11:06:40 by bboisson         ###   ########lyon.fr   */
+/*   Created: 2023/01/24 13:32:11 by bperriol          #+#    #+#             */
+/*   Updated: 2023/01/25 11:54:31 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_exit_status;
-
-void	ft_env(t_exec *exec)
+void	ft_perror(char *info, char *ft, char *error)
 {
-	int	i;
-
-	i = 0;
-	while (exec->data->envp[i])
+	if (info)
 	{
-		if (has_equal(exec->data->envp[i]))
-		{
-			write(1, exec->data->envp[i], ft_strlen(exec->data->envp[i]));
-			write(1, "\n", 1);
-		}
-		i++;
+		write(2, info, ft_strlen(info));
+		write(2, ": ", 2);
 	}
-	g_exit_status = 0;
-	if (!exec->data->pid[exec->nb])
-		exit(0);
+	if (ft)
+	{
+		write(2, ft, ft_strlen(ft));
+		write(2, ": ", 2);
+	}
+	if (!error)
+		return (perror(NULL));
+	write(2, error, ft_strlen(error));
+	write(2, "\n", 1);
 }

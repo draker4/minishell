@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 10:38:17 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 12:09:46 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ static void	handle_pipe(t_exec *exec)
 
 static void	last_cmd(t_exec *exec)
 {
+	int	update_status;
+
+	update_status = 1;
 	exec->data->pid[exec->nb] = fork();
 	if (exec->data->pid[exec->nb] < 0)
 		return (perror("Last_commande - Fork"));
@@ -54,11 +57,16 @@ static void	last_cmd(t_exec *exec)
 		while (exec->nb >= 0)
 		{
 			waitpid(exec->data->pid[exec->nb--], &g_exit_status, 0);
-			close(STDIN_FILENO);
-			close(STDOUT_FILENO);
+			if (update_status)
+			{
+				close(STDIN_FILENO);
+				if (WIFEXITED(g_exit_status))
+					g_exit_status = WEXITSTATUS(g_exit_status);
+				else if (WIFSIGNALED(g_exit_status))
+					g_exit_status = 128 + WTERMSIG(g_exit_status);
+				update_status = 0;
+			}
 		}
-		g_exit_status = WEXITSTATUS(g_exit_status);
-		// printf("g_exit = %d\n", g_exit_status);
 	}
 }
 

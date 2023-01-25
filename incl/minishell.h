@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 12:52:51 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 13:50:30 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,5 +289,7 @@ char		**split_var(char *s);
 
 // split words
 char		**split_not_quotes(char *str);
+
+void		ft_perror(char *info, char *ft, char *error);
 
 #endif
