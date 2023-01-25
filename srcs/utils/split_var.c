@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:47:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:42:01 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:09:08 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char	**ft_cut_value(char *s, char **split, int i)
 	}
 	while (s[i])
 		split[1][k++] = s[i++];
+	split[1][k] = '\0';
 	return (split);
 }
 
@@ -45,6 +46,7 @@ static char	**ft_cut_var(char *s, char **split)
 		split[0][k] = s[k];
 		k++;
 	}
+	split[0][k] = '\0';
 	if (!s[i])
 	{
 		split[1] = NULL;
