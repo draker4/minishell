@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:27:05 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 12:03:41 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:34:11 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ static int	add_arg(t_exec *current, char *str)
 	{
 		new_arg = add_current(current->arg, copy);
 		if (!new_arg)
-			return (perror("Add_arg - add_current:"), 0);
+			return (free(copy), perror("Add_arg - add_current:"), 0);
 	}
 	else
 	{
 		new_arg = malloc(sizeof(char *) * 2);
 		if (!new_arg)
-			return (perror("Add_arg - Malloc:"), 0);
+			return (free(copy), perror("Add_arg - Malloc:"), 0);
 		new_arg[++i] = str;
 		new_arg[++i] = NULL;
 	}
