@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:47:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:09:08 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:51:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	**ft_cut_value(char *s, char **split, int i)
 	if (!split[1])
 	{
 		free(split[0]);
+		free(split);
 		return (NULL);
 	}
 	while (s[i])
@@ -39,7 +40,7 @@ static char	**ft_cut_var(char *s, char **split)
 		i++;
 	split[0] = malloc(sizeof(**split) * (i + 1));
 	if (split[0] == NULL)
-		return (perror("Ft_cut_var - Malloc"), NULL);
+		return (free(split), perror("Ft_cut_var - Malloc"), NULL);
 	k = 0;
 	while (k < i)
 	{
