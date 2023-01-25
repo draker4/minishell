@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:12:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:45:51 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,25 @@ void	print_exec(t_exec *exec)
 
 static int	read_line(t_data *data)
 {
-	char	*line;
-	t_exec	*exec;
 	int		check;
 
-	exec = NULL;
+	data->exec_begin = NULL;
 	if (data->modify_env)
 		if (update_envp(data) || get_path(data))
 			return (FAIL);
-	line = readline("minishell > ");
+	data->line = readline("minishell > ");
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
 	if (tcsetattr(0, TCSANOW, &data->term))
 		return (perror("Read_line - tcsetattr"), -1);
-	check = check_line(line);
+	check = check_line(data->line);
 	if (check > 0)
 	{
-		if (parse(line, &exec, data))
-			execute(exec);
+		if (parse(data->line, &data->exec_begin, data))
+			execute(data->exec_begin);
 	}
 	else
 		g_exit_status = 0;
-	free_all(line, &exec);
+	free_readline(data->line, &data->exec_begin);
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
 	if (tcsetattr(0, TCSANOW, &data->term))
 		return (perror("Read_line - tcsetattr"), -1);
