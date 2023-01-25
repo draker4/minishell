@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 10:26:53 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 10:51:53 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_echo(t_exec *exec)
 	}
 	if (new_line)
 		write(1, "\n", 1);
-	printf("%d\n", exec->data->pid[exec->nb]);
 	if (!exec->data->pid[exec->nb])
 		exit(0);
 }
