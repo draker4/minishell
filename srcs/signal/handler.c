@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:19:29 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 18:26:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:23:12 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	handler(int sig)
 	if (sig == SIGQUIT && pid != -1)
 	{
 		g_exit_status = 131;
-		printf("Quit\n");
+		printf("Quit: 3\n");
 	}
 }

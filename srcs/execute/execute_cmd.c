@@ -6,11 +6,13 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 11:58:44 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:41:33 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 void	execute_builtin(t_exec *exec)
 {
@@ -37,7 +39,7 @@ void	execute_commande(t_exec *exec)
 
 	i = 0;
 	if (exec->function == NULL)
-		exit(1);
+		exit(0);
 	if (exec->cmd == builtin)
 		return (execute_builtin(exec));
 	if (ft_strchr(exec->function, '/'))
@@ -52,7 +54,7 @@ void	execute_commande(t_exec *exec)
 		}
 	}
 	ft_perror("minishell", exec->arg[0], "command not found");
-	exit (1);
+	exit (127);
 }
 
 void	execute(t_exec *exec)
