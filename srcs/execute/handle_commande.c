@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 15:00:31 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 15:47:26 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static void	handle_pipe(t_exec *exec)
 	else if (!exec->data->pid[exec->nb])
 	{
 		if (close(exec->fd_pipe[0]))
-			return (perror("Handle_pipe (exec) - Close"), exit (1));
+			return (perror("Handle_pipe (exec) - Close"), exit(1));
 		if (dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
-			return (perror("Handle_pipe (exec) - Dup2"), exit (1));
+			return (perror("Handle_pipe (exec) - Dup2"), exit(1));
 		if (close(exec->fd_pipe[1]))
-			return (perror("Handle_pipe (exec) - Close"), exit (1));
+			return (perror("Handle_pipe (exec) - Close"), exit(1));
 		execute_commande(exec);
 	}
 	else
@@ -45,7 +45,7 @@ static void	handle_pipe(t_exec *exec)
 static void	last_cmd(t_exec *exec)
 {
 	int	update_status;
-	int	exit;
+	int	status;
 
 	update_status = 1;
 	exec->data->pid[exec->nb] = fork();
@@ -57,14 +57,12 @@ static void	last_cmd(t_exec *exec)
 	{
 		while (exec->nb >= 0)
 		{
-			waitpid(exec->data->pid[exec->nb--], &exit, 0);
+			waitpid(exec->data->pid[exec->nb--], &status, WUNTRACED);
 			if (update_status)
 			{
 				close(STDIN_FILENO);
-				if (WIFEXITED(exit))
-					g_exit_status = WEXITSTATUS(exit);
-				else if (WIFSIGNALED(exit))
-					g_exit_status = 128 + WTERMSIG(exit);
+				if (WIFEXITED(status))
+					g_exit_status = WEXITSTATUS(status);
 				update_status = 0;
 			}
 		}
