@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:41:54 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:49:33 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ t_env	*in_env(t_env *full_env, char *search_var)
 		return (NULL);
 	while (full_env)
 	{
-		if (!ft_strncmp(full_env->var, search_var, ft_strlen(full_env->var) + 1))
+		if (!ft_strncmp(full_env->var, search_var,
+				ft_strlen(full_env->var) + 1))
 			return (full_env);
 		full_env = full_env->next;
 	}
