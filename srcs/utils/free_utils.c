@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 19:40:23 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:48:22 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_all(char *str, t_exec **exec)
+void	free_readline(char *str, t_exec **exec)
 {
 	if (!str)
 		free(str);
@@ -40,4 +40,10 @@ void	free_data(t_data *data)
 		free_split(data->envp);
 	if (data->env)
 		env_clear_data(&data->env);
+}
+
+void	free_all(t_data *data)
+{
+	free_readline(data->line, &data->exec_begin);
+	free_data(data);
 }

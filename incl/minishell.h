@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 13:50:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:48:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct s_data
 {
 	char				**path;
 	char				**envp;
+	char				*line;
+	struct s_exec		*exec_begin;
 	t_env				*env;
 	int					modify_env;
 	pid_t				*pid;
@@ -215,8 +217,9 @@ int			create_exec(char *str, t_exec **exec, t_data *data);
 
 // free utils
 void		free_split(char **split);
-void		free_all(char *str, t_exec **exec);
+void		free_readline(char *str, t_exec **exec);
 void		free_data(t_data *data);
+void		free_all(t_data *data);
 
 // split words
 char		**split_not_quotes(char *str);
@@ -253,10 +256,6 @@ int			remove_var(t_env **full_env, char *search_var);
 // exit status
 int			change_exit_status(t_exec *exec);
 char		*parse_exit_status(char *str);
-
-// free utils
-void		free_split(char **split);
-void		free_all(char *str, t_exec **exec);
 
 // get path variable
 int			ft_split_data(char ***new, char const *s, char c);
