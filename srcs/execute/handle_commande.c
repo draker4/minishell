@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 14:46:00 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 15:00:31 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	handle_pipe(t_exec *exec)
 static void	last_cmd(t_exec *exec)
 {
 	int	update_status;
+	int	exit;
 
 	update_status = 1;
 	exec->data->pid[exec->nb] = fork();
@@ -56,14 +57,14 @@ static void	last_cmd(t_exec *exec)
 	{
 		while (exec->nb >= 0)
 		{
-			waitpid(exec->data->pid[exec->nb--], &g_exit_status, 0);
+			waitpid(exec->data->pid[exec->nb--], &exit, 0);
 			if (update_status)
 			{
 				close(STDIN_FILENO);
-				if (WIFEXITED(g_exit_status))
-					g_exit_status = WEXITSTATUS(g_exit_status);
-				else if (WIFSIGNALED(g_exit_status))
-					g_exit_status = 128 + WTERMSIG(g_exit_status);
+				if (WIFEXITED(exit))
+					g_exit_status = WEXITSTATUS(exit);
+				else if (WIFSIGNALED(exit))
+					g_exit_status = 128 + WTERMSIG(exit);
 				update_status = 0;
 			}
 		}
