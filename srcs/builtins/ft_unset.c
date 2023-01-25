@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 14:20:59 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:48:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_exit_status;
 
 void	ft_unset(t_exec *exec)
 {
-	int		i;
+	int	i;
 
 	exec->data->modify_env = 1;
 	if (size_arg(exec->arg) == 1)

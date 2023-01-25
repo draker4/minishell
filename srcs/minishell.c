@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:53:53 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:51:04 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	g_exit_status;
 
 static int	read_line(t_data *data)
 {
-	int		check;
+	int	check;
 
 	data->exec_begin = NULL;
 	if (data->modify_env)

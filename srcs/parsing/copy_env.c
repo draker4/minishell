@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:20:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:55:28 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:34:14 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	copy_env(char **envp, t_data *data)
 	t_env	*new;
 	char	**split;
 
-	i = 0;
-	while (envp[i])
+	i = -1;
+	while (envp[++i])
 	{
 		split = split_var(envp[i]);
 		if (!split)
@@ -71,7 +71,7 @@ int	copy_env(char **envp, t_data *data)
 		if (split[1])
 			new->has_equal = 1;
 		env_add_back(&data->env, new);
-		i++;
+		free(split);
 	}
 	return (1);
 }

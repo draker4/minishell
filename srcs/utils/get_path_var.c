@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:05:10 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:33:48 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:49:39 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ static char	**split_data(char const *s, char c)
 
 int	get_path(t_data *data)
 {
+	if (data->path)
+		free_split(data->path);
 	if (in_env(data->env, "PATH") && in_env(data->env, "PATH")->value)
 	{
 		data->path = split_data(in_env(data->env, "PATH")->value, ':');

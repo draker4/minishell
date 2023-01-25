@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:35:35 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:53:22 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	update_env(t_exec *exec)
 			include_value(exec->data->env, var);
 		else
 			include_var(exec->data, var);
-		free(var);
+		free_split(var);
 		i++;
 	}
 	g_exit_status = 0;

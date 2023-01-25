@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:48:22 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 18:42:57 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_split(char **split)
 
 void	free_readline(char *str, t_exec **exec)
 {
-	if (!str)
+	if (str)
 		free(str);
 	str = NULL;
 	exec_clear_data(exec);
