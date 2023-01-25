@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 14:39:04 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:53:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static int	read_line(t_data *data)
 		if (parse(line, &exec, data))
 			execute(exec);
 	}
+	else
+		g_exit_status = 0;
 	free_all(line, &exec);
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
 	if (tcsetattr(0, TCSANOW, &data->term))
