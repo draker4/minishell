@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:05:10 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 10:28:26 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:29:17 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_divide(char const *s, char c)
 	{
 		j = i;
 		while (s[i] != c && s[i])
-			i ++;
+			i++;
 		if (i - j)
 			size++;
 		if (s[i])
@@ -78,7 +78,7 @@ int	ft_split_data(char ***new, char const *s, char c)
 	size = ft_divide(s, c);
 	*new = malloc(sizeof(char *) * (size + 1));
 	if (*new == NULL)
-		return (perror("ft_split_data"), FAIL);
+		return (perror("ft_split_data - malloc"), FAIL);
 	if (ft_insert(s, c, *new, 0))
 		return (FAIL);
 	(*new)[size] = NULL;
@@ -88,22 +88,14 @@ int	ft_split_data(char ***new, char const *s, char c)
 int	get_path(t_data *data)
 {
 	int		i;
-	char	**path_all;
 
 	i = 0;
-	if (!data->envp[0])
-		return (0);
-	while (data->envp[i])
+	if (in_env(data->env, "PATH"))
 	{
-		if (!ft_strncmp("PATH=", data->envp[i], 5))
-			break ;
-		i++;
+		if (ft_split_data(&data->path, in_env(data->env, "PATH")->value, ':'))
+			return (FAIL);
 	}
-	if (!data->envp[i])
-		return (0);
-	if (ft_split_data(&path_all, data->envp[i], '='))
-		return (FAIL);
-	if (ft_split_data(&data->path, path_all[1], ':'))
-		return (FAIL);
+	else
+		data->path = NULL;
 	return (0);
 }
