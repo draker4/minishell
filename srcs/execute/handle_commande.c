@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 15:47:26 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 15:49:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,16 @@ void	handle_cmd_list(t_exec *exec)
 {
 	if (!change_exit_status(exec))
 		return ;
-	if (exec->input)
+	if (exec->input && change_input(exec->input))
 	{
-		if (change_input(exec->input))
-		{
-			g_exit_status = 1;
-			close_file(exec);
-			if (exec->next)
-				handle_cmd_list(exec->next);
-			return ;
-		}
+		g_exit_status = 1;
+		close_file(exec);
+		if (exec->next)
+			handle_cmd_list(exec->next);
+		return ;
 	}
-	if (exec->output)
-	{
-		if (change_output(exec->output))
-			return (close_file(exec));
-	}
+	if (exec->output && change_output(exec->output))
+		return (close_file(exec));
 	if (exec->next)
 	{
 		handle_pipe(exec);
