@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 15:49:15 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 15:52:13 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,22 @@ void	handle_cmd_list(t_exec *exec)
 {
 	if (!change_exit_status(exec))
 		return ;
-	if (exec->input && change_input(exec->input))
+	if (exec->input)
 	{
-		g_exit_status = 1;
-		close_file(exec);
-		if (exec->next)
-			handle_cmd_list(exec->next);
-		return ;
+		if (change_input(exec->input))
+		{
+			g_exit_status = 1;
+			close_file(exec);
+			if (exec->next)
+				handle_cmd_list(exec->next);
+			return ;
+		}
 	}
-	if (exec->output && change_output(exec->output))
-		return (close_file(exec));
+	if (exec->output)
+	{
+		if (change_output(exec->output))
+			return (close_file(exec));
+	}
 	if (exec->next)
 	{
 		handle_pipe(exec);
@@ -97,15 +103,12 @@ void	handle_cmd(t_exec *exec)
 {
 	if (!change_exit_status(exec))
 		return ;
-	if (exec->input)
-		if (change_input(exec->input))
-			return (g_exit_status = 1, close_file(exec));
-	if (exec->output)
-		if (change_output(exec->output))
-			return (close_file(exec));
+	if (exec->input && change_input(exec->input))
+		return (g_exit_status = 1, close_file(exec));
+	if (exec->output && change_output(exec->output))
+		return (close_file(exec));
 	if (exec->cmd == builtin)
-		return (execute_builtin(exec));
-	else
-		last_cmd(exec);
+		return (execute_builtin(exec), close_file(exec));
+	last_cmd(exec);
 	close_file(exec);
 }
