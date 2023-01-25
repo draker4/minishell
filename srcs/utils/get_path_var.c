@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 20:05:10 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:29:17 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 17:33:48 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,29 @@ static int	ft_insert(const char *s, char c, char **split, int i)
 	return (0);
 }
 
-int	ft_split_data(char ***new, char const *s, char c)
+static char	**split_data(char const *s, char c)
 {
 	int		size;
+	char	**split;
 
 	if (s == NULL)
-		return (FAIL);
+		return (NULL);
 	size = ft_divide(s, c);
-	*new = malloc(sizeof(char *) * (size + 1));
-	if (*new == NULL)
-		return (perror("ft_split_data - malloc"), FAIL);
-	if (ft_insert(s, c, *new, 0))
-		return (FAIL);
-	(*new)[size] = NULL;
-	return (0);
+	split = malloc(sizeof(char *) * (size + 1));
+	if (split == NULL)
+		return (perror("ft_split_data - malloc"), NULL);
+	if (ft_insert(s, c, split, 0))
+		return (NULL);
+	split[size] = NULL;
+	return (split);
 }
 
 int	get_path(t_data *data)
 {
-	int		i;
-
-	i = 0;
-	if (in_env(data->env, "PATH"))
+	if (in_env(data->env, "PATH") && in_env(data->env, "PATH")->value)
 	{
-		if (ft_split_data(&data->path, in_env(data->env, "PATH")->value, ':'))
+		data->path = split_data(in_env(data->env, "PATH")->value, ':');
+		if (!data->path)
 			return (FAIL);
 	}
 	else
