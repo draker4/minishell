@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:04:53 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:25:40 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ char	*get_wildcard(char *str)
 	check = check_str(str);
 	if (!check)
 		return (wild_clear_data(&wild), str);
-	printf("%s\n", check);
 	check_wildcard(check, wild);
 	free(check);
 	return (link_wildcard(str, &wild));
@@ -112,7 +111,7 @@ char	*get_wildcard(char *str)
 // 	char	*str;
 // 	char	*wildcard;
 
-// 	str = ft_strdup("a**c***e");
+// 	str = ft_strdup("*e");
 // 	wildcard = get_wildcard(str);
 // 	printf("%s\n", wildcard);
 // 	free(wildcard);
