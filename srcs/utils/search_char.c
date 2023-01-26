@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:12:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 12:50:28 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:48:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,28 @@ int	has_exit_status(char *str)
 		i++;
 	}
 	return (0);
+}
+
+int	has_space(char *str)
+{
+	int	i;
+	int	nb_spaces;
+
+	i = 0;
+	nb_spaces = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+		{
+			while (str[i] == ' ')
+				i++;
+			if (str[i])
+				nb_spaces++;
+		}
+		if (str[i])
+			i++;
+	}
+	return (nb_spaces);
 }
