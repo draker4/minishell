@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:07:19 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 20:55:29 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,7 @@ int			is_in_quote(char *str, int index);
 int			has_equal(char *str);
 int			has_exit_status(char *str);
 int			has_space(char *str);
+int			has_star(char *str);
 
 // prototype split environment variable
 char		**split_var(char *s);
@@ -301,7 +302,8 @@ void		wild_add_back(t_wild **wild, t_wild *new);
 
 // check wildcard
 char		*check_str(char *str);
-void		check_wildcard(char *str, t_wild *wild);
+int			nb_wildcard(char *str);
+int			confirm_middle(t_wild *wild, char **tab);
 
 // manage wildcard
 char		*get_wildcard(char *search);

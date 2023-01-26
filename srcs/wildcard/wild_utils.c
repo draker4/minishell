@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_wild.c                                       :+:      :+:    :+:   */
+/*   wild_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:25:32 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 20:52:10 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,53 +60,50 @@ char	*check_str(char *str)
 	return (new);
 }
 
-
-int	confirm_char(char *str, t_wild *tmp, int *i, int *j)
+int	nb_wildcard(char *str)
 {
-	if (str[*i] != '*' && str[*i] != tmp->arg[*j])
-		return (1);
-	else if (str[*i] != '*' && str[*i] == tmp->arg[*j])
-	{
-		*i += 1;
-		*j += 1;
-		if (!str[*i] && !tmp->arg[*j])
-			return (tmp->keep = 1, 1);
-		return (0);
+	int	i;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	while (str[i])
+	{	
+		if (str[i])
+			nb++;
+		i++;
 	}
-	else if (str[*i] == '*' && str[*i + 1] && tmp->arg[*j])
-	{
-		*i += 1;
-		while (tmp->arg[*j] && str[*i] != tmp->arg[*j])
-			*j += 1;
-		if (str[*i] == tmp->arg[*j])
-		{	
-			*i += 1;
-			*j += 1;
-		}
-		//printf("%s - %c - %c\n", tmp->arg, str[*i], tmp->arg[*j]);
-		if (!tmp->arg[*j] && (!str[*i] || (str[*i] == '*' && !str[*i + 1])))
-			return (tmp->keep = 1, 1);
-		return (0);
-	}
-	return (tmp->keep = 1, 1);
+	return (nb);
 }
 
-void	check_wildcard(char *str, t_wild *wild)
+int	check_search(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	if (!s1[i])
+		return (0);
+	return (1);
+}
+
+int	confirm_middle(t_wild *wild, char **tab)
 {
 	int		i;
 	int		j;
-	t_wild	*tmp;
 
-	tmp = wild;
-	while (tmp)
+	if (!tab)
+		return (perror("confirm_middle - malloc"), 1);
+	i = 0;
+	j = 0;
+	while (tab[i] && wild->arg[j])
 	{
-		i = 0;
-		j = 0;
-		while (str[i] && tmp->arg[j])
-		{
-			if (confirm_char(str, tmp, &i, &j))
-				break ;
-		}
-		tmp = tmp->next;
+		if (!check_search(tab[i], &wild->arg[j]))
+			i++;
+		j++;
 	}
+	if (!tab[i])
+		return (free_split(tab), 0);
+	return (free_split(tab), 1);
 }

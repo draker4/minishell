@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:25:40 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 20:49:26 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,32 @@ char	*link_wildcard(char *str, t_wild **wild)
 	return (free(str), final);
 }
 
+void	check_wildcard(char *str, t_wild *wild, int nb)
+{
+	int	str_size;
+	int	arg_size;
+
+	if (wild)
+	{	
+		str_size = ft_strlen(str) - 1;
+		arg_size = ft_strlen(wild->arg) - 1;
+		if (str[0] != '*' && str[0] != wild->arg[0])
+			return (check_wildcard(str, wild->next, nb));
+		if (str[str_size] != '*' && str[str_size] != wild->arg[arg_size])
+			return (check_wildcard(str, wild->next, nb));
+		if (nb > 1)
+			if (confirm_middle(wild, ft_split(str, '*')))
+				return (check_wildcard(str, wild->next, nb));
+		wild->keep = 1;
+	}
+}
+
 char	*get_wildcard(char *str)
 {
 	DIR		*dirp;
 	t_wild	*wild;
 	char	*check;
+	int		nb;
 
 	dirp = opendir(".");
 	if (!dirp)
@@ -101,18 +122,8 @@ char	*get_wildcard(char *str)
 	check = check_str(str);
 	if (!check)
 		return (wild_clear_data(&wild), str);
-	check_wildcard(check, wild);
+	nb = nb_wildcard(str);
+	check_wildcard(check, wild, nb);
 	free(check);
 	return (link_wildcard(str, &wild));
 }
-
-// int	main(void)
-// {
-// 	char	*str;
-// 	char	*wildcard;
-
-// 	str = ft_strdup("*e");
-// 	wildcard = get_wildcard(str);
-// 	printf("%s\n", wildcard);
-// 	free(wildcard);
-// }

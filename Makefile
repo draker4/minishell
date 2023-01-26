@@ -91,8 +91,8 @@ SRCS_U			=	env_lst_utils.c			\
 					split_var.c				\
 					split_words.c
 
-SRCS_W			=	check_wild.c			\
-					wild_lst_utils.c		\
+SRCS_W			=	wild_lst.c				\
+					wild_utils.c			\
 					wildcard.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
