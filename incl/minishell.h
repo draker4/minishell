@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:07:19 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:11:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,7 @@ int			is_in_quote(char *str, int index);
 int			has_equal(char *str);
 int			has_exit_status(char *str);
 int			has_space(char *str);
+int			has_star(char *str);
 
 // prototype split environment variable
 char		**split_var(char *s);
