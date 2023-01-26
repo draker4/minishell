@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:52:20 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 11:00:22 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	no_arg(t_exec *exec)
 	if (!in_env(exec->data->env, "HOME"))
 		write(2, "HOME not set\n", 13);
 	else if (chdir(in_env(exec->data->env, "HOME")->value))
-		ft_perror("minishell: cd :", "HOME", NULL);
+		ft_auto_perror("minishell: cd", "HOME", NULL);
 	else
 		change_var(exec);
 	g_exit_status = 0;
@@ -54,7 +54,7 @@ void	ft_cd(t_exec *exec)
 		return (no_arg(exec));
 	if (chdir(exec->arg[1]))
 	{
-		ft_perror("minishell: cd :", exec->arg[1], NULL);
+		ft_auto_perror("minishell: cd", exec->arg[1], NULL);
 		g_exit_status = 1;
 		if (!exec->data->pid[exec->nb])
 			exit(1);

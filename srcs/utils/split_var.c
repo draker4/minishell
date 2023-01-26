@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:47:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 18:16:53 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 09:37:29 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ static char	**ft_cut_var(char *s, char **split)
 char	**split_var(char *s)
 {
 	char	**split;
-	int		i;
 
-	i = 0;
 	if (s == NULL)
 		return (NULL);
 	split = malloc(sizeof(*split) * 3);

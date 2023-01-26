@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:46:57 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 09:58:42 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int	ft_is_num(char *str)
 
 void	ft_exit(t_exec *exec)
 {
+	int	code;
+
 	write(2, "exit\n", 5);
 	if (size_arg(exec->arg) == 1)
 	{
@@ -46,14 +48,12 @@ void	ft_exit(t_exec *exec)
 		free_all(exec->data);
 		exit(255);
 	}
-	else if (size_arg(exec->arg) > 2)
-	{
-		write(2, "minishell: exit: too many arguments\n", 36);
-		g_exit_status = 1;
-	}
 	else if (size_arg(exec->arg) == 2)
 	{
+		code = ft_atoi(exec->arg[1]) % 256;
 		free_all(exec->data);
-		exit((ft_atoi(exec->arg[1]) * 1) % 256);
+		exit(code);
 	}
+	write(2, "minishell: exit: too many arguments\n", 36);
+	g_exit_status = 1;
 }

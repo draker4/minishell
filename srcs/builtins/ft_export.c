@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 19:19:46 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:59:16 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	include_value(t_env *full_env, char **var)
 	if (tmp->value)
 		free (tmp->value);
 	tmp->value = var[1];
+	free(var[0]);
 }
 
 void	include_var(t_data *data, char **var)
@@ -65,7 +66,7 @@ void	update_env(t_exec *exec)
 		if (!var)
 			return (handle_error(exec));
 		if (ft_isdigit(var[0][0]))
-			ft_perror("minishell: export: `", exec->arg[i],
+			ft_man_perror("minishell: export: `", exec->arg[i],
 				"': not a valid identifier");
 		else if (in_env(exec->data->env, var[0]))
 			include_value(exec->data->env, var);
