@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 19:16:33 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:15:04 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ static int	join_var_value(char **envp, t_env *env)
 	int		i;
 	int		j;
 
-	// printf("env var = %s\n", env->var);
-	// printf("env value = %s\n",env->value);
-	// printf("env var = %zu\n", ft_strlen(env->var));
-	// printf("env value = %zu\n",ft_strlen(env->value));
-	// printf("has equal = %d\n", env->has_equal);
 	*envp = malloc(sizeof(char) * (ft_strlen(env->value)
 				+ ft_strlen(env->var)
 				+ env->has_equal + 1));
