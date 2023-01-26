@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:37:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 11:08:22 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 11:19:06 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	cut_space(t_exec *current, int i, int nb_spaces)
 	char	**new_arg;
 	char	**split;
 
-	j = 0;
 	new_arg = malloc(sizeof(char *) * (size_arg(current->arg) + nb_spaces + 1));
 	if (!new_arg)
 		return (perror("Cut_space - Malloc"), FAIL);
@@ -32,11 +31,12 @@ static int	cut_space(t_exec *current, int i, int nb_spaces)
 		new_arg[j] = current->arg[j];
 		j++;
 	}
+	free(current->arg[j]);
 	k = 0;
 	while (split[k])
 		new_arg[j++] = split[k++];
+	new_arg[j] = NULL;
 	free(current->arg);
-	free(current->arg[i]);
 	current->arg = new_arg;
 	return (free(split), 0);
 }
