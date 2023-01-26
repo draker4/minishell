@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 19:58:49 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:57:10 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,7 @@ char		**split_var(char *s);
 // split words
 char		**split_not_quotes(char *str);
 
-void		ft_perror(char *info, char *ft, char *error);
+void		ft_auto_perror(char *info, char *ft, char *error);
+void		ft_man_perror(char *info, char *ft, char *error);
 
 #endif

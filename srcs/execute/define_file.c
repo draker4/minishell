@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 20:15:41 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:58:21 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	change_input(t_input *input, t_exec *exec)
 	if (input->in == in_file)
 	{
 		if (access(input->str, F_OK))
-			return (ft_perror("minishell", input->str, NULL), FAIL);
+			return (ft_auto_perror("minishell", input->str, NULL), FAIL);
 		input->file = open(input->str, O_RDONLY);
 		if (input->file < 0)
 			return (perror("Change_input - Open"), FAIL);

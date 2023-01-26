@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 16:31:49 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:58:59 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	execute_commande(t_exec *exec)
 			i++;
 		}
 	}
-	ft_perror("minishell: ", exec->arg[0], ": command not found");
+	ft_auto_perror("minishell", exec->arg[0], "command not found");
 	exit (127);
 }
 
