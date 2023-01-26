@@ -6,7 +6,7 @@
 /*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 10:58:21 by baptiste         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 11:11:10 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	change_input(t_input *input, t_exec *exec)
 	}
 	else if (input->in == delimiter)
 		if (change_delimiter(input, exec))
-			return (perror("Change_input - access"), FAIL);
+			return (FAIL);
 	if (dup2(input->file, STDIN_FILENO) < 0)
 		return (perror("Change_input - Dup2"),
 			unlink(".delimiter_tmp"), FAIL);

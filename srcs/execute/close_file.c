@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/21 16:56:05 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 11:11:32 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static void	close_input(t_exec *exec, t_input *input)
 {
 	if (input->file > 0)
-		if (close (input->file))
-			perror("Close_input - Close");
+		close (input->file);
 	if (input->in == delimiter)
 		unlink(".delimiter_tmp");
 	if (input->next)

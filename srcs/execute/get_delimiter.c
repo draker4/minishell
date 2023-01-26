@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_delimiter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 20:00:31 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 11:14:01 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	get_delimiter(int fd, char **line, t_exec *exec)
 		if (nbc < 0)
 		{
 			str[0] = '\0';
-			return (free(tmp), perror("Get_next_line - read"), FAIL);
+			return (free(tmp), FAIL);
 		}
 		str[nbc] = '\0';
 		tmp = gnl_strjoin(tmp, str);
