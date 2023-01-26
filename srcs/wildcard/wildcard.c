@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 14:09:33 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:04:53 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,79 @@ static char	*wildcard_strjoin(char *s1, char *s2)
 	return (new);
 }
 
-char	*get_wildcard(void)
+int	copy_wildcard(char *str, DIR *dirp, t_wild **wild)
 {
-	DIR				*dirp;
-	char			*wildcard;
+	t_wild			*new;
 	struct dirent	*file;
 
-	dirp = opendir(".");
-	wildcard = NULL;
 	file = readdir(dirp);
 	while (file)
 	{
-		wildcard = wildcard_strjoin(wildcard, file->d_name);
+		if ((str && str[0] != '.' && file->d_name[0] != '.')
+			|| (str && str[0] == '.' && file->d_name[0] == '.'))
+		{
+			new = new_wild(file->d_name);
+			if (!new)
+				return (wild_clear_data(wild), closedir(dirp), FAIL);
+			wild_add_back(wild, new);
+		}
 		file = readdir(dirp);
 	}
-	printf("%s\n", wildcard);
 	closedir(dirp);
-	return (wildcard);
+	return (0);
 }
+
+char	*link_wildcard(char *str, t_wild **wild)
+{
+	char	*final;
+	t_wild	*tmp;
+
+	tmp = *wild;
+	final = NULL;
+	while (tmp)
+	{
+		if (tmp->keep)
+		{
+			final = wildcard_strjoin(final, tmp->arg);
+			if (!final)
+				return (str);
+		}
+		tmp = tmp->next;
+	}
+	wild_clear_data(wild);
+	if (!final)
+		return (str);
+	return (free(str), final);
+}
+
+char	*get_wildcard(char *str)
+{
+	DIR		*dirp;
+	t_wild	*wild;
+	char	*check;
+
+	dirp = opendir(".");
+	if (!dirp)
+		return (perror("get_wildcard - opendir"), str);
+	wild = NULL;
+	if (copy_wildcard(str, dirp, &wild) || !wild)
+		return (str);
+	check = check_str(str);
+	if (!check)
+		return (wild_clear_data(&wild), str);
+	printf("%s\n", check);
+	check_wildcard(check, wild);
+	free(check);
+	return (link_wildcard(str, &wild));
+}
+
+// int	main(void)
+// {
+// 	char	*str;
+// 	char	*wildcard;
+
+// 	str = ft_strdup("a**c***e");
+// 	wildcard = get_wildcard(str);
+// 	printf("%s\n", wildcard);
+// 	free(wildcard);
+// }
