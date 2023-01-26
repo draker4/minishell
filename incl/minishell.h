@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 18:45:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:07:19 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 # define FAIL 1
 
-/* -----------------------------  ENUMERATION  ----------------------------- */
+/* -----------------------------  ENUMERATION  ------------------------------ */
 
 enum e_type
 {
@@ -106,6 +106,14 @@ typedef struct s_exec
 	t_data			*data;
 	struct s_exec	*next;
 }	t_exec;
+
+// structure used to handle wildcard
+typedef struct s_wild
+{
+	int				keep;
+	char			*arg;
+	struct s_wild	*next;
+}	t_wild;
 
 /* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
 
@@ -228,11 +236,11 @@ char		*parse_word_quotes(char *str, char **envp);
 // quotes
 int			parse_quotes_env(char *str, char **line_parsed, char **envp);
 
-/* --------------------------  PROTOTYPE SIGNAL  --------------------------- */
+/* --------------------------  PROTOTYPE SIGNAL  ---------------------------- */
 
 void		handler(int sig);
 
-/* -------------------------- PROTOTYPE UTILS  --------------------------- */
+/* ---------------------------  PROTOTYPE UTILS  ---------------------------- */
 
 // prototypes env list utils
 t_env		*new_env(char *var, char *value, int has_equal);
@@ -284,7 +292,18 @@ char		**split_not_quotes(char *str);
 void		ft_auto_perror(char *info, char *ft, char *error);
 void		ft_man_perror(char *info, char *ft, char *error);
 
+/* -------------------------- PROTOTYPE WILDCARD  --------------------------- */
+
+// manage wildcard list
+t_wild		*new_wild(char *file);
+void		wild_clear_data(t_wild **wild);
+void		wild_add_back(t_wild **wild, t_wild *new);
+
+// check wildcard
+char		*check_str(char *str);
+void		check_wildcard(char *str, t_wild *wild);
+
 // manage wildcard
-char		*get_wildcard(void);
+char		*get_wildcard(char *search);
 
 #endif

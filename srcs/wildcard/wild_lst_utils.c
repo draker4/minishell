@@ -1,63 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_lst_utils.c                                    :+:      :+:    :+:   */
+/*   wild_lst_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:32:11 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 15:56:09 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 16:07:50 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*new_env(char *var, char *value, int has_equal)
+t_wild	*new_wild(char *file)
 {
-	t_env	*new;
+	t_wild	*new;
 
-	new = malloc(sizeof(t_env));
+	new = malloc(sizeof(t_wild));
 	if (!new)
-		return (perror("New_env"), NULL);
-	new->var = var;
-	new->value = value;
-	new->has_equal = has_equal;
+		return (perror("New_wild - malloc"), NULL);
+	new->arg = ft_strdup(file);
+	if (!new->arg)
+		return (perror("New_wild - ft_strdup"), free(new), NULL);
+	new->keep = 0;
 	new->next = NULL;
 	return (new);
 }
 
-void	env_clear_data(t_env **env)
+void	wild_clear_data(t_wild **wild)
 {
-	t_env	*clear;
-	t_env	*tmp;
+	t_wild	*clear;
+	t_wild	*tmp;
 
-	if (!env)
+	if (!wild)
 		return ;
-	clear = *env;
+	clear = *wild;
 	while (clear)
 	{
 		tmp = clear;
 		clear = clear->next;
-		if (tmp->var)
-			free(tmp->var);
-		if (tmp->value)
-			free(tmp->value);
+		if (tmp->arg)
+			free(tmp->arg);
 		free(tmp);
 	}
-	*env = NULL;
+	*wild = NULL;
 }
 
-void	env_add_back(t_env **env, t_env *new)
+void	wild_add_back(t_wild **wild, t_wild *new)
 {
-	t_env	*current;
+	t_wild	*current;
 
-	if (env && *env)
+	if (wild && *wild)
 	{
-		current = *env;
+		current = *wild;
 		while (current->next)
 			current = current->next;
 		current->next = new;
 	}
-	else if (env)
-		*env = new;
+	else if (wild)
+		*wild = new;
 }

@@ -20,6 +20,7 @@ DIR_SRCS_E			=	./srcs/execute/
 DIR_SRCS_P			=	./srcs/parsing/
 DIR_SRCS_S			=	./srcs/signal/
 DIR_SRCS_U			=	./srcs/utils/
+DIR_SRCS_W			=	./srcs/wildcard/
 DIR_LIBFT			=	./libft/
 DIR_OBJS			=	.build/
 DIR_OBJS_B			=	.build/builtins/
@@ -27,12 +28,14 @@ DIR_OBJS_E			=	.build/execute/
 DIR_OBJS_P			=	.build/parsing/
 DIR_OBJS_S			=	.build/signal/
 DIR_OBJS_U			=	.build/utils/
+DIR_OBJS_W			=	.build/wildcard/
 DIR_OBJS_D			=	.build_debug/
 DIR_OBJS_D_B		=	.build_debug/builtins/
 DIR_OBJS_D_E		=	.build_debug/execute/
 DIR_OBJS_D_P		=	.build_debug/parsing/
 DIR_OBJS_D_S		=	.build_debug/signal/
 DIR_OBJS_D_U		=	.build_debug/utils/
+DIR_OBJS_D_W		=	.build_debug/wildcard/
 DIR_DEBUG			=	${NAME}.dSYM
 
 # -------------  Files  -------------- #
@@ -86,7 +89,10 @@ SRCS_U			=	env_lst_utils.c			\
 					print_error.c			\
 					search_char.c			\
 					split_var.c				\
-					split_words.c			\
+					split_words.c
+
+SRCS_W			=	check_wild.c			\
+					wild_lst_utils.c		\
 					wildcard.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
@@ -95,24 +101,29 @@ OBJS_E			=	${SRCS_E:%.c=${DIR_OBJS_E}%.o}
 OBJS_P			=	${SRCS_P:%.c=${DIR_OBJS_P}%.o}
 OBJS_S			=	${SRCS_S:%.c=${DIR_OBJS_S}%.o}
 OBJS_U			=	${SRCS_U:%.c=${DIR_OBJS_U}%.o}
+OBJS_W			=	${SRCS_W:%.c=${DIR_OBJS_W}%.o}
 OBJS_D			=	${SRCS:%.c=${DIR_OBJS_D}%.o}
 OBJS_D_B		=	${SRCS_B:%.c=${DIR_OBJS_D_B}%.o}
 OBJS_D_E		=	${SRCS_E:%.c=${DIR_OBJS_D_E}%.o}
 OBJS_D_P		=	${SRCS_P:%.c=${DIR_OBJS_D_P}%.o}
 OBJS_D_S		=	${SRCS_S:%.c=${DIR_OBJS_D_S}%.o}
 OBJS_D_U		=	${SRCS_U:%.c=${DIR_OBJS_D_U}%.o}
+OBJS_D_W		=	${SRCS_W:%.c=${DIR_OBJS_D_W}%.o}
 
 DEPS			=	${OBJS:.o=.d}
 DEPS_B			=	${OBJS_B:.o=.d}
 DEPS_E			=	${OBJS_E:.o=.d}
 DEPS_P			=	${OBJS_P:.o=.d}
 DEPS_S			=	${OBJS_S:.o=.d}
+DEPS_U			=	${OBJS_U:.o=.d}
+DEPS_W			=	${OBJS_W:.o=.d}
 DEPS_D			=	${OBJS_D:.o=.d}
 DEPS_D_B		=	${OBJS_D_B:.o=.d}
 DEPS_D_E		=	${OBJS_D_E:.o=.d}
 DEPS_D_P		=	${OBJS_D_P:.o=.d}
 DEPS_D_S		=	${OBJS_D_S:.o=.d}
 DEPS_D_U		=	${OBJS_D_U:.o=.d}
+DEPS_D_W		=	${OBJS_D_W:.o=.d}
 
 # --------------  Path  -------------- #
 
@@ -154,8 +165,8 @@ all					:
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S} ${OBJS_U}
-						${CC} ${CFLAGS} ${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S}  ${OBJS_U} -L ${DIR_LIBFT} ${L_READ1} ${L_READ2} ${L_READ3} ${LIBFT} ${READLINE} -o ${NAME}
+${NAME}				:	${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S} ${OBJS_U} ${OBJS_W}
+						${CC} ${CFLAGS} ${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S} ${OBJS_U} ${OBJS_W} -L ${DIR_LIBFT} ${L_READ1} ${L_READ2} ${L_READ3} ${LIBFT} ${READLINE} -o ${NAME}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ1} ${I_READ2} ${I_READ3} -c $< -o $@
@@ -175,6 +186,9 @@ ${DIR_OBJS_S}%.o	:	${DIR_SRCS_S}%.c Makefile | ${DIR_OBJS}
 ${DIR_OBJS_U}%.o	:	${DIR_SRCS_U}%.c Makefile | ${DIR_OBJS}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ1} ${I_READ2} ${I_READ3} -c $< -o $@
 
+${DIR_OBJS_W}%.o	:	${DIR_SRCS_W}%.c Makefile | ${DIR_OBJS}
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ1} ${I_READ2} ${I_READ3} -c $< -o $@
+
 ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS}
 						${MKDIR} ${DIR_OBJS_B}
@@ -182,6 +196,7 @@ ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS_P}
 						${MKDIR} ${DIR_OBJS_S}
 						${MKDIR} ${DIR_OBJS_U}
+						${MKDIR} ${DIR_OBJS_W}
 
 -include ${DEPS}
 -include ${DEPS_B}
@@ -189,6 +204,7 @@ ${DIR_OBJS}			:
 -include ${DEPS_P}
 -include ${DEPS_S}
 -include ${DEPS_U}
+-include ${DEPS_W}
 
 # ------  Compiled Rules Debug  ------ #
 
@@ -213,6 +229,9 @@ ${DIR_OBJS_D_S}%.o	:	${DIR_SRCS_S}%.c Makefile | ${DIR_OBJS_D}
 ${DIR_OBJS_D_U}%.o	:	${DIR_SRCS_U}%.c Makefile | ${DIR_OBJS_D}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ1} ${I_READ2} ${I_READ3} -g3 ${FSANITIZE} -c $< -o $@
 
+${DIR_OBJS_D_W}%.o	:	${DIR_SRCS_W}%.c Makefile | ${DIR_OBJS_D}
+						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ1} ${I_READ2} ${I_READ3} -g3 ${FSANITIZE} -c $< -o $@
+
 ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D}
 						${MKDIR} ${DIR_OBJS_D_B}
@@ -220,6 +239,7 @@ ${DIR_OBJS_D}		:
 						${MKDIR} ${DIR_OBJS_D_P}
 						${MKDIR} ${DIR_OBJS_D_S}
 						${MKDIR} ${DIR_OBJS_D_U}
+						${MKDIR} ${DIR_OBJS_D_W}
 
 -include ${DEPS_D}
 -include ${DEPS_D_B}
@@ -227,6 +247,7 @@ ${DIR_OBJS_D}		:
 -include ${DEPS_D_P}
 -include ${DEPS_D_S}
 -include ${DEPS_D_U}
+-include ${DEPS_D_W}
 
 # ---------  Usual Commands  --------  #
 
