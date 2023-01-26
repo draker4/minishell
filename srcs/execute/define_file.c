@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 13:26:15 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 13:37:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,12 @@ int	change_redir(t_exec *exec)
 	{
 		if (has_space(tmp->str))
 		{
-			write(2, "minishell: $", 11);
-			write(2, find_var(exec->data->env, tmp->str), \
-			ft_strlen(find_var(exec->data->env, tmp->str)) + 1);
-			write(2, ": ambiguous redirect\n", 21);
+			ft_man_perror("minishell: $", find_var(exec, tmp->str),
+				": ambiguous redirect");
+			// write(2, "minishell: $", 11);
+			// write(2, find_var(exec->data->env, tmp->str), \
+			// ft_strlen(find_var(exec->data->env, tmp->str)) + 1);
+			// write(2, ": ambiguous redirect\n", 21);
 			return (g_exit_status = 1, close_file(exec), FAIL);
 		}
 		if ((tmp->type == in_file || tmp->type == delimiter) && \

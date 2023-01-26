@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 12:31:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 14:09:30 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,25 @@ t_env	*in_env(t_env *full_env, char *search_var)
 	return (NULL);
 }
 
-char	*find_var(t_env *full_env, char *search_value)
+char	*find_var(t_exec *exec, char *search_value)
 {
-	if (!full_env || !search_value)
+	char	*parse_search;
+	t_env	*tmp;
+
+	tmp = exec->data->env;
+	if (!tmp || !search_value)
 		return (NULL);
-	while (full_env)
+	while (tmp)
 	{
-		if (!ft_strncmp(full_env->value, search_value,
-				ft_strlen(full_env->value) + 1))
-			return (full_env->var);
-		full_env = full_env->next;
+		parse_search = parse_word_quotes(tmp->value, exec->data->envp);
+		if (!parse_search)
+			return (NULL);
+		if (!ft_strncmp(parse_search, search_value,
+				ft_strlen(search_value) + 1))
+			return (free(parse_search), tmp->var);
+		tmp = tmp->next;
+		free(parse_search);
+		parse_search = NULL;
 	}
 	return (NULL);
 }
