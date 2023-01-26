@@ -33,6 +33,7 @@ DIR_OBJS_D_E		=	.build_debug/execute/
 DIR_OBJS_D_P		=	.build_debug/parsing/
 DIR_OBJS_D_S		=	.build_debug/signal/
 DIR_OBJS_D_U		=	.build_debug/utils/
+DIR_DEBUG			=	${NAME}.dSYM
 
 # -------------  Files  -------------- #
 
@@ -84,7 +85,8 @@ SRCS_U			=	env_lst_utils.c			\
 					print_error.c			\
 					search_char.c			\
 					split_var.c				\
-					split_words.c
+					split_words.c			\
+					wildcard.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_B			=	${SRCS_B:%.c=${DIR_OBJS_B}%.o}
@@ -230,6 +232,7 @@ ${DIR_OBJS_D}		:
 clean				:	
 						${RM} ${DIR_OBJS}
 						${RM} ${DIR_OBJS_D}
+						${RM} ${DIR_DEBUG}
 
 fclean				:	clean
 						${RM} ${NAME}

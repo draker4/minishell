@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 12:31:59 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 14:09:49 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <dirent.h>
 
 # define ERROR_ARG "Please don't enter any argument!\n"
 
@@ -278,5 +279,8 @@ char		**split_not_quotes(char *str);
 
 void		ft_auto_perror(char *info, char *ft, char *error);
 void		ft_man_perror(char *info, char *ft, char *error);
+
+// manage wildcard
+char		*get_wildcard(void);
 
 #endif
