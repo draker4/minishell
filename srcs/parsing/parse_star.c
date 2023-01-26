@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:29:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 20:56:02 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 21:04:02 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static int	create_new_word(t_exec *current, int i)
 	env_word = parse_word_quotes(current->words[i], current->data->envp);
 	if (!env_word)
 		return (0);
+	//printf("entree = %s\n", env_word);
 	star_word = get_wildcard(env_word);
+	//printf("sortie = %s\n", star_word);
 	if (!star_word)
 		return (free(env_word), 0);
 	free(current->words[i]);
