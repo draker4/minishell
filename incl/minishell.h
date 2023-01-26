@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 14:15:50 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 18:45:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ void		execute_commande(t_exec *exec);
 void		execute(t_exec *exec);
 
 // get delimiter
-int			get_delimiter(int fd, char **line, t_exec *exec);
+int			get_delimiter(int fd, char **line, t_exec *exec, int status);
+int			confirm_end(const char *s1, const char *s2);
 
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
 
@@ -217,6 +218,9 @@ void		is_built_in(t_exec *exec);
 // parse space
 int			parse_space(t_exec **exec);
 
+// parse star
+int			parse_star(t_exec **exec);
+
 // parsing
 int			parse(char *str, t_exec **exec, t_data *data);
 char		*parse_word_quotes(char *str, char **envp);
@@ -244,7 +248,7 @@ char		*find_var(t_exec *exec, char *search_value);
 
 // exit status
 int			change_exit_status(t_exec *exec);
-char		*parse_exit_status(char *str);
+char		*parse_exit_status(char *str, int status);
 
 // get path variable
 int			ft_split_data(char ***new, char const *s, char c);

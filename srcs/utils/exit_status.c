@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:53:43 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 12:01:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:00:35 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ static int	add_char_exit(char *str, char **copy, char *nb_itoa)
 	return (1);
 }
 
-char	*parse_exit_status(char *str)
+char	*parse_exit_status(char *str, int status)
 {
 	char	*copy;
 	char	*nb_itoa;
 
-	nb_itoa = ft_itoa(g_exit_status);
+	nb_itoa = ft_itoa(status);
 	if (!nb_itoa)
 		return (perror("Parse_exit_status - ft_itoa"), NULL);
 	copy = malloc(sizeof(char) * 1);
@@ -56,7 +56,7 @@ char	*parse_exit_status(char *str)
 		return (perror("Parse_exit_status - malloc"), NULL);
 	copy[0] = '\0';
 	if (!add_char_exit(str, &copy, nb_itoa))
-		return (free(nb_itoa), NULL);
+		return (free(nb_itoa), free(copy), NULL);
 	free(str);
 	free(nb_itoa);
 	return (copy);
@@ -72,7 +72,7 @@ int	change_exit_status(t_exec *exec)
 	{
 		if (has_exit_status(exec->arg[i]))
 		{
-			str = parse_exit_status(exec->arg[i]);
+			str = parse_exit_status(exec->arg[i], g_exit_status);
 			if (!str)
 				return (0);
 			exec->arg[i] = str;
@@ -80,7 +80,7 @@ int	change_exit_status(t_exec *exec)
 	}
 	if (exec->function && has_exit_status(exec->function))
 	{
-		str = parse_exit_status(exec->function);
+		str = parse_exit_status(exec->function, g_exit_status);
 		if (!str)
 			return (0);
 		exec->function = str;

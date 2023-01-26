@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_delimiter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 14:03:14 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:00:01 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
+extern int	g_exit_status;
 
 // strjoin with the s1 being free at the end;
 static char	*gnl_strjoin(char *s1, char *s2)
@@ -44,77 +42,60 @@ static char	*gnl_strjoin(char *s1, char *s2)
 	return (new);
 }
 
-static void	reset_str(char *tmp, char *str, size_t start)
+static int	parse_delimiter(char **line, t_exec *exec, int status)
 {
-	size_t	i;
+	char	*parsed_line;
 
-	i = 0;
-	while (tmp[start + i])
-	{
-		str[i] = tmp[start + i];
-		i++;
-	}
-	str[i] = '\0';
-}
-
-static int	parse_line(char **line, t_exec *exec)
-{
-	char	*line_parsed;
-
-	line_parsed = parse_word_quotes(*line, exec->data->envp);
-	if (!line_parsed)
-		return (free(*line), FAIL);
-	*line = line_parsed;
+	parsed_line = parse_word_quotes(*line, exec->data->envp);
+	if (!parsed_line)
+		return (FAIL);
+	*line = parsed_line;
+	parsed_line = parse_exit_status(*line, status);
+	if (!parsed_line)
+		return (FAIL);
+	*line = parsed_line;
 	return (0);
 }
 
-static int	ret_line(char *tmp, char *str, char **line, t_exec *exec)
+int	get_delimiter(int fd, char **line, t_exec *exec, int status)
 {
-	size_t	i;
-
-	i = 0;
-	if (!tmp[0])
-		return (free(tmp), 0);
-	while (tmp[i] && tmp[i] != '\n')
-		i++;
-	*line = malloc(sizeof(char) * (i + 2));
-	if (!(*line))
-		return (free(tmp), perror("Ret_line - Malloc (line)"), FAIL);
-	i = 0;
-	while (tmp[i] && tmp[i] != '\n')
-	{
-		(*line)[i] = tmp[i];
-		i++;
-	}
-	(*line)[i] = tmp[i];
-	(*line)[i + 1] = '\0';
-	if (tmp[i++] != '\0')
-		reset_str(tmp, str, i);
-	return (free(tmp), parse_line(line, exec));
-}
-
-int	get_delimiter(int fd, char **line, t_exec *exec)
-{
-	static char	str[BUFFER_SIZE + 1];
-	char		*tmp;
-	int			nbc;
+	char	str[2];
+	int		nbc;
 
 	nbc = 1;
-	tmp = gnl_strjoin(NULL, str);
-	if (!tmp)
-		return (FAIL);
+	*line = NULL;
+	str[0] = '\0';
 	while (!ft_strchr(str, '\n') && nbc > 0)
 	{
-		nbc = read(fd, str, BUFFER_SIZE);
+		nbc = read(fd, str, 1);
 		if (nbc < 0)
-		{
-			str[0] = '\0';
-			return (free(tmp), FAIL);
-		}
+			return (FAIL);
 		str[nbc] = '\0';
-		tmp = gnl_strjoin(tmp, str);
-		if (!tmp)
+		*line = gnl_strjoin(*line, str);
+		if (!*line)
 			return (FAIL);
 	}
-	return (ret_line(tmp, str, line, exec));
+	if (parse_delimiter(line, exec, status))
+		return (free(line), FAIL);
+	return (0);
+}
+
+int	confirm_end(const char *s1, const char *s2)
+{
+	int	i;
+	int	size_s1;
+	int	size_s2;
+
+	if (!*s2)
+		return (1);
+	size_s1 = ft_strlen(s1);
+	size_s2 = ft_strlen(s2);
+	if (size_s1 != size_s2 - 1)
+		return (0);
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	if (i == size_s1 && s2[i] == '\n')
+		return (1);
+	return (0);
 }

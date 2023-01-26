@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:37:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 11:19:06 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 15:25:44 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	parse_space(t_exec **exec)
 	while (current)
 	{
 		i = 0;
-		while (current->arg[i])
+		while (current->arg && current->arg[i])
 		{
 			if (i == 0 && !ft_strncmp(current->arg[0], "export", 7))
 				break ;

@@ -69,6 +69,7 @@ SRCS_P			=	add_env.c				\
 					init_data.c				\
 					is_builtin.c			\
 					parse_space.c			\
+					parse_star.c			\
 					parsing.c				\
 					quotes.c
 

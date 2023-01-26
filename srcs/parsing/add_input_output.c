@@ -6,11 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 12:04:01 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 12:17:20 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 18:50:32 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 static void	add_last_redir(t_exec *current, t_redir *redir)
 {
@@ -58,7 +60,7 @@ int	exit_status_redir(t_exec *exec)
 	{
 		if (has_exit_status(tmp->str))
 		{
-			str = parse_exit_status(tmp->str);
+			str = parse_exit_status(tmp->str, g_exit_status);
 			if (!str)
 				return (0);
 			tmp->str = str;
