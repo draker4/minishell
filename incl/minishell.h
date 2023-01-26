@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/25 19:58:49 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 10:55:39 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,9 @@ int			init_data(t_data *data, char **envp);
 // is_built_in
 void		is_built_in(t_exec *exec);
 
+// parse space
+int			parse_space(t_exec **exec);
+
 // parsing
 int			parse(char *str, t_exec **exec, t_data *data);
 char		*parse_word_quotes(char *str, char **envp);
@@ -283,6 +286,7 @@ int			size_arg(char **arg);
 int			is_in_quote(char *str, int index);
 int			has_equal(char *str);
 int			has_exit_status(char *str);
+int			has_space(char *str);
 
 // prototype split environment variable
 char		**split_var(char *s);

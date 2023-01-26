@@ -67,6 +67,7 @@ SRCS_P			=	add_env.c				\
 					find_redirections.c		\
 					init_data.c				\
 					is_builtin.c			\
+					parse_space.c			\
 					parsing.c				\
 					quotes.c
 
