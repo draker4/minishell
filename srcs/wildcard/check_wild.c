@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:01:48 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:25:32 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	confirm_char(char *str, t_wild *tmp, int *i, int *j)
 			*i += 1;
 			*j += 1;
 		}
+		//printf("%s - %c - %c\n", tmp->arg, str[*i], tmp->arg[*j]);
 		if (!tmp->arg[*j] && (!str[*i] || (str[*i] == '*' && !str[*i + 1])))
 			return (tmp->keep = 1, 1);
 		return (0);

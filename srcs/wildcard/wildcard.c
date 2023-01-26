@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:18:26 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:27:16 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,3 +105,14 @@ char	*get_wildcard(char *str)
 	free(check);
 	return (link_wildcard(str, &wild));
 }
+
+// int	main(void)
+// {
+// 	char	*str;
+// 	char	*wildcard;
+
+// 	str = ft_strdup("*e");
+// 	wildcard = get_wildcard(str);
+// 	printf("%s\n", wildcard);
+// 	free(wildcard);
+// }
