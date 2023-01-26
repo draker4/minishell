@@ -3,99 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   add_input_output.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 12:04:01 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:45:48 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:17:20 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	create_input(t_exec *current, int *index)
+static void	add_last_redir(t_exec *current, t_redir *redir)
 {
-	t_input	*input;
-	t_input	*last;
+	t_redir	*last;
 
-	input = malloc(sizeof(t_input));
-	if (!input)
+	last = last_redir(current->redir);
+	if (last)
+		last->next = redir;
+	else
+		current->redir = redir;
+}
+
+int	create_redir(t_exec *current, int *index, int type1, int type2)
+{
+	t_redir	*redir;
+
+	redir = malloc(sizeof(t_redir));
+	if (!redir)
 		return (perror("Create_input - Malloc:"), 0);
-	input->next = NULL;
-	input->file = -1;
+	redir->next = NULL;
+	redir->file = -1;
 	*index += 1;
-	if (!ft_strncmp(current->words[*index], "<", 1))
+	if (!ft_strncmp(current->words[*index], "<", 2) || \
+	!ft_strncmp(current->words[*index], ">", 2))
 	{
-		input->in = delimiter;
+		redir->type = type2;
 		*index += 1;
 	}
 	else
-		input->in = in_file;
-	input->str = ft_strdup(current->words[*index]);
-	if (!input->str)
-		return (free(input), perror("Create_input - ft_strdup"), 0);
-	last = last_input(current->input);
-	if (last)
-		last->next = input;
-	else
-		current->input = input;
+		redir->type = type1;
+	redir->str = ft_strdup(current->words[*index]);
+	if (!redir->str)
+		return (free(redir), perror("Create_input - ft_strdup"), 0);
+	add_last_redir(current, redir);
 	return (1);
 }
 
-int	create_output(t_exec *current, int *index)
+int	exit_status_redir(t_exec *exec)
 {
-	t_output	*output;
-	t_output	*last;
-
-	output = malloc(sizeof(t_output));
-	if (!output)
-		return (perror("Create_output - Malloc:"), 0);
-	output->next = NULL;
-	output->file = -1;
-	*index += 1;
-	if (!ft_strncmp(current->words[*index], ">", 1))
-	{
-		output->out = append;
-		*index += 1;
-	}
-	else
-		output->out = out_file;
-	output->str = current->words[*index];
-	if (!output->str)
-		return (free (output), perror("Create_output - ft_strdup"), 0);
-	last = last_output(current->output);
-	if (last)
-		last->next = output;
-	else
-		current->output = output;
-	return (1);
-}
-
-int	exit_status_input(t_exec *exec)
-{
-	t_input	*tmp;
+	t_redir	*tmp;
 	char	*str;
 
-	tmp = exec->input;
-	while (tmp)
-	{
-		if (has_exit_status(tmp->str))
-		{
-			str = parse_exit_status(tmp->str);
-			if (!str)
-				return (0);
-			tmp->str = str;
-		}
-		tmp = tmp->next;
-	}
-	return (1);
-}
-
-int	exit_status_output(t_exec *exec)
-{
-	t_output	*tmp;
-	char		*str;
-
-	tmp = exec->output;
+	tmp = exec->redir;
 	while (tmp)
 	{
 		if (has_exit_status(tmp->str))

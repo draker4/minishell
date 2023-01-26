@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:27:05 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 18:02:52 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:08:54 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ static int	create_in_out_arg(t_exec *current)
 	{
 		if (!ft_strncmp(current->words[i], "<", 1) && current->words[i + 1])
 		{
-			if (!create_input(current, &i))
+			if (!create_redir(current, &i, in_file, delimiter))
 				return (0);
 		}
 		else if (!ft_strncmp(current->words[i], ">", 1)
 			&& current->words[i + 1])
 		{
-			if (!create_output(current, &i))
+			if (!create_redir(current, &i, out_file, append))
 				return (0);
 		}
 		else

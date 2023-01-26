@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 11:06:53 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:12:14 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	g_exit_status;
 void	print_exec(t_exec *exec)
 {
 	t_exec		*current;
-	t_input		*input;
-	t_output	*output;
+	t_redir		*redir;
 	int			i;
 
 	current = exec;
@@ -28,18 +27,11 @@ void	print_exec(t_exec *exec)
 		// i = 0;
 		// while (current->words[i])
 		// 	printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
-		input = current->input;
-		while (input)
+		redir = current->redir;
+		while (redir)
 		{
-			printf("detail input = %s et type = %u\n", input->str, input->in);
-			input = input->next;
-		}
-		printf("\n");
-		output = current->output;
-		while (output)
-		{
-			printf("detail output = %s et type = %u\n", output->str, output->out);
-			output = output->next;
+			printf("detail input = %s et type = %u\n", redir->str, redir->type);
+			redir = redir->next;
 		}
 		printf("\n");
 		if (current->arg)

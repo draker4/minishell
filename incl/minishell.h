@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 11:09:56 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:04:40 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,10 @@
 
 /* -----------------------------  ENUMERATION  ----------------------------- */
 
-enum e_in
+enum e_type
 {
 	in_file,
 	delimiter,
-};
-
-enum e_out
-{
 	out_file,
 	append,
 };
@@ -59,23 +55,14 @@ typedef struct s_parse
 	int		save;
 }	t_parse;
 
-// structure used to save all inputs
-typedef struct s_input
+// structure used to save all inputs and outputs (redirections)
+typedef struct s_redir
 {
 	int				file;
 	char			*str;
-	enum e_in		in;
-	struct s_input	*next;
-}	t_input;
-
-// structure used to save all outputs
-typedef struct s_output
-{
-	int				file;
-	char			*str;
-	enum e_out		out;
-	struct s_output	*next;
-}	t_output;
+	enum e_type		type;
+	struct s_redir	*next;
+}	t_redir;
 
 // structre saving the environment variables
 typedef struct s_env
@@ -114,8 +101,7 @@ typedef struct s_exec
 	int				save_stdin;
 	int				save_stdout;
 	int				nb;
-	t_input			*input;
-	t_output		*output;
+	t_redir			*redir;
 	t_data			*data;
 	struct s_exec	*next;
 }	t_exec;
@@ -153,8 +139,7 @@ void		ft_unset(t_exec *exec);
 void		close_file(t_exec *exec);
 
 // define file
-int			change_input(t_input *input, t_exec *exec);
-int			change_output(t_output *output);
+int			change_redir(t_exec *exec);
 
 // handle commande
 void		handle_cmd(t_exec *exec);
@@ -181,10 +166,8 @@ int			add_last(t_env **env);
 int			add_oldpwd(t_env **env);
 
 // add input output list
-int			create_input(t_exec *current, int *index);
-int			create_output(t_exec *current, int *index);
-int			exit_status_input(t_exec *exec);
-int			exit_status_output(t_exec *exec);
+int			create_redir(t_exec *current, int *index, int type1, int type2);
+int			exit_status_redir(t_exec *exec);
 
 // check and (&&), or (||) symbols
 int			check_and_or(char *str);
@@ -271,10 +254,8 @@ void		exec_clear_data(t_exec **exec);
 void		exec_add_back(t_exec **bracket, t_exec *new);
 
 // input output list utils
-t_input		*last_input(t_input *input);
-t_output	*last_output(t_output *output);
-void		input_clear_data(t_input **input);
-void		output_clear_data(t_output **output);
+t_redir		*last_redir(t_redir *redir);
+void		redir_clear_data(t_redir **redir);
 
 // parsing utils
 char		*str_add(char *str, char c);

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 11:34:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 11:59:09 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ t_exec	*new_exec(char *str, t_data *data, int nb)
 	new->data = data;
 	new->nb = nb;
 	new->function = NULL;
-	new->input = NULL;
-	new->output = NULL;
+	new->redir = NULL;
 	new->words = NULL;
 	new->delimiter = NULL;
 	new->next = NULL;
@@ -39,10 +38,8 @@ static void	del_one_exec(t_exec *exec)
 		free_split(exec->words);
 	if (exec->delimiter)
 		free(exec->delimiter);
-	if (exec->input)
-		input_clear_data(&exec->input);
-	if (exec->output)
-		output_clear_data(&exec->output);
+	if (exec->redir)
+		redir_clear_data(&exec->redir);
 	if (exec->function)
 		free(exec->function);
 	if (exec->arg)

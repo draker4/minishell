@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:53:43 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 14:38:09 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:01:07 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	change_exit_status(t_exec *exec)
 			return (0);
 		exec->function = str;
 	}
-	if (!exit_status_input(exec) || !exit_status_output(exec))
+	if (!exit_status_redir(exec))
 		return (0);
 	return (1);
 }
