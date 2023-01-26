@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 12:04:40 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:31:59 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,9 +236,10 @@ void		env_add_back(t_env **env, t_env *new);
 int			exec_size(t_exec *exec);
 
 // env_update
-t_env		*in_env(t_env *full_env, char *search_var);
 int			update_envp(t_data *data);
 int			remove_var(t_env **full_env, char *search_var);
+t_env		*in_env(t_env *full_env, char *search_var);
+char		*find_var(t_env *full_env, char *search_value);
 
 // exit status
 int			change_exit_status(t_exec *exec);
