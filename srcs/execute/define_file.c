@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 12:35:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 13:24:45 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,17 @@ static int	change_input(t_redir *redir, t_exec *exec)
 		if (redir->file < 0)
 			return (perror("Change_input - Open"), FAIL);
 	}
+<<<<<<< HEAD
 	else if (redir->type == delimiter)
 		if (change_delimiter(redir, exec))
 			return (perror("Change_input - access"), FAIL);
 	if (dup2(redir->file, STDIN_FILENO) < 0)
+=======
+	else if (input->in == delimiter)
+		if (change_delimiter(input, exec))
+			return (FAIL);
+	if (dup2(input->file, STDIN_FILENO) < 0)
+>>>>>>> a8c0dd1cb7c13de8403e3152baaf82ccf79e2567
 		return (perror("Change_input - Dup2"),
 			unlink(".delimiter_tmp"), FAIL);
 	while (tmp)
