@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:48:51 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:50:23 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ static int	change_delimiter(t_redir *redir, t_exec *exec, int status)
 		free (line);
 	}
 	if (line)
-	{	
-		printf("free\n");
 		free(line);
-	}
 	close(redir->file);
 	redir->file = open(".delimiter_tmp", O_RDONLY, 0644);
 	if (redir->file < 0)
