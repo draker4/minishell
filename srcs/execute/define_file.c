@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:17:58 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:35:14 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	change_delimiter(t_redir *redir, t_exec *exec, int status)
 {
 	char	*line;
 
-	line = NULL;
 	g_exit_status = -1;
 	redir->file = open(".delimiter_tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (redir->file < 0)
@@ -34,9 +33,12 @@ static int	change_delimiter(t_redir *redir, t_exec *exec, int status)
 		free (line);
 	}
 	if (line)
+	{	
+		printf("free\n");
 		free(line);
+	}
 	close(redir->file);
-	redir->file = open(".delimiter_tmp", O_RDWR, 0644);
+	redir->file = open(".delimiter_tmp", O_RDONLY, 0644);
 	if (redir->file < 0)
 		return (unlink(".delimiter_tmp"),
 			perror("Change_delimiter - Open"), FAIL);
@@ -75,15 +77,8 @@ static int	change_input(t_redir *redir, t_exec *exec)
 	}
 	else if (redir->type == delimiter && control_delimiter(redir, exec))
 		return (FAIL);
-	printf("delimiter ok\n");
 	if (dup2(redir->file, STDIN_FILENO) < 0)
 		return (perror("Change_input - Dup2"), FAIL);
-	// while (tmp)
-	// {
-	// 	if (tmp->type == in_file || tmp->type == delimiter)
-	// 		return (0);
-	// 	tmp = tmp->next;
-	// }
 	return (0);
 }
 
@@ -120,7 +115,6 @@ int	change_redir(t_exec *exec)
 		if ((tmp->type == out_file || tmp->type == append) && \
 		change_output(tmp))
 			return (close_file(exec), FAIL);
-		close_file(exec);
 		tmp = tmp->next;
 	}
 	return (0);
