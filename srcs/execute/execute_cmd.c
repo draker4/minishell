@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 17:53:09 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 14:15:14 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	execute_commande(t_exec *exec)
 			i++;
 		}
 	}
-	ft_auto_perror("minishell", exec->arg[0], "command not found");
+	ft_auto_perror("minishell", exec->function, "command not found");
 	exit (127);
 }
 

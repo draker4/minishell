@@ -61,6 +61,7 @@ SRCS_E			=	close_file.c			\
 
 SRCS_P			=	add_env.c				\
 					add_input_output.c		\
+					change_env.c			\
 					check_and_or_symbols.c	\
 					check_line.c			\
 					check_redirections.c	\
@@ -71,6 +72,9 @@ SRCS_P			=	add_env.c				\
 					find_redirections.c		\
 					init_data.c				\
 					is_builtin.c			\
+					parse_env_only.c		\
+					parse_new_words.c		\
+					parse_quotes.c			\
 					parse_space.c			\
 					parse_star.c			\
 					parsing.c				\
@@ -88,6 +92,7 @@ SRCS_U			=	env_lst_utils.c			\
 					parsing_utils.c			\
 					print_error.c			\
 					search_char.c			\
+					split_spaces.c			\
 					split_var.c				\
 					split_words.c
 

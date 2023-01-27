@@ -6,25 +6,36 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:29:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 10:24:55 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 16:54:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	create_new_word(t_exec *current, int i)
+static int	has_star(char *str)
 {
-	char	*env_word;
-	char	*star_word;
+	int	i;
 
-	env_word = parse_word_quotes(current->words[i], current->data->envp);
-	if (!env_word)
-		return (0);
-	star_word = get_wildcard(env_word);
-	if (!star_word)
-		return (free(env_word), 0);
-	free(current->words[i]);
-	current->words[i] = star_word;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '*' && !is_in_quote(str, i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int	create_new_redir(t_redir *redir)
+{
+	t_redir	*current;
+
+	current = redir;
+	while (current)
+	{
+		current->str = get_wildcard(current->str);
+		current = current->next;
+	}
 	return (1);
 }
 
@@ -37,13 +48,14 @@ int	parse_star(t_exec **exec)
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->words[i])
+		while (tmp->arg[i])
 		{
-			if (has_star(tmp->words[i]))
-				if (!create_new_word(tmp, i))
-					return (0);
+			if (has_star(tmp->arg[i]))
+				tmp->arg[i] = get_wildcard(tmp->arg[i]);
 			i++;
 		}
+		if (!create_new_redir(tmp->redir))
+			return (0);
 		tmp = tmp->next;
 	}
 	return (1);

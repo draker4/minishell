@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:29:23 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 16:09:41 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,9 @@ int			add_oldpwd(t_env **env);
 int			create_redir(t_exec *current, int *index, int type1, int type2);
 int			exit_status_redir(t_exec *exec);
 
+// change environment variable
+int			change_env(t_exec **exec);
+
 // check and (&&), or (||) symbols
 int			check_and_or(char *str);
 
@@ -220,6 +223,7 @@ int			create_path_cmd(t_exec **exec);
 
 // environment variables
 int			check_env(char *str, char **line_parsed, int *i, char **envp);
+int			ft_change_env(char **old_words, char **envp);
 
 // find redirections
 int			find_redirections(t_exec **exec);
@@ -235,6 +239,15 @@ int			init_data(t_data *data, char **envp);
 
 // is_built_in
 void		is_built_in(t_exec *exec);
+
+// parse env only
+char		*parse_env_only(char *str, char **envp);
+
+// parse new words
+int			parse_new_words(t_exec **exec);
+
+// parse quotes
+int			parse_quotes(t_exec **exec);
 
 // parse space
 int			parse_space(t_exec **exec);
@@ -302,7 +315,9 @@ int			is_in_quote(char *str, int index);
 int			has_equal(char *str);
 int			has_exit_status(char *str);
 int			has_space(char *str);
-int			has_star(char *str);
+
+// split spaces not in quotes
+char		**split_spaces(char *s);
 
 // prototype split environment variable
 char		**split_var(char *s);

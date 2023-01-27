@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 10:25:00 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 17:47:55 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,6 @@ char	*parse_word_quotes(char *str, char **envp)
 		return (NULL);
 	}
 	return (word_parsed);
-}
-
-static int	parse_quotes(t_exec **exec)
-{
-	t_exec	*current;
-	char	*word_parsed;
-	int		i;
-
-	current = *exec;
-	while (current)
-	{
-		i = 0;
-		while (current->words[i])
-		{
-			word_parsed = parse_word_quotes(current->words[i], \
-			(*exec)->data->envp);
-			if (!word_parsed)
-				return (0);
-			free(current->words[i]);
-			current->words[i++] = word_parsed;
-		}
-		current = current->next;
-	}
-	return (1);
 }
 
 static int	parse_words(t_exec **exec)
@@ -79,7 +55,7 @@ static int	find_function(t_exec **exec)
 	current = *exec;
 	while (current)
 	{
-		if (current->arg)
+		if (current->arg && current->arg[0])
 		{
 			current->function = ft_strdup(current->arg[0]);
 			if (!delete_slash_symbol(current, current->arg[0]))
@@ -87,7 +63,6 @@ static int	find_function(t_exec **exec)
 		}
 		else
 			current->function = NULL;
-		is_built_in(current);
 		current = current->next;
 	}
 	return (1);
@@ -96,9 +71,10 @@ static int	find_function(t_exec **exec)
 int	parse(char *str, t_exec **exec, t_data *data)
 {
 	if (!create_exec(str, exec, data) || !parse_words(exec)
-		|| !parse_star(exec) || !parse_quotes(exec)
-		|| !find_redirections(exec) || !parse_space(exec)
-		|| !find_function(exec) || !create_path_cmd(exec))
+		|| !find_redirections(exec) || !parse_star(exec)
+		|| !change_env(exec) || !parse_new_words(exec)
+		|| !find_function(exec) || !parse_quotes(exec)
+		|| !parse_space(exec) || !create_path_cmd(exec))
 		return (0);
 	return (1);
 }
