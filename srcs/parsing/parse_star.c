@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_star.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:29:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 21:04:02 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 00:54:04 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

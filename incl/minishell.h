@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 20:55:29 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 02:07:46 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,24 @@ typedef struct s_wild
 	char			*arg;
 	struct s_wild	*next;
 }	t_wild;
+
+typedef struct s_index
+{
+	int				tab;
+	int				arg;
+}	t_index;
+typedef struct s_check
+{
+	int				nb;
+	int				s_str;
+	int				s_start;
+	int				s_end;
+	int				s_tab;
+	char			*str;
+	char			*start;
+	char			*end;
+	char			**tab;
+}	t_check;
 
 /* --------------------------  PROTOTYPE BUILTIN  --------------------------- */
 
@@ -295,17 +313,19 @@ void		ft_man_perror(char *info, char *ft, char *error);
 
 /* -------------------------- PROTOTYPE WILDCARD  --------------------------- */
 
+// define check
+int			define_check(t_check *check, char *str);
+
 // manage wildcard list
 t_wild		*new_wild(char *file);
 void		wild_clear_data(t_wild **wild);
 void		wild_add_back(t_wild **wild, t_wild *new);
 
 // check wildcard
-char		*check_str(char *str);
-int			nb_wildcard(char *str);
-int			confirm_middle(t_wild *wild, char **tab);
+void		wild_check(t_check	*check, t_wild *wild);
 
 // manage wildcard
+void		free_check(t_check *check);
 char		*get_wildcard(char *search);
 
 #endif

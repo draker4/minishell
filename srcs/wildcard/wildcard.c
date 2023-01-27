@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: baptiste <baptiste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 21:03:59 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 00:52:21 by baptiste         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_check(t_check *check)
+{
+	if (check->str)
+		free(check->str);
+	if (check->start)
+		free(check->start);
+	if (check->end)
+		free(check->end);
+	if (check->tab)
+		free_split(check->tab);
+}
 
 static char	*wildcard_strjoin(char *s1, char *s2)
 {
@@ -86,37 +98,11 @@ char	*link_wildcard(char *str, t_wild **wild)
 	return (free(str), final);
 }
 
-void	check_wildcard(char *str, t_wild *wild, int nb)
-{
-	int	str_size;
-	int	arg_size;
-
-	if (wild)
-	{	
-		str_size = ft_strlen(str) - 1;
-		arg_size = ft_strlen(wild->arg) - 1;
-		//printf("%s\n", wild->arg);
-		if (str[0] != '*' && str[0] != wild->arg[0])
-			return (check_wildcard(str, wild->next, nb));
-		//printf("%s\n", wild->arg);
-		if (str[str_size] != '*' && str[str_size] != wild->arg[arg_size])
-			return (check_wildcard(str, wild->next, nb));
-		//printf("%s\n", wild->arg);
-		if (nb > 1)
-			if (confirm_middle(wild, ft_split(str, '*')))
-				return (check_wildcard(str, wild->next, nb));
-		//printf("%s\n", wild->arg);
-		wild->keep = 1;
-		return (check_wildcard(str, wild->next, nb));
-	}
-}
-
 char	*get_wildcard(char *str)
 {
 	DIR		*dirp;
 	t_wild	*wild;
-	char	*check;
-	int		nb;
+	t_check	check;
 
 	dirp = opendir(".");
 	if (!dirp)
@@ -124,11 +110,9 @@ char	*get_wildcard(char *str)
 	wild = NULL;
 	if (copy_wildcard(str, dirp, &wild) || !wild)
 		return (str);
-	check = check_str(str);
-	if (!check)
+	if (define_check(&check, str))
 		return (wild_clear_data(&wild), str);
-	nb = nb_wildcard(str);
-	check_wildcard(check, wild, nb);
-	free(check);
+	wild_check(&check, wild);
+	free_check(&check);
 	return (link_wildcard(str, &wild));
 }
