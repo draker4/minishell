@@ -69,6 +69,7 @@ SRCS_P			=	add_env.c				\
 					create_exec.c			\
 					create_path_cmd.c		\
 					env_var.c				\
+					find_delimiter.c		\
 					find_redirections.c		\
 					init_data.c				\
 					is_builtin.c			\
