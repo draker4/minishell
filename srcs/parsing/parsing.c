@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:47:55 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 17:52:01 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ static int	find_function(t_exec **exec)
 int	parse(char *str, t_exec **exec, t_data *data)
 {
 	if (!create_exec(str, exec, data) || !parse_words(exec)
-		|| !find_redirections(exec) || !parse_star(exec)
-		|| !change_env(exec) || !parse_new_words(exec)
-		|| !find_function(exec) || !parse_quotes(exec)
-		|| !parse_space(exec) || !create_path_cmd(exec))
+		|| !find_redirections(exec) || !find_delimiter(exec)
+		|| !parse_star(exec) || !change_env(exec)
+		|| !parse_new_words(exec) || !find_function(exec)
+		|| !parse_quotes(exec) || !parse_space(exec)
+		|| !create_path_cmd(exec))
 		return (0);
 	return (1);
 }
