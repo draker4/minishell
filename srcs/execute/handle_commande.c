@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 14:33:10 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 20:00:58 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	handle_pipe(t_exec *exec)
 		return (perror("Handle_pipe - Fork: "));
 	else if (!exec->data->pid[exec->nb])
 	{
-		if (dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
+		if (!exec->redir && dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
 			return (perror("Handle_pipe (exec) - Dup2"), exit(1));
 		if (close(exec->fd_pipe[0]) || close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (exec) - Close"), exit(1));
