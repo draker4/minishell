@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 17:57:43 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:16:57 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,9 @@ void		execute_commande(t_exec *exec);
 void		execute(t_exec *exec);
 
 // get delimiter
-int			get_delimiter(int fd, char **line, t_exec *exec, int status);
-int			confirm_end(const char *s1, const char *s2);
+int			get_delimiter(char **line, t_exec *exec,
+				int status, t_redir *redir);
+int			confirm_end(char *s1, char *s2, t_exec *exec);
 
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
 

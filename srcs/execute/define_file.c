@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 17:58:04 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:15:12 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static int	change_delimiter(t_redir *redir, t_exec *exec, int status)
 	while (1)
 	{
 		write(1, " > ", 3);
-		if (get_delimiter(exec->save_stdin, &line, exec, status))
+		if (get_delimiter(&line, exec, status, redir))
 			return (FAIL);
-		if (confirm_end(redir->str, line))
+		if (confirm_end(redir->str, line, exec))
 			break ;
 		write(redir->file, line, ft_strlen(line));
 		free (line);
