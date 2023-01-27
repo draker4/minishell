@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 19:22:41 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 20:04:25 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	close_file(t_exec *exec)
 	tmp = exec->redir;
 	while (tmp)
 	{
-		if (close(tmp->file))
-			perror("Close_file - Close");
+		close(tmp->file);
 		if (tmp->type == delimiter)
 			unlink(".delimiter_tmp");
 		tmp = tmp->next;
