@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 19:21:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:27:59 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	rl_clear_history();
 	free_data(&data);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &data.term_original))
+		return (perror("Main - tcsetattr"), FAIL);
 	return (0);
 }

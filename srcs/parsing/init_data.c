@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:46:08 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 11:23:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:29:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,23 @@ static void	init_null(t_data *data)
 	data->path = NULL;
 }
 
-int	init_data(t_data *data, char **envp)
+static int	init_termios(t_data *data)
 {
-	init_null(data);
+	if (tcgetattr(STDIN_FILENO, &data->term_original))
+		return (perror("Init_data - tcgetattr"), FAIL);
 	if (tcgetattr(STDIN_FILENO, &data->term))
 		return (perror("Init_data - tcgetattr"), FAIL);
 	data->term.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(0, TCSANOW, &data->term))
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &data->term))
 		return (perror("Init_data - tcsetattr"), FAIL);
+	return (0);
+}
+
+int	init_data(t_data *data, char **envp)
+{
+	init_null(data);
+	if (init_termios(data))
+		return (FAIL);
 	if (!copy_env(envp, data) || !which_env_add(data) || !manage_shlvl(data))
 		return (FAIL);
 	if (update_envp(data) || get_path(data))

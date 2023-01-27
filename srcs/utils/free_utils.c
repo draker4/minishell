@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 18:42:57 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:29:51 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,12 @@ void	free_all(t_data *data)
 {
 	free_readline(data->line, &data->exec_begin);
 	free_data(data);
+}
+
+void	free_exit(t_exec *exec, int nb)
+{
+	free_all(exec->data);
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term_original))
+		perror("Main - tcsetattr");
+	exit(nb);
 }
