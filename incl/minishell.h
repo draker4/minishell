@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 17:57:01 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 17:57:43 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <dirent.h>
+# include <errno.h>
 
 # define ERROR_ARG "Please don't enter any argument!\n"
 
@@ -104,6 +106,7 @@ typedef struct s_exec
 	int				save_stdin;
 	int				save_stdout;
 	int				nb;
+	int				file_error;
 	t_redir			*redir;
 	t_data			*data;
 	struct s_exec	*next;
@@ -150,7 +153,7 @@ void		ft_env(t_exec *exec);
 void		ft_exit(t_exec *exec);
 
 // export builtin utils
-
+void		handle_error(t_exec *exec);
 void		print_export(t_exec *exec);
 
 // export builtin
@@ -332,7 +335,7 @@ char		**split_not_quotes(char *str);
 
 void		ft_auto_perror(char *info, char *ft, char *error);
 void		ft_man_perror(char *info, char *ft, char *error);
-
+int			ft_auto_perror_code(char *info, char *ft, char *error);
 /* -------------------------- PROTOTYPE WILDCARD  --------------------------- */
 
 // define check

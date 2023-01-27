@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 14:15:14 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 17:58:42 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,50 @@ void	execute_builtin(t_exec *exec)
 	write(2, "Builtin not found\n", 18);
 }
 
-void	execute_commande(t_exec *exec)
+void	execute_with_path(t_exec *exec)
+{
+	struct stat	states;
+
+	if (!stat(exec->function, &states) && S_ISDIR(states.st_mode))
+	{
+		ft_auto_perror_code("minishell", exec->function, "is a directory");
+		exit (126);
+	}
+	execve(exec->function, exec->arg, exec->data->envp);
+	if (errno == EACCES)
+	{
+		ft_auto_perror_code("minishell", exec->function, "Permission denied");
+		exit (126);
+	}
+	ft_auto_perror("minishell", exec->function, NULL);
+	exit (127);
+}
+
+void	execute_without_path(t_exec *exec)
 {
 	int	i;
 
 	i = 0;
+	while (exec->cmd_path[i])
+		execve(exec->cmd_path[i++], exec->arg, exec->data->envp);
+	if (errno == EACCES)
+	{
+		ft_auto_perror_code("minishell", exec->function, "Permission denied");
+		exit (126);
+	}
+	ft_auto_perror("minishell", exec->function, "command not found");
+	exit (127);
+}
+
+void	execute_commande(t_exec *exec)
+{
 	if (exec->function == NULL)
 		exit(0);
 	if (exec->cmd == builtin)
 		return (execute_builtin(exec));
-	if (ft_strchr(exec->function, '/'))
-		execve(exec->function, exec->arg, exec->data->envp);
-	else
-	{
-		while (exec->cmd_path[i])
-		{
-			if (!access(exec->cmd_path[i], F_OK))
-				execve(exec->cmd_path[i], exec->arg, exec->data->envp);
-			i++;
-		}
-	}
-	ft_auto_perror("minishell", exec->function, "command not found");
-	exit (127);
+	else if (ft_strchr(exec->function, '/'))
+		return (execute_with_path(exec));
+	return (execute_without_path(exec));
 }
 
 void	execute(t_exec *exec)

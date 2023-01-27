@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:48:41 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 17:58:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static int	read_line(t_data *data)
 			return (FAIL);
 	data->line = readline("minishell > ");
 	data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
-	if (tcsetattr(0, TCSANOW, &data->term))
-		return (perror("Read_line - tcsetattr"), -1);
+	/*if (*/tcsetattr(0, TCSANOW, &data->term);
+		//return (perror("Read_line - tcsetattr"), -1);
 	check = check_line(data->line);
 	if (check > 0)
 	{
@@ -68,13 +68,13 @@ static int	read_line(t_data *data)
 			execute(data->exec_begin);
 			// print_exec(data->exec_begin);
 	}
-	else
+	else if (check != -1)
 		g_exit_status = 0;
 	free_readline(data->line, &data->exec_begin);
 	if (data->term.c_lflag & ECHOCTL)
 		data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;
-	if (tcsetattr(0, TCSANOW, &data->term))
-		return (perror("Read_line - tcsetattr"), -1);
+	/*if (*/tcsetattr(0, TCSANOW, &data->term);
+		//return (perror("Read_line - tcsetattr"), -1);
 	return (check);
 }
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	rl_clear_history();
 	free_data(&data);
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &data.term_original))
-		return (perror("Main - tcsetattr"), FAIL);
-	return (0);
+	/*if (*/tcsetattr(STDIN_FILENO, TCSANOW, &data.term_original);/*)
+		return (perror("Main - tcsetattr"), FAIL);*/
+	return (g_exit_status);
 }
