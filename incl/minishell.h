@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 10:24:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:29:23 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_data
 	int					modify_env;
 	pid_t				*pid;
 	struct termios		term;
+	struct termios		term_original;
 	struct sigaction	sa;
 }	t_data;
 
@@ -226,12 +227,6 @@ int			find_redirections(t_exec **exec);
 // create exec list
 int			create_exec(char *str, t_exec **exec, t_data *data);
 
-// free utils
-void		free_split(char **split);
-void		free_readline(char *str, t_exec **exec);
-void		free_data(t_data *data);
-void		free_all(t_data *data);
-
 // split words
 char		**split_not_quotes(char *str);
 
@@ -275,6 +270,13 @@ char		*find_var(t_exec *exec, char *search_value);
 // exit status
 int			change_exit_status(t_exec *exec);
 char		*parse_exit_status(char *str, int status);
+
+// free utils
+void		free_split(char **split);
+void		free_readline(char *str, t_exec **exec);
+void		free_data(t_data *data);
+void		free_all(t_data *data);
+void		free_exit(t_exec *exec, int nb);
 
 // get path variable
 int			ft_split_data(char ***new, char const *s, char c);

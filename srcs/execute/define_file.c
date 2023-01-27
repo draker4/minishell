@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:35:14 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:48:51 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ static int	control_delimiter(t_redir *redir, t_exec *exec)
 {
 	int	status;
 
-	// exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
-	// if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term))
-	// 	return (perror("Control_delimiter - tcsetattr"), FAIL);
+	exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
+	if (tcsetattr(exec->save_stdin, TCSANOW, &exec->data->term))
+		return (perror("Control_delimiter - tcsetattr"), FAIL);
 	status = g_exit_status;
 	if (change_delimiter(redir, exec, status))
 		return (g_exit_status = status, FAIL);
 	g_exit_status = status;
-	// exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
-	// if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term))
-	// 	return (perror("Control_delimiter - tcsetattr"), FAIL);
+	exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
+	if (tcsetattr(exec->save_stdin, TCSANOW, &exec->data->term))
+		return (perror("Control_delimiter - tcsetattr"), FAIL);
 	return (0);
 }
 
