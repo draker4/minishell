@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utilis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 17:58:36 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 16:43:03 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,8 @@ void	print_env_var(char ***env_var)
 	}
 }
 
-static void	handle_error(t_exec *exec)
+void	handle_error(t_exec *exec)
 {
-	perror("ft_export");
 	g_exit_status = 1;
 	if (!exec->data->pid[exec->nb])
 		exit(1);
@@ -96,13 +95,13 @@ void	print_export(t_exec *exec)
 
 	env_var = malloc(sizeof(char **) * (size_arg(exec->data->envp) + 1));
 	if (!env_var)
-		return (handle_error(exec));
+		return (perror("ft_export"), handle_error(exec));
 	i = 0;
 	while (exec->data->envp[i])
 	{
 		env_var[i] = split_var(exec->data->envp[i]);
 		if (!env_var[i])
-			return (free_var(env_var), handle_error(exec));
+			return (free_var(env_var), perror("ft_export"), handle_error(exec));
 		i++;
 	}
 	env_var[i] = NULL;

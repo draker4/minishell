@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 11:05:35 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 17:47:20 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,24 @@ static void	ft_echo_no_arg(t_exec *exec)
 	return ;
 }
 
+int	flag_n(char *arg)
+{
+	int	i;
+
+	if (arg[0] != '-')
+		return (1);
+	if (arg[1] != 'n')
+		return (1);
+	i = 2;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	ft_echo(t_exec *exec)
 {
 	int	i;
@@ -32,7 +50,7 @@ void	ft_echo(t_exec *exec)
 		return (ft_echo_no_arg(exec));
 	i = 1;
 	new_line = 1;
-	if (!ft_strncmp(exec->arg[1], "-n", 2) && !exec->arg[1][2])
+	if (!flag_n(exec->arg[i]))
 	{
 		new_line = 0;
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 04:56:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 11:59:09 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 14:28:48 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_exec	*new_exec(char *str, t_data *data, int nb)
 	new->str = str;
 	new->data = data;
 	new->nb = nb;
+	new->file_error = 0;
 	new->function = NULL;
 	new->redir = NULL;
 	new->words = NULL;

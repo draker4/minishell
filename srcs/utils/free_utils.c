@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 11:29:51 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 13:58:14 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_all(t_data *data)
 void	free_exit(t_exec *exec, int nb)
 {
 	free_all(exec->data);
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term_original))
-		perror("Main - tcsetattr");
+	if (exec->data->pid)
+		tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term_original);
 	exit(nb);
 }
