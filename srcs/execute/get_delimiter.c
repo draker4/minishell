@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/26 19:00:01 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:43:15 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	get_delimiter(int fd, char **line, t_exec *exec, int status)
 	{
 		nbc = read(fd, str, 1);
 		if (nbc < 0)
-			return (FAIL);
+			return (free(line), FAIL);
 		str[nbc] = '\0';
 		*line = gnl_strjoin(*line, str);
 		if (!*line)

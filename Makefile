@@ -91,8 +91,9 @@ SRCS_U			=	env_lst_utils.c			\
 					split_var.c				\
 					split_words.c
 
-SRCS_W			=	check_wild.c			\
-					wild_lst_utils.c		\
+SRCS_W			=	define_check.c			\
+					wild_check.c			\
+					wild_lst.c				\
 					wildcard.c
 
 OBJS			=	${SRCS:%.c=${DIR_OBJS}%.o}
@@ -208,8 +209,8 @@ ${DIR_OBJS}			:
 
 # ------  Compiled Rules Debug  ------ #
 
-${DEBUG}			:	${OBJS_D} ${OBJS_D_B} ${OBJS_D_E} ${OBJS_D_P} ${OBJS_D_S} ${OBJS_D_U}
-						${CC} ${CFLAGS} ${OBJS_D} ${OBJS_D_B} ${OBJS_D_E} ${OBJS_D_P} ${OBJS_D_S} ${OBJS_D_U} -L ${DIR_LIBFT} ${LIBFT_D} ${L_READ1} ${L_READ2} ${L_READ3} ${READLINE} -g3 ${FSANITIZE} -o ${DEBUG}
+${DEBUG}			:	${OBJS_D} ${OBJS_D_B} ${OBJS_D_E} ${OBJS_D_P} ${OBJS_D_S} ${OBJS_D_U} ${OBJS_D_W}
+						${CC} ${CFLAGS} ${OBJS_D} ${OBJS_D_B} ${OBJS_D_E} ${OBJS_D_P} ${OBJS_D_S} ${OBJS_D_U} ${OBJS_D_W} -L ${DIR_LIBFT} ${LIBFT_D} ${L_READ1} ${L_READ2} ${L_READ3} ${READLINE} -g3 ${FSANITIZE} -o ${DEBUG}
 
 ${DIR_OBJS_D}%.o	:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS_D}
 						${CC} ${CFLAGS} ${MMD} -I ${DIR_HEAD} -I ${DIR_LIBFT} ${I_READ1} ${I_READ2} ${I_READ3} -g3 ${FSANITIZE} -c $< -o $@

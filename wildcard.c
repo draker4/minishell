@@ -6,23 +6,11 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 10:25:03 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 19:38:43 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_check(t_check *check)
-{
-	if (check->str)
-		free(check->str);
-	if (check->start)
-		free(check->start);
-	if (check->end)
-		free(check->end);
-	if (check->tab)
-		free_split(check->tab);
-}
 
 static char	*wildcard_strjoin(char *s1, char *s2)
 {
@@ -102,7 +90,7 @@ char	*get_wildcard(char *str)
 {
 	DIR		*dirp;
 	t_wild	*wild;
-	t_check	check;
+	char	*check;
 
 	dirp = opendir(".");
 	if (!dirp)
@@ -110,9 +98,21 @@ char	*get_wildcard(char *str)
 	wild = NULL;
 	if (copy_wildcard(str, dirp, &wild) || !wild)
 		return (str);
-	if (define_check(&check, str))
+	check = check_str(str);
+	if (!check)
 		return (wild_clear_data(&wild), str);
-	wild_check(&check, wild);
-	free_check(&check);
+	check_wildcard(check, wild);
+	free(check);
 	return (link_wildcard(str, &wild));
 }
+
+// int	main(void)
+// {
+// 	char	*str;
+// 	char	*wildcard;
+
+// 	str = ft_strdup("*e");
+// 	wildcard = get_wildcard(str);
+// 	printf("%s\n", wildcard);
+// 	free(wildcard);
+// }
