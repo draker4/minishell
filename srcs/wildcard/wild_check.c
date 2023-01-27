@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:05:50 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 10:43:41 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 10:46:08 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	confirm_middle(t_check	*check, t_wild *wild)
 	// printf("%d - %d - %d - %d\n", i.tab, max.tab, i.arg, max.arg);
 	while (i.tab < max.tab && i.arg < max.arg)
 	{
-		printf("%s - %s\n", check->tab[i.tab], &wild->arg[i.arg]);
+		// printf("%s - %s\n", check->tab[i.tab], &wild->arg[i.arg]);
 		if (!check_search(check->tab[i.tab], &wild->arg[i.arg]))
 		{
 			i.arg += ft_strlen(check->tab[i.tab]);
