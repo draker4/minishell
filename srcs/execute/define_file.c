@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:06:55 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:17:58 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	change_delimiter(t_redir *redir, t_exec *exec, int status)
 	while (1)
 	{
 		write(1, " > ", 3);
-		if (get_delimiter(0, &line, exec, status))
+		if (get_delimiter(exec->save_stdin, &line, exec, status))
 			return (FAIL);
 		if (confirm_end(redir->str, line))
 			break ;
@@ -47,16 +47,16 @@ static int	control_delimiter(t_redir *redir, t_exec *exec)
 {
 	int	status;
 
-	exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term))
-		return (perror("Control_delimiter - tcsetattr"), FAIL);
+	// exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
+	// if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term))
+	// 	return (perror("Control_delimiter - tcsetattr"), FAIL);
 	status = g_exit_status;
 	if (change_delimiter(redir, exec, status))
 		return (g_exit_status = status, FAIL);
 	g_exit_status = status;
-	exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term))
-		return (perror("Control_delimiter - tcsetattr"), FAIL);
+	// exec->data->term.c_lflag = exec->data->term.c_lflag ^ ECHOCTL;
+	// if (tcsetattr(STDIN_FILENO, TCSANOW, &exec->data->term))
+	// 	return (perror("Control_delimiter - tcsetattr"), FAIL);
 	return (0);
 }
 
@@ -75,14 +75,15 @@ static int	change_input(t_redir *redir, t_exec *exec)
 	}
 	else if (redir->type == delimiter && control_delimiter(redir, exec))
 		return (FAIL);
+	printf("delimiter ok\n");
 	if (dup2(redir->file, STDIN_FILENO) < 0)
 		return (perror("Change_input - Dup2"), FAIL);
-	while (tmp)
-	{
-		if (tmp->type == in_file || tmp->type == delimiter)
-			return (0);
-		tmp = tmp->next;
-	}
+	// while (tmp)
+	// {
+	// 	if (tmp->type == in_file || tmp->type == delimiter)
+	// 		return (0);
+	// 	tmp = tmp->next;
+	// }
 	return (0);
 }
 
