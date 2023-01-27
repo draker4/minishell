@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 10:44:26 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:06:55 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	change_delimiter(t_redir *redir, t_exec *exec, int status)
 		write(redir->file, line, ft_strlen(line));
 		free (line);
 	}
-	free(line);
+	if (line)
+		free(line);
 	close(redir->file);
 	redir->file = open(".delimiter_tmp", O_RDWR, 0644);
 	if (redir->file < 0)
@@ -118,6 +119,7 @@ int	change_redir(t_exec *exec)
 		if ((tmp->type == out_file || tmp->type == append) && \
 		change_output(tmp))
 			return (close_file(exec), FAIL);
+		close_file(exec);
 		tmp = tmp->next;
 	}
 	return (0);
