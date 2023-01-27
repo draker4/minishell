@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:14:41 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 11:40:48 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	parse_delimiter(char **line, t_exec *exec, int status)
 	parsed_line = parse_word_quotes(*line, exec->data->envp);
 	if (!parsed_line)
 		return (FAIL);
+	free(*line);
 	*line = parsed_line;
 	parsed_line = parse_exit_status(*line, status);
 	if (!parsed_line)
