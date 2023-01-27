@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_delimiter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:52:12 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:57:16 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:01:01 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_delimiter(t_exec **exec)
 				tmp->modif = 1;
 			tmp = tmp->next;
 		}
-		current -= current->next;
+		current = current->next;
 	}
 	return (1);
 }

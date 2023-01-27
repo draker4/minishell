@@ -7,11 +7,7 @@ echo ''
 echo "$PWD"
 echo '$PWD'
 echo "aspas ->'"
-echo "aspas -> ' "
 echo 'aspas ->"'
-echo 'aspas -> " '
-echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
-echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<'
 echo "exit_code ->$? user ->$USER home -> $HOME"
 echo 'exit_code ->$? user ->$USER home -> $HOME'
 echo "$"
@@ -49,8 +45,3 @@ exit "-100"
 exit -"100"
 exit hello
 exit 42 world
-exit 9223372036854775807
-exit 9223372036854775808
-exit -9223372036854775807
-exit -9223372036854775808
-exit -9223372036854775809

@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 14:33:10 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 19:21:09 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	last_cmd(t_exec *exec)
 			if (update_status)
 			{
 				close(STDIN_FILENO);
+				close(STDOUT_FILENO);
 				if (WIFEXITED(status))
 					g_exit_status = WEXITSTATUS(status);
 				update_status = 0;
@@ -71,19 +72,11 @@ void	handle_cmd_list(t_exec *exec)
 {
 	if (!change_exit_status(exec))
 		return ;
-	if (exec->redir)
+	if (exec->redir && change_redir(exec))
 	{
-		if (change_redir(exec))
-		{
-			if (exec->next)
-			{
-				exec->file_error = 1;
-				handle_pipe(exec);
-				close_file(exec);
-				return (handle_cmd_list(exec->next));
-			}
+		exec->file_error = 1;
+		if (!exec->next)
 			return ;
-		}
 	}
 	if (exec->next)
 	{
