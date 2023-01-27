@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 18:08:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:49:14 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	parse(char *str, t_exec **exec, t_data *data)
 		|| !find_redirections(exec) || !find_delimiter(exec)
 		|| !parse_star(exec) || !change_env(exec)
 		|| !parse_new_words(exec) || !find_function(exec)
-		|| !parse_quotes(exec) || !parse_space(exec)
-		|| !create_path_cmd(exec))
+		|| !parse_quotes(exec) || !create_path_cmd(exec))
+		/* || !parse_space(exec)*/
 		return (0);
 	return (1);
 }

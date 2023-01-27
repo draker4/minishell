@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 18:15:12 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 19:01:08 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	change_redir(t_exec *exec)
 		if ((tmp->type == in_file || tmp->type == delimiter) && \
 		change_input(tmp, exec))
 			return (g_exit_status = 1, close_file(exec), FAIL);
-		if ((tmp->type == out_file || tmp->type == append) && \
+		else if ((tmp->type == out_file || tmp->type == append) && \
 		change_output(tmp))
 			return (g_exit_status = 1, close_file(exec), FAIL);
 		tmp = tmp->next;

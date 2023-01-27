@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 18:41:18 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/24 17:18:10 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:36:39 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,17 @@ int	shlvl_plus_one(t_env **env)
 
 	tmp = in_env(*env, "SHLVL");
 	nb_atoi = (ft_atoi(tmp->value));
-	nb_atoi++;
+	if (nb_atoi > 998)
+	{
+		write(2, "minishell: warning: shell level (", 33);
+		ft_putnbr_fd(nb_atoi + 1, 2);
+		write(2, ") too high, resetting to 1\n", 27);
+		nb_atoi = 1;
+	}
+	else if (nb_atoi < 0)
+		nb_atoi = 0;
+	else
+		nb_atoi++;
 	nb_itoa = ft_itoa(nb_atoi);
 	if (!nb_itoa)
 		return (env_clear_data(env), perror("Shlvl_plus_one - ft_itoa"), 0);
