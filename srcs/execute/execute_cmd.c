@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:58:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:33:58 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	execute(t_exec *exec)
 	exec->data->pid = malloc(sizeof(pid_t) * exec_size(exec));
 	if (!exec->data->pid)
 		return (close(exec->save_stdin), close(exec->save_stdout),
-			perror("Execute"));
+			perror("Execute - Malloc"));
 	memset(exec->data->pid, 1, exec_size(exec));
 	if (!exec->next)
 		handle_cmd(exec);

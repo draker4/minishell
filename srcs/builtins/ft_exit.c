@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:29:33 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:06:42 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_exit(t_exec *exec)
 {
 	int	code;
 
-	write(2, "exit\n", 5);
+	write(1, "exit\n", 5);
 	if (size_arg(exec->arg) == 1)
 		return (free_exit(exec, 0));
 	else if (ft_is_num(exec->arg[1]))
