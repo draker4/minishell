@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_delimiter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 11:48:45 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:18:12 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	parse_delimiter(char **line, t_exec *exec, int status)
 	return (0);
 }
 
-int	get_delimiter(int fd, char **line, t_exec *exec, int status)
+int	get_delimiter(char **line, t_exec *exec, int status, t_redir *redir)
 {
 	char	str[2];
 	int		nbc;
@@ -68,7 +68,7 @@ int	get_delimiter(int fd, char **line, t_exec *exec, int status)
 	str[0] = '\0';
 	while (!ft_strchr(str, '\n') && nbc > 0)
 	{
-		nbc = read(fd, str, 1);
+		nbc = read(exec->save_stdin, str, 1);
 		if (nbc < 0)
 			return (free(*line), FAIL);
 		str[nbc] = '\0';
@@ -76,27 +76,31 @@ int	get_delimiter(int fd, char **line, t_exec *exec, int status)
 		if (!*line)
 			return (FAIL);
 	}
-	if (parse_delimiter(line, exec, status))
+	if (!redir->modif && parse_delimiter(line, exec, status))
 		return (free(*line), FAIL);
 	return (0);
 }
 
-int	confirm_end(const char *s1, const char *s2)
+int	confirm_end(char *s1, char *s2, t_exec *exec)
 {
-	int	i;
-	int	size_s1;
-	int	size_s2;
+	int		i;
+	int		size_s1;
+	int		size_s2;
+	char	*line_parsed;
 
 	if (!*s2)
 		return (1);
+	line_parsed = parse_word_quotes(s2, exec->data->envp);
+	if (!line_parsed)
+		return (FAIL);
 	size_s1 = ft_strlen(s1);
-	size_s2 = ft_strlen(s2);
+	size_s2 = ft_strlen(line_parsed);
 	if (size_s1 != size_s2 - 1)
-		return (0);
+		return (free(line_parsed), 0);
 	i = 0;
-	while (s1[i] == s2[i] && s1[i] && s2[i])
+	while (s1[i] == line_parsed[i] && s1[i] && line_parsed[i])
 		i++;
-	if (i == size_s1 && s2[i] == '\n')
-		return (1);
-	return (0);
+	if (i == size_s1 && line_parsed[i] == '\n')
+		return (free(line_parsed), 1);
+	return (free(line_parsed), 0);
 }

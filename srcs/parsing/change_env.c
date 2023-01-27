@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:28:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:45:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:10:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	change_env(t_exec **exec)
 	while (current)
 	{
 		i = 0;
-		while (current->arg[i])
+		while (current->arg && current->arg[i])
 		{
 			parse_word = parse_env_only(current->arg[i], current->data->envp);
 			if (!parse_word)

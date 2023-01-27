@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:29:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 16:54:37 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/27 18:09:55 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parse_star(t_exec **exec)
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->arg[i])
+		while (tmp->arg && tmp->arg[i])
 		{
 			if (has_star(tmp->arg[i]))
 				tmp->arg[i] = get_wildcard(tmp->arg[i]);
