@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 11:33:40 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:16:59 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_exec(t_exec *exec)
 		printf("\n");
 		while (redir)
 		{
-			printf("detail redir =%s$ et type = %u\n", redir->str, redir->type);
+			printf("detail redir =%s$ et type = %u et mofif = %d\n", redir->str, redir->type, redir->modif);
 			redir = redir->next;
 		}
 		printf("\n");
