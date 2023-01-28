@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 19:58:48 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 09:55:24 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	change_redir(t_exec *exec)
 	while (tmp)
 	{
 		if ((tmp->type == in_file || tmp->type == out_file)
-			&& has_space(tmp->str))
+			&& has_space(tmp->str) && ft_strncmp(exec->function, "ls", 3))
 		{
 			ft_man_perror("minishell: $", find_var(exec, tmp->str),
 				": ambiguous redirect");
