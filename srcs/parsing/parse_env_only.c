@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 14:55:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:38:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 11:07:59 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ static int	adapt_line_var(char *str, char **word_parsed, int *i, char **envp)
 	return (1);
 }
 
-static void	move_one_space_var(char *str, int *i)
-{
-	if (str[*i] == ' ')
-	{
-		while (str[*i] && str[*i] == ' ')
-			*i += 1;
-		*i -= 1;
-	}
-}
-
 int	parse_env_var(char *str, char **word_parsed, char **envp)
 {
 	int	i;
@@ -54,7 +44,6 @@ int	parse_env_var(char *str, char **word_parsed, char **envp)
 	i = 0;
 	while (str[i])
 	{
-		move_one_space_var(str, &i);
 		if (str[i] == '$' && str[i + 1] && !is_in_quote(str, i) && \
 		(ft_isalnum(str[i + 1]) || str[i + 1] == '_' || str[i + 1] == '{'))
 		{

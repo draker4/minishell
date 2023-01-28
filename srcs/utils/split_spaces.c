@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:41:50 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 16:13:05 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 11:10:20 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,3 @@ char	**split_spaces(char *s)
 	split[nb_str] = NULL;
 	return (ft_cut_spaces(s, split));
 }
-
