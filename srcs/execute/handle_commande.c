@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 13:30:02 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 13:45:01 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ static void	last_cmd(t_exec *exec)
 		waitpid(exec->data->pid[exec->nb--], &status, WUNTRACED);
 		if (update_status)
 		{
-			if (close(STDIN_FILENO) && close(STDOUT_FILENO)
-				&& WIFEXITED(status))
+			close(STDIN_FILENO);
+			close(STDOUT_FILENO);
+			if (WIFEXITED(status))
 				g_exit_status = WEXITSTATUS(status);
 			update_status = 0;
 		}
