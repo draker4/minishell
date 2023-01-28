@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 19:00:08 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:23:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	read_line(t_data *data)
 			// print_exec(data->exec_begin);
 	}
 	else if (check != -1)
-		g_exit_status = 0;
+		g_exit_status = 258;
 	free_readline(data->line, &data->exec_begin);
 	if (data->term.c_lflag & ECHOCTL)
 		data->term.c_lflag = data->term.c_lflag ^ ECHOCTL;

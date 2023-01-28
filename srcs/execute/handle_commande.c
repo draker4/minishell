@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 10:45:40 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:46:58 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ static void	last_cmd(t_exec *exec)
 
 void	handle_cmd_list(t_exec *exec)
 {
-	if (!change_exit_status(exec))
-		return ;
 	if (exec->next)
 	{
 		handle_pipe(exec);
@@ -83,8 +81,6 @@ void	handle_cmd_list(t_exec *exec)
 
 void	handle_cmd(t_exec *exec)
 {
-	if (!change_exit_status(exec))
-		return ;
 	if (exec->redir && change_redir(exec))
 		return ;
 	if (exec->cmd == builtin)
