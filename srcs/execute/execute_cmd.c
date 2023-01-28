@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 18:33:58 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 13:24:55 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	execute_without_path(t_exec *exec)
 
 void	execute_commande(t_exec *exec)
 {
+	close_file(exec);
 	if (exec->function == NULL)
 		exit(0);
 	if (exec->cmd == builtin)

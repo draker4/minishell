@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 10:46:53 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 12:27:06 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_parse
 // structure used to save all inputs and outputs (redirections)
 typedef struct s_redir
 {
-	int				file;
 	int				modif;
 	char			*str;
 	enum e_type		type;
@@ -103,9 +102,11 @@ typedef struct s_exec
 	char			**cmd_path;
 	int				save_stdin;
 	int				save_stdout;
+	int				infile;
+	int				outfile;
+	int				delimfile;
 	int				nb;
 	int				file_error;
-	int				output_file;
 	int				fd_pipe[2];
 	t_redir			*redir;
 	t_data			*data;
@@ -168,18 +169,19 @@ void		ft_unset(t_exec *exec);
 
 /* --------------------------  PROTOTYPE EXECUTE  --------------------------- */
 
-// close file
-void		close_file(t_exec *exec);
-
 // define file
-int			change_redir(t_exec *exec);
+void		change_redir(t_exec *exec, t_redir	*redir);
 
 // handle commande
 void		handle_cmd(t_exec *exec);
 void		handle_cmd_list(t_exec *exec);
 
-// close file
+// file utils
+void		close_infile(t_exec *exec);
+void		close_outfile(t_exec *exec);
 void		close_file(t_exec *exec);
+void		fd_error(t_exec *exec);
+void		file_error(t_exec *exec, t_redir *redir);
 
 // execute cmd
 void		execute_builtin(t_exec *exec);

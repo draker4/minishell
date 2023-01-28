@@ -53,9 +53,9 @@ SRCS_B			=	ft_cd.c					\
 					ft_pwd.c				\
 					ft_unset.c
 
-SRCS_E			=	close_file.c			\
-					define_file.c			\
+SRCS_E			=	define_file.c			\
 					execute_cmd.c			\
+					file_utils.c			\
 					get_delimiter.c			\
 					handle_commande.c
 
