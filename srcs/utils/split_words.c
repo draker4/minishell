@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:08:33 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/16 16:50:32 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:44:46 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_find_next(char *s, int *i)
 {
-	if ((s[*i] == '>' || s[*i] == '<') && !is_in_quote(s, *i))
+	if ((s[*i] == '>' || s[*i] == '<') && !is_in_quote(s, *i, 0))
 	{
 		*i += 1;
 		return (0);
@@ -22,7 +22,7 @@ static int	ft_find_next(char *s, int *i)
 	while (s[*i])
 	{
 		if ((s[*i] == ' ' || s[*i] == '>' || s[*i] == '<') \
-		&& !is_in_quote(s, *i))
+		&& !is_in_quote(s, *i, 0))
 		{
 			if (s[*i] == ' ')
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 14:14:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 15:43:27 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_parse
 typedef struct s_redir
 {
 	int				modif;
+	int				ambiguous;
 	char			*str;
 	enum e_type		type;
 	struct s_redir	*next;
@@ -232,6 +233,8 @@ int			create_path_cmd(t_exec **exec);
 
 // environment variables
 int			check_env(char *str, char **line_parsed, int *i, char **envp);
+int			check_env_quotes(char *str, char **line_parsed, int *i, \
+			char **envp);
 int			ft_change_env(char **old_words, char **envp);
 
 // find delimiter
@@ -287,7 +290,6 @@ int			exec_size(t_exec *exec);
 int			update_envp(t_data *data);
 int			remove_var(t_env **full_env, char *search_var);
 t_env		*in_env(t_env *full_env, char *search_var);
-char		*find_var(t_exec *exec, char *search_value);
 
 // exit status
 int			change_exit_status(t_exec **exec);
@@ -320,7 +322,7 @@ int			delete_slash_symbol(t_exec *exec, char *str);
 int			size_arg(char **arg);
 
 // search character
-int			is_in_quote(char *str, int index);
+int			is_in_quote(char *str, int index, int single);
 int			has_equal(char *str);
 int			has_exit_status(char *str);
 int			has_space(char *str);

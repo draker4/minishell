@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:29:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 14:01:07 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:44:09 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	has_star(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '*' && !is_in_quote(str, i))
+		if (str[i] == '*' && !is_in_quote(str, i, 0))
 			return (1);
 		i++;
 	}

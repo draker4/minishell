@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:52:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/15 10:58:10 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:43:49 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ int	check_redirections(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '>' && !is_in_quote(str, i))
+		if (str[i] == '>' && !is_in_quote(str, i, 0))
 		{
 			if (!check_output(str, &i))
 				return (0);
 		}
-		else if (str[i] == '<' && !is_in_quote(str, i))
+		else if (str[i] == '<' && !is_in_quote(str, i, 0))
 		{
 			if (!check_input(str, &i))
 				return (0);

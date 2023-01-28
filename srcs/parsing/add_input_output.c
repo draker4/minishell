@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 12:04:01 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 13:46:24 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:53:40 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	create_redir(t_exec *current, int *index, int type1, int type2)
 		return (perror("Create_input - Malloc:"), 0);
 	redir->next = NULL;
 	redir->modif = 0;
+	redir->ambiguous = 0;
 	*index += 1;
 	if (!ft_strncmp(current->words[*index], "<", 2) || \
 	!ft_strncmp(current->words[*index], ">", 2))

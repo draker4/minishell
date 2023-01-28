@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 14:12:16 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 15:49:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void	change_redir(t_exec *exec, t_redir	*redir)
 {
 	if (!redir)
 		return ;
-	if (redir->type != delimiter && has_space(redir->str)
-		&& ft_strncmp(exec->function, "ls", 3))
+	if (redir->ambiguous)
 	{
-		ft_man_perror("minishell: $", find_var(exec, redir->str),
+		ft_man_perror("minishell: ", redir->str,
 			": ambiguous redirect");
 		g_exit_status = 1;
+		exec->file_error = 1;
 		return ;
 	}
 	else if ((redir->type == in_file || redir->type == delimiter))

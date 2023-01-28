@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:41:50 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 11:10:20 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:43:25 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_find_next_spaces(char *s, int *i)
 {
 	while (s[*i])
 	{
-		if (s[*i] == ' ' && !is_in_quote(s, *i))
+		if (s[*i] == ' ' && !is_in_quote(s, *i, 0))
 		{
 			if (s[*i] == ' ')
 				return (1);

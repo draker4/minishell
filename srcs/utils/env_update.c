@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 13:53:47 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 14:09:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 15:43:26 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,29 +102,6 @@ t_env	*in_env(t_env *full_env, char *search_var)
 				ft_strlen(full_env->var) + 1))
 			return (full_env);
 		full_env = full_env->next;
-	}
-	return (NULL);
-}
-
-char	*find_var(t_exec *exec, char *search_value)
-{
-	char	*parse_search;
-	t_env	*tmp;
-
-	tmp = exec->data->env;
-	if (!tmp || !search_value)
-		return (NULL);
-	while (tmp)
-	{
-		parse_search = parse_word_quotes(tmp->value, exec->data->envp);
-		if (!parse_search)
-			return (NULL);
-		if (!ft_strncmp(parse_search, search_value,
-				ft_strlen(search_value) + 1))
-			return (free(parse_search), tmp->var);
-		tmp = tmp->next;
-		free(parse_search);
-		parse_search = NULL;
 	}
 	return (NULL);
 }
