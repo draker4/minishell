@@ -21,6 +21,7 @@ if [[ $1 == "wildcards"  || $1 == "bonus" ]]; then
 	MINISHELL_PATH="../minishell_bonus"
 fi
 
+
 BOLD="\e[1m"
 YELLOW="\033[0;33m"
 GREY="\033[38;5;244m"
