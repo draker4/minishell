@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 15:43:27 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 19:46:11 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,9 @@ int			init_data(t_data *data, char **envp);
 
 // is_built_in
 void		is_built_in(t_exec *exec);
+
+// parse delimiter
+char		*parse_env_del(char *str, char **envp);
 
 // parse env only
 char		*parse_env_only(char *str, char **envp);
