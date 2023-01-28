@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:28:27 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 18:10:21 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 11:41:05 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ static int	change_env_redir(t_redir *current, char **envp)
 	tmp = current;
 	while (tmp)
 	{
-		parse_word = parse_env_only(tmp->str, envp);
-		if (!parse_word)
-			return (0);
-		free(tmp->str);
-		tmp->str = parse_word;
+		if (tmp->type != delimiter)
+		{
+			parse_word = parse_env_only(tmp->str, envp);
+			if (!parse_word)
+				return (0);
+			free(tmp->str);
+			tmp->str = parse_word;
+		}
 		tmp = tmp->next;
 	}
 	return (1);
@@ -55,4 +58,3 @@ int	change_env(t_exec **exec)
 	}
 	return (1);
 }
-

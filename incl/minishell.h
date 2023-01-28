@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 12:27:06 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 13:29:03 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void		execute(t_exec *exec);
 // get delimiter
 int			get_delimiter(char **line, t_exec *exec,
 				int status, t_redir *redir);
-int			confirm_end(char *s1, char *s2, t_exec *exec);
+int			confirm_end(char *s1, char *s2);
 
 /* --------------------------  PROTOTYPE PARSING  --------------------------- */
 

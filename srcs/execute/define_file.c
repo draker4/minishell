@@ -6,7 +6,7 @@
 /*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 13:28:09 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 13:29:41 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	change_delimiter(t_exec *exec, t_redir *redir, int status)
 		write(1, " > ", 3);
 		if (get_delimiter(&line, exec, status, redir))
 			return (fd_error(exec), FAIL);
-		if (confirm_end(redir->str, line, exec))
+		if (confirm_end(redir->str, line))
 			break ;
 		write(exec->infile, line, ft_strlen(line));
 		free (line);
