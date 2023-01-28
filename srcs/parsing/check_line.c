@@ -6,11 +6,13 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:50:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 18:37:44 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:30:25 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_status;
 
 static int	is_space_tab(char *str)
 {
@@ -35,12 +37,12 @@ static int	check_parenthesis(char *str)
 	{
 		if (str[i] == '(' && !is_in_quote(str, i))
 		{
-			write(2, "Please don't enter parenthesis!\n", 32);
+			write(2, "minishell: syntax error, unexpected '('\n", 40);
 			return (0);
 		}
 		else if (str[i] == ')' && !is_in_quote(str, i))
 		{
-			write(2, "Please don't enter parenthesis!\n", 32);
+			write(2, "minishell: syntax error, unexpected '('\n", 40);
 			return (0);
 		}
 		i++;

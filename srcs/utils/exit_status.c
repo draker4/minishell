@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:53:43 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/26 19:00:35 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:17:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,45 @@ char	*parse_exit_status(char *str, int status)
 	return (copy);
 }
 
-int	change_exit_status(t_exec *exec)
+static int	change_function_exit_var(t_exec *current)
 {
+	char	*str;
+
+	if (current->function && has_exit_status(current->function))
+	{
+		str = parse_exit_status(current->function, g_exit_status);
+		if (!str)
+			return (0);
+		current->function = str;
+	}
+	return (1);
+}
+
+int	change_exit_status(t_exec **exec)
+{
+	t_exec	*current;
 	int		i;
 	char	*str;
 
-	i = -1;
-	while (exec->arg && exec->arg[++i])
+	current = *exec;
+	while (current)
 	{
-		if (has_exit_status(exec->arg[i]))
+		i = 0;
+		while (current->arg[i])
 		{
-			str = parse_exit_status(exec->arg[i], g_exit_status);
-			if (!str)
-				return (0);
-			exec->arg[i] = str;
+			if (has_exit_status(current->arg[i]))
+			{
+				str = parse_exit_status(current->arg[i], g_exit_status);
+				if (!str)
+					return (0);
+				current->arg[i] = str;
+			}
+			i++;
 		}
-	}
-	if (exec->function && has_exit_status(exec->function))
-	{
-		str = parse_exit_status(exec->function, g_exit_status);
-		if (!str)
+		if (!change_function_exit_var(current) || !exit_status_redir(current))
 			return (0);
-		exec->function = str;
+		g_exit_status = 0;
+		current = current->next;
 	}
-	if (!exit_status_redir(exec))
-		return (0);
 	return (1);
 }

@@ -76,7 +76,6 @@ SRCS_P			=	add_env.c				\
 					parse_env_only.c		\
 					parse_new_words.c		\
 					parse_quotes.c			\
-					parse_space.c			\
 					parse_star.c			\
 					parsing.c				\
 					quotes.c

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 18:16:57 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:19:27 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,9 +257,6 @@ int			parse_new_words(t_exec **exec);
 // parse quotes
 int			parse_quotes(t_exec **exec);
 
-// parse space
-int			parse_space(t_exec **exec);
-
 // parse star
 int			parse_star(t_exec **exec);
 
@@ -289,7 +286,7 @@ t_env		*in_env(t_env *full_env, char *search_var);
 char		*find_var(t_exec *exec, char *search_value);
 
 // exit status
-int			change_exit_status(t_exec *exec);
+int			change_exit_status(t_exec **exec);
 char		*parse_exit_status(char *str, int status);
 
 // free utils
