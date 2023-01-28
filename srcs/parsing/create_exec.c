@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 07:39:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 18:07:31 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:41:13 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	create_exec(char *str, t_exec **exec, t_data *data)
 	nb = 0;
 	while (str[parse->i])
 	{
-		if (str[parse->i] == '|' && !is_in_quote(str, parse->i))
+		if (str[parse->i] == '|' && !is_in_quote(str, parse->i, 0))
 		{
 			if (!add_exec(exec, parse, data, nb))
 				return (free(parse), 0);

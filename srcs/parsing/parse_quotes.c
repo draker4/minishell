@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:58:30 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:48:26 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 15:48:56 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ static int	parse_redir(t_exec **exec)
 	current = (*exec)->redir;
 	while (current)
 	{
-		word_parsed = parse_word_quotes(current->str, \
-		(*exec)->data->envp);
-		if (!word_parsed)
-			return (0);
-		free(current->str);
-		current->str = word_parsed;
+		if (current->type != delimiter && !current->ambiguous)
+		{
+			word_parsed = parse_word_quotes(current->str, \
+			(*exec)->data->envp);
+			if (!word_parsed)
+				return (0);
+			free(current->str);
+			current->str = word_parsed;
+		}
 		current = current->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:50:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 10:30:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:46:42 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ static int	check_parenthesis(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '(' && !is_in_quote(str, i))
+		if (str[i] == '(' && !is_in_quote(str, i, 0))
 		{
 			write(2, "minishell: syntax error, unexpected '('\n", 40);
 			return (0);
 		}
-		else if (str[i] == ')' && !is_in_quote(str, i))
+		else if (str[i] == ')' && !is_in_quote(str, i, 0))
 		{
 			write(2, "minishell: syntax error, unexpected '('\n", 40);
 			return (0);
@@ -87,10 +87,16 @@ int	check_line(char *str)
 		return (-1);
 	}
 	if (!*str || !is_space_tab(str))
+	{
+		g_exit_status = 0;
 		return (0);
+	}
 	add_history(str);
 	if (!check_nb_quotes(str) || !check_parenthesis(str) \
 	|| !check_and_or(str) || !check_redirections(str))
+	{
+		g_exit_status = 258;
 		return (0);
+	}
 	return (1);
 }

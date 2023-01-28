@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 13:29:41 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 15:49:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,13 @@ extern int	g_exit_status;
 
 static int	change_delimiter(t_exec *exec, t_redir *redir, int status)
 {
-	char	*line;
-
 	g_exit_status = -1;
 	exec->delimfile = 1;
 	exec->infile = open(".delimiter_tmp", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (exec->infile < 0)
 		return (perror("change_delimiter - Open"), fd_error(exec), FAIL);
-	while (1)
-	{
-		write(1, " > ", 3);
-		if (get_delimiter(&line, exec, status, redir))
-			return (fd_error(exec), FAIL);
-		if (confirm_end(redir->str, line))
-			break ;
-		write(exec->infile, line, ft_strlen(line));
-		free (line);
-	}
-	if (line)
-		free(line);
+	if (write_in_delimiter_file(redir, exec, status))
+		return (FAIL);
 	close(exec->infile);
 	exec->infile = open(".delimiter_tmp", O_RDONLY, 0644);
 	if (exec->infile < 0)
@@ -95,12 +83,12 @@ void	change_redir(t_exec *exec, t_redir	*redir)
 {
 	if (!redir)
 		return ;
-	if (redir->type != delimiter && has_space(redir->str)
-		&& ft_strncmp(exec->function, "ls", 3))
+	if (redir->ambiguous)
 	{
-		ft_man_perror("minishell: $", find_var(exec, redir->str),
+		ft_man_perror("minishell: ", redir->str,
 			": ambiguous redirect");
 		g_exit_status = 1;
+		exec->file_error = 1;
 		return ;
 	}
 	else if ((redir->type == in_file || redir->type == delimiter))

@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:18:57 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/25 18:10:30 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:44:56 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	delete_slash_symbol(t_exec *exec, char *str)
 	save = 0;
 	while (str[i])
 	{
-		if (str[i] == '/' && !is_in_quote(str, i) && str[i + 1])
+		if (str[i] == '/' && !is_in_quote(str, i, 0) && str[i + 1])
 			save = i + 1;
 		i++;
 	}

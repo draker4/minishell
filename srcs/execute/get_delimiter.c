@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:56:17 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 11:51:25 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 14:14:21 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*gnl_strjoin(char *s1, char *s2)
 	return (new);
 }
 
-static int	parse_delimiter(char **line, t_exec *exec, int status)
+int	parse_line_delimiter(char **line, t_exec *exec, int status)
 {
 	char	*parsed_line;
 
@@ -58,7 +58,7 @@ static int	parse_delimiter(char **line, t_exec *exec, int status)
 	return (0);
 }
 
-int	get_delimiter(char **line, t_exec *exec, int status, t_redir *redir)
+int	get_delimiter(char **line, t_exec *exec)
 {
 	char	str[2];
 	int		nbc;
@@ -76,8 +76,6 @@ int	get_delimiter(char **line, t_exec *exec, int status, t_redir *redir)
 		if (!*line)
 			return (FAIL);
 	}
-	if (!redir->modif && parse_delimiter(line, exec, status))
-		return (free(*line), FAIL);
 	return (0);
 }
 
@@ -98,5 +96,26 @@ int	confirm_end(char *s1, char *s2)
 		i++;
 	if (i == size_s1 && s2[i] == '\n')
 		return (1);
+	return (0);
+}
+
+int	write_in_delimiter_file(t_redir *redir, t_exec *exec, int status)
+{
+	char	*line;
+
+	while (1)
+	{
+		write(1, " > ", 3);
+		if (get_delimiter(&line, exec))
+			return (fd_error(exec), FAIL);
+		if (confirm_end(redir->str, line))
+			break ;
+		if (!redir->modif && parse_line_delimiter(&line, exec, status))
+			return (free(line), FAIL);
+		write(exec->infile, line, ft_strlen(line));
+		free (line);
+	}
+	if (line)
+		free(line);
 	return (0);
 }
