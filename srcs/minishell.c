@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:51:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 10:23:13 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 11:11:35 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	print_exec(t_exec *exec)
 		printf("current = %s\n", current->str);
 		i = 0;
 		while (current->words[i])
-			printf("detail current = %s et words = %s\n", current->str, current->words[i++]);
+			printf("detail current = %s et words =%s$\n", current->str, current->words[i++]);
 		redir = current->redir;
 		printf("\n");
 		while (redir)
 		{
-			printf("detail redir = %s et type = %u\n", redir->str, redir->type);
+			printf("detail redir =%s$ et type = %u\n", redir->str, redir->type);
 			redir = redir->next;
 		}
 		printf("\n");
@@ -39,10 +39,10 @@ void	print_exec(t_exec *exec)
 		{
 			i = 0;
 			while (current->arg[i])
-				printf("detail arg = %s\n", current->arg[i++]);
+				printf("detail arg =%s$\n", current->arg[i++]);
 		}
 		printf("\n");
-		printf("detail function = %s\n", current->function);
+		printf("detail function =%s$\n", current->function);
 		printf("is built in = %d\n", exec->cmd);
 		printf("\n");
 		current = current->next;
