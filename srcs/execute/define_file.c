@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 09:55:24 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:23:01 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	change_input(t_redir *redir, t_exec *exec)
 	return (0);
 }
 
-static int	change_output(t_redir *redir)
+static int	change_output(t_redir *redir, t_exec *exec)
 {
 	if (redir->type == out_file)
 		redir->file = open(redir->str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -89,6 +89,7 @@ static int	change_output(t_redir *redir)
 		return (ft_auto_perror("minishell", redir->str, NULL), FAIL);
 	if (dup2(redir->file, STDOUT_FILENO) < 0)
 		return (perror("Change_output - Dup2"), FAIL);
+	exec->output_file = 1;
 	return (0);
 }
 
@@ -99,8 +100,9 @@ int	change_redir(t_exec *exec)
 	tmp = exec->redir;
 	while (tmp)
 	{
-		if ((tmp->type == in_file || tmp->type == out_file)
-			&& has_space(tmp->str) && ft_strncmp(exec->function, "ls", 3))
+		if ((tmp->type == in_file || tmp->type == out_file
+				|| tmp->type == append) && has_space(tmp->str)
+			&& ft_strncmp(exec->function, "ls", 3))
 		{
 			ft_man_perror("minishell: $", find_var(exec, tmp->str),
 				": ambiguous redirect");
@@ -110,7 +112,7 @@ int	change_redir(t_exec *exec)
 			&& change_input(tmp, exec))
 			return (g_exit_status = 1, close_file(exec), FAIL);
 		if ((tmp->type == out_file || tmp->type == append)
-			&& change_output(tmp))
+			&& change_output(tmp, exec))
 			return (g_exit_status = 1, close_file(exec), FAIL);
 		tmp = tmp->next;
 	}

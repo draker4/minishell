@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 20:11:52 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:45:40 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ static void	handle_pipe(t_exec *exec)
 	else if (!exec->data->pid[exec->nb])
 	{
 		if (exec->redir && change_redir(exec))
-		{
 			exec->file_error = 1;
-			if (!exec->next)
-				return ;
-		}
-		if (!exec->redir && dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
+		if (!exec->output_file && dup2(exec->fd_pipe[1], STDOUT_FILENO) < 0)
 			return (perror("Handle_pipe (exec) - Dup2"), exit(1));
 		if (close(exec->fd_pipe[0]) || close(exec->fd_pipe[1]))
 			return (perror("Handle_pipe (exec) - Close"), exit(1));
@@ -36,14 +32,11 @@ static void	handle_pipe(t_exec *exec)
 			exit(0);
 		execute_commande(exec);
 	}
-	else
-	{
-		g_exit_status = 0;
-		if (dup2(exec->fd_pipe[0], STDIN_FILENO) < 0)
-			return (perror("Handle_pipe (next) - Dup2"));
-		if (close(exec->fd_pipe[1]) || close(exec->fd_pipe[0]))
-			return (perror("Handle_pipe (next) - Close"));
-	}
+	g_exit_status = 0;
+	if (dup2(exec->fd_pipe[0], STDIN_FILENO) < 0)
+		return (perror("Handle_pipe (next) - Dup2"));
+	if (close(exec->fd_pipe[1]) || close(exec->fd_pipe[0]))
+		return (perror("Handle_pipe (next) - Close"));
 }
 
 static void	last_cmd(t_exec *exec)
@@ -58,26 +51,18 @@ static void	last_cmd(t_exec *exec)
 	else if (!exec->data->pid[exec->nb])
 	{	
 		if (exec->redir && change_redir(exec))
-		{
-			exec->file_error = 1;
-			if (!exec->next)
-				return ;
-		}
+			exit(1);
 		execute_commande(exec);
 	}
-	else
+	while (exec->nb >= 0)
 	{
-		while (exec->nb >= 0)
+		waitpid(exec->data->pid[exec->nb--], &status, WUNTRACED);
+		if (update_status)
 		{
-			waitpid(exec->data->pid[exec->nb--], &status, WUNTRACED);
-			if (update_status)
-			{
-				close(STDIN_FILENO);
-				close(STDOUT_FILENO);
-				if (WIFEXITED(status))
-					g_exit_status = WEXITSTATUS(status);
-				update_status = 0;
-			}
+			if (close(STDIN_FILENO) && close(STDOUT_FILENO)
+				&& WIFEXITED(status))
+				g_exit_status = WEXITSTATUS(status);
+			update_status = 0;
 		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/27 18:16:57 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 10:29:44 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ typedef struct s_data
 	char				**path;
 	char				**envp;
 	char				*line;
-	struct s_exec		*exec_begin;
-	t_env				*env;
 	int					modify_env;
+	t_env				*env;
 	pid_t				*pid;
+	struct s_exec		*exec_begin;
 	struct termios		term;
 	struct termios		term_original;
 	struct sigaction	sa;
@@ -97,18 +97,19 @@ typedef struct s_exec
 {
 	char			*str;
 	char			*function;
-	enum e_cmd		cmd;
 	char			*delimiter;
 	char			**words;
 	char			**arg;
-	int				fd_pipe[2];
 	char			**cmd_path;
 	int				save_stdin;
 	int				save_stdout;
 	int				nb;
 	int				file_error;
+	int				output_file;
+	int				fd_pipe[2];
 	t_redir			*redir;
 	t_data			*data;
+	enum e_cmd		cmd;
 	struct s_exec	*next;
 }	t_exec;
 
