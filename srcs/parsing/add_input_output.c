@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_input_output.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 12:04:01 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 12:28:40 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 13:46:24 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	exit_status_redir(t_exec *exec)
 	tmp = exec->redir;
 	while (tmp)
 	{
-		if (has_exit_status(tmp->str))
+		if (has_exit_status(tmp->str) && tmp->type != delimiter)
 		{
 			str = parse_exit_status(tmp->str, g_exit_status);
 			if (!str)
