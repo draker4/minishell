@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 12:16:15 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:36 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 17:24:14 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*parse_word_quotes(char *str, char **envp)
 	word_parsed = malloc(sizeof(char));
 	if (!word_parsed)
 	{
-		write(2, "Malloc function error!\n", 23);
+		write(2, "Parse_word_quotes - Malloc\n", 27);
 		return (NULL);
 	}
 	word_parsed[0] = '\0';
@@ -72,7 +72,7 @@ int	parse(char *str, t_exec **exec, t_data *data)
 {
 	if (!create_exec(str, exec, data) || !parse_words(exec)
 		|| !find_redirections(exec) || !find_delimiter(exec)
-		|| !parse_star(exec) || !change_env(exec)
+		|| !change_env(exec) || !parse_star(exec)
 		|| !parse_new_words(exec) || !find_function(exec)
 		|| !change_exit_status(exec) || !parse_quotes(exec)
 		|| !create_path_cmd(exec))

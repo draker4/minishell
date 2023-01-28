@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 14:55:39 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 14:41:53 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 17:44:19 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	adapt_line_var(char *str, char **word_parsed, int *i, char **envp)
 	else if (str[*i] == '$')
 	{
 		*i += 1;
+		if (str[*i] && (str[*i] == '"' || str[*i] == '\''))
+			return (*i -= 1, 1);
 		if (!check_env(str, word_parsed, i, envp))
 			return (0);
 	}
@@ -45,7 +47,8 @@ int	parse_env_var(char *str, char **word_parsed, char **envp)
 	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1] && !is_in_quote(str, i, 0) && \
-		(ft_isalnum(str[i + 1]) || str[i + 1] == '_' || str[i + 1] == '{'))
+		(ft_isalnum(str[i + 1]) || str[i + 1] == '_' || str[i + 1] == '{' \
+		|| str[i + 1] == '"' || str[i + 1] == '\''))
 		{
 			if (!adapt_line_var(str, word_parsed, &i, envp))
 				return (0);
@@ -69,7 +72,7 @@ char	*parse_env_only(char *str, char **envp)
 	word_parsed = malloc(sizeof(char));
 	if (!word_parsed)
 	{
-		write(2, "Malloc function error!\n", 23);
+		write(2, "Parse_env_only - Malloc\n", 24);
 		return (NULL);
 	}
 	word_parsed[0] = '\0';

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 17:52:47 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 17:56:02 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,18 @@ void	update_env(t_exec *exec)
 
 void	ft_export(t_exec *exec)
 {
+	int	i;
+
+	i = 0;
+	while (exec->words[i])
+	{
+		if (!ft_strncmp(exec->words[i], "\"\"", 3) || \
+		ft_strncmp(exec->words[i], "\'\'", 3))
+			break ;
+		i++;
+	}
 	if (size_arg(exec->arg) == 1
-		|| (size_arg(exec->arg) == 2 && !exec->arg[1][0]))
+		|| (size_arg(exec->arg) == 2 && !exec->arg[1][0] && !exec->words[i]))
 		return (print_export(exec));
 	return (update_env(exec));
 }

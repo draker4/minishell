@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:50:37 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 14:46:42 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 16:09:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static int	check_parenthesis(char *str)
 	{
 		if (str[i] == '(' && !is_in_quote(str, i, 0))
 		{
-			write(2, "minishell: syntax error, unexpected '('\n", 40);
+			write(2, "minishell: syntax error near unexpected token '('\n", 50);
 			return (0);
 		}
 		else if (str[i] == ')' && !is_in_quote(str, i, 0))
 		{
-			write(2, "minishell: syntax error, unexpected '('\n", 40);
+			write(2, "minishell: syntax error near unexpected token ')'\n", 50);
 			return (0);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 13:24:55 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 16:47:48 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ void	execute_commande(t_exec *exec)
 	close_file(exec);
 	if (exec->function == NULL)
 		exit(0);
+	if (exec->function[0] == '\0')
+	{
+		write(2, "minishell: : command not found\n", 31);
+		exit(127);
+	}
 	if (exec->cmd == builtin)
 		return (execute_builtin(exec));
 	else if (ft_strchr(exec->function, '/'))

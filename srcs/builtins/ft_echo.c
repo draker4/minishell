@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 18:21:18 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 16:58:27 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_echo(t_exec *exec)
 		return (ft_echo_no_arg(exec));
 	i = 1;
 	new_line = 1;
-	while (!flag_n(exec->arg[i]))
+	while (exec->arg[i] && !flag_n(exec->arg[i]))
 	{
 		new_line = 0;
 		i++;

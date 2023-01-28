@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:52:38 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 14:43:49 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 16:01:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_output(char *str, int *i)
 {
 	if (!str[*i + 1])
 	{
-		write(2, "Wrong '>' symbol!\n", 18);
+		write(2, "minishell: syntax error near unexpected token '>'\n", 50);
 		return (0);
 	}
 	if (str[*i + 1] == '>')
@@ -27,7 +27,7 @@ static int	check_output(char *str, int *i)
 	if (!str[*i] || str[*i] == '|' || str[*i] == '&' \
 	|| str[*i] == '<' || str[*i] == '>')
 	{
-		write(2, "Wrong '>' symbol!\n", 18);
+		write(2, "minishell: syntax error near unexpected token '>'\n", 50);
 		return (0);
 	}
 	return (1);
@@ -37,7 +37,7 @@ static int	check_input(char *str, int *i)
 {
 	if (!str[*i + 1])
 	{
-		write(2, "Wrong '<' symbol!\n", 18);
+		write(2, "minishell: syntax error near unexpected token '<'\n", 50);
 		return (0);
 	}
 	if (str[*i + 1] == '<')
@@ -48,7 +48,7 @@ static int	check_input(char *str, int *i)
 	if (!str[*i] || str[*i] == '|' || str[*i] == '&' \
 	|| str[*i] == '<' || str[*i] == '>')
 	{
-		write(2, "Wrong '>' symbol!\n", 18);
+		write(2, "minishell: syntax error near unexpected token '<'\n", 50);
 		return (0);
 	}
 	return (1);
