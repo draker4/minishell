@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_delimiter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:52:12 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 19:55:01 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 12:52:24 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	find_delimiter(t_exec **exec)
 		while (tmp)
 		{
 			if (tmp->type == delimiter && has_quote(tmp->str))
+			{
 				tmp->modif = 1;
+			}
 			tmp = tmp->next;
 		}
 		current = current->next;

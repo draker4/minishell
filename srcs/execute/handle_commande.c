@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_commande.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:44:14 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 10:46:58 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/28 11:57:39 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ void	handle_cmd_list(t_exec *exec)
 
 void	handle_cmd(t_exec *exec)
 {
-	if (exec->redir && change_redir(exec))
-		return ;
 	if (exec->cmd == builtin)
+	{
+		if (exec->redir && change_redir(exec))
+			return ;
 		return (execute_builtin(exec), close_file(exec));
+	}
 	last_cmd(exec);
 	close_file(exec);
 }
