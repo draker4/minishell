@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:38:00 by bboisson          #+#    #+#             */
-/*   Updated: 2023/01/28 19:46:11 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 11:45:36 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void		ft_echo(t_exec *exec);
 void		ft_env(t_exec *exec);
 
 // exit builtin
-void		ft_exit(t_exec *exec);
+unsigned char	ft_exit(t_exec *exec);
 
 // export builtin utils
 void		handle_error(t_exec *exec);

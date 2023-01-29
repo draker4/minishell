@@ -1,0 +1,124 @@
+
+
+:
+!
+>
+<
+>>
+<<
+<>
+>>>>>
+>>>>>>>>>>>>>>>
+<<<<<
+<<<<<<<<<<<<<<<<
+> > > >
+>> >> >> >>
+>>>> >> >> >>
+/
+//
+/.
+/./../../../../..
+///////
+\\
+\\\\
+\\\\\\\\
+-
+|
+| hola
+| | |
+||
+|||||
+|||||||||||||
+>>|><
+&&
+&&&&&
+&&&&&&&&&&&&&&
+;;
+;;;;;
+;;;;;;;;;;;;;;;
+()
+( ( ) )
+( ( ( ( ) ) ) )
+echo > <
+echo | |
+>echo>
+<echo<
+>>echo>>
+|echo|
+|echo -n hola
+export
+export $DONTEXIST
+export -HOLA=bonjour
+export --HOLA=bonjour
+export HOL\\\$A=bonjour
+export HOLA+=bonjour
+export HOLA+=bonjour
+exportHOLA=bonjour
+unset HOL?A HOL.A
+unset HOLA=
+unset HOL\\\\A
+unset HOL;A
+unset -HOLA
+history
+pwd -p
+pwd --p
+pwd ---p
+pwd -- pcd -
+cd --
+cd ---
+cd ~
+cd ~/
+cd ~/ | echo $?
+cat | cat | cat | ls
+whoami | cat -e | cat -e > /tmp/bonjour
+cat /tmp/bonjour
+whereis ls | cat -e | cat -e > /tmp/bonjour
+cat /tmp/bonjour
+echo hola || cat
+echo hola ||| cat
+ech|o hola | cat
+cat Makefile | grep pr | head -n 5 | cd file_not_exist
+cat Makefile | grep pr | head -n 5 | hello
+export HOLA=bonjour | cat -e | cat -e
+unset HOLA | cat -e
+ export HOLA | echo hola
+env | grep PROUT
+export | echo hola
+ echo hola > a
+>>b echo que tal
+cat a | <b cat | cat > c | cat
+pwd && ls
+pwd || ls
+echo hola || echo bonjour
+echo hola && echo bonjour
+echo bonjour || echo hola
+echo bonjour && echo hola
+echo -n bonjour && echo -n hola
+pwd && ls && echo hola
+pwd || ls && echo hola
+pwd && ls || echo hola
+pwd || ls || echo hola
+ls || export ""
+export "" || ls
+ls && export ""
+export "" && ls
+ls || ;
+; || ls
+ls && ;
+; && ls
+ls || <
+ls && <
+cat | echo || ls
+cat | echo && ls
+ls || cat | echo
+ls && cat | echo
+ls || cat | echo
+ls && cat | echo
+pwd>bonjour
+echo hola > > bonjour
+echo hola < < bonjour
+echo hola >>> bonjour
+cat >>
+cat >>>
+cat >> <<
+cat >> > >> << >>

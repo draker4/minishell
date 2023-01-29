@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 02:30:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 19:17:16 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 11:45:19 by bboisson         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static double	modulo(double x, double y)
 	return (x - (int)(x / y) *y);
 }
 
-static int	ft_long_atoi(char *str)
+static unsigned char	ft_long_atoi(char *str)
 {
 	size_t			i;
 	long double		result;
@@ -57,10 +57,10 @@ static int	ft_long_atoi(char *str)
 			return (-1);
 		i++;
 	}
-	return (modulo(result, 256.));
+	return (result);
 }
 
-void	ft_exit(t_exec *exec)
+unsigned char	ft_exit(t_exec *exec)
 {
 	long double	code;
 
