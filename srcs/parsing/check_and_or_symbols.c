@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 10:32:16 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 17:09:02 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 14:59:00 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	begin_and_or_char(char *str)
 	{
 		if (str[i] == '&')
 			return (write \
-			(2, "minishell: syntax error near unexpected token '&'\n", 50) , 0);
+			(2, "minishell: syntax error near unexpected token '&'\n", 50), 0);
 		if (str[i] == '|')
 			return (write \
 			(2, "minishell: syntax error near unexpected token '|'\n", 50), 0);

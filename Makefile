@@ -166,13 +166,13 @@ VALGRIND		=	valgrind --leak-check=full --track-origins=yes --show-reachable=no -
 
 # ****************************  RULES  ***************************** #
 
-all					:	
+all					:
 						${MAKE} -C ${DIR_LIBFT}
 						$(MAKE) -j ${NAME}
 
 # ---------  Compiled Rules  --------- #
 
-${NAME}				:	${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S} ${OBJS_U} ${OBJS_W}
+${NAME}				:	${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S} ${OBJS_U} ${OBJS_W} ./libft/libft.a
 						${CC} ${CFLAGS} ${OBJS} ${OBJS_B} ${OBJS_E} ${OBJS_P} ${OBJS_S} ${OBJS_U} ${OBJS_W} -L ${DIR_LIBFT} ${L_READ1} ${L_READ2} ${L_READ3} ${LIBFT} ${READLINE} -o ${NAME}
 
 ${DIR_OBJS}%.o		:	${DIR_SRCS}%.c Makefile | ${DIR_OBJS}

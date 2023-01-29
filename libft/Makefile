@@ -13,8 +13,8 @@ DEBUG		=	libft_debug.a
 
 DIR_HEAD	=	./
 DIR_SRCS	=	./
-DIR_OBJS	=	.objs/
-DIR_OBJS_D	=	.objs_debug/
+DIR_OBJS	=	.build/
+DIR_OBJS_D	=	.build_debug/
 DIR_DEBUG	=	${DEBUG}.dSYM
 
 # -------------  Files  -------------- #
@@ -29,6 +29,9 @@ SRCS		=	ft_atoi_itoa.c		ft_calloc.c			ft_get_next_line.c	\
 				ft_to_all.c		
 OBJS		=	${SRCS:%.c=${DIR_OBJS}%.o}
 OBJS_D		=	${SRCS:%.c=${DIR_OBJS_D}%.o}
+
+DEPS			=	${OBJS:.o=.d}
+DEPS_D			=	${OBJS_D:.o=.d}
 
 # --------------  Path  -------------- #
 
@@ -69,7 +72,7 @@ ${DIR_OBJS}%.o	:	${DIR_SRCS}%.c Makefile
 ${DIR_OBJS}		:
 					${MKDIR} ${DIR_OBJS}
 
--include ${DIR_OBJS}%.d
+-include ${DEPS}
 
 # ------  Compiled Rules Debug  ------ #
 
@@ -83,6 +86,8 @@ ${DIR_OBJS_D}%.o:	${DIR_SRCS}%.c ${PATH_HEAD} Makefile
 
 ${DIR_OBJS_D}	:
 					${MKDIR} ${DIR_OBJS_D}
+
+-include ${DEPS_D}
 
 # ---------  Usual Commands  --------  #
 
