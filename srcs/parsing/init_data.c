@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bboisson <bboisson@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:46:08 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/27 13:40:41 by bboisson         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 14:54:52 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ static void	init_null(t_data *data)
 
 static int	init_termios(t_data *data)
 {
-	/*if (*/tcgetattr(STDIN_FILENO, &data->term_original);/*)
-		return (perror("Init_data - tcgetattr"), FAIL);*/
-	/*if (*/tcgetattr(STDIN_FILENO, &data->term);/*)
-		return (perror("Init_data - tcgetattr"), FAIL);*/
+	tcgetattr(STDIN_FILENO, &data->term_original);
+	tcgetattr(STDIN_FILENO, &data->term);
 	data->term.c_lflag &= ~ECHOCTL;
-	/*if (*/tcsetattr(STDIN_FILENO, TCSANOW, &data->term);/*)
-		return (perror("Init_data - tcsetattr"), FAIL);*/
+	tcsetattr(STDIN_FILENO, TCSANOW, &data->term);
 	return (0);
 }
 
@@ -45,13 +42,13 @@ int	init_data(t_data *data, char **envp)
 		return (FAIL);
 	if (sigemptyset(&data->sa.sa_mask) == -1)
 		return (write(2, "Sigemptyset function error!\n", 28), FAIL);
-	/*if (*/sigaddset(&data->sa.sa_mask, SIGINT);/* == -1|| \*/
-	sigaddset(&data->sa.sa_mask, SIGQUIT)/* == -1*/;
-		//return (perror("Init data - Sigaddset:"), FAIL);
+	if (sigaddset(&data->sa.sa_mask, SIGINT) == -1 || \
+	sigaddset(&data->sa.sa_mask, SIGQUIT == -1))
+		return (perror("Init data - Sigaddset:"), FAIL);
 	data->sa.sa_flags = 0;
 	data->sa.sa_handler = &handler;
-	/*if (*/sigaction(SIGINT, &data->sa, NULL)/* == -1 || \*/;
-	sigaction(SIGQUIT, &data->sa, NULL)/* == -1)*/;
-		//return (perror("Init data - Sigaction"), FAIL);
+	if (sigaction(SIGINT, &data->sa, NULL) == -1 || \
+	sigaction(SIGQUIT, &data->sa, NULL) == -1)
+		return (perror("Init data - Sigaction"), FAIL);
 	return (0);
 }
