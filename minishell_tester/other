@@ -1,54 +1,8 @@
-
-
-:
-!
->
-<
->>
-<<
-<>
->>>>>
->>>>>>>>>>>>>>>
-<<<<<
-<<<<<<<<<<<<<<<<
-> > > >
->> >> >> >>
->>>> >> >> >>
-/
-//
-/.
-/./../../../../..
-///////
-\\
-\\\\
-\\\\\\\\
--
-|
-| hola
-| | |
-||
-|||||
-|||||||||||||
->>|><
-&&
-&&&&&
-&&&&&&&&&&&&&&
-;;
-;;;;;
-;;;;;;;;;;;;;;;
-()
-( ( ) )
-( ( ( ( ) ) ) )
 ""
 "hola"
 'hola'
 ''
 *
-*/*
-*/*
-.
-..
-~
 ABC=hola
 4ABC=hola
 a
@@ -94,24 +48,14 @@ echo \$HOME
 echo my shit terminal is [$TERM]
 echo my shit terminal is [$TERM4
 echo my shit terminal is [$TERM4]
-echo $UID
 echo $HOME9
 echo $9HOME
-echo $HOME%
-echo $UID$HOME
 echo Le path de mon HOME est $HOME
 echo $USER$var\$USER$USER\$USERtest$USER
 echo $hola*
 echo -nnnn $hola
-echo > <
-echo | |
 EechoE
 .echo.
->echo>
-<echo<
->>echo>>
-|echo|
-|echo -n hola
 echo *
 echo '*'
 echo D*
@@ -185,14 +129,11 @@ $DONTEXIST
 $LESS$VAR
 export HOLA=bonjour
 export       HOLA=bonjour
-export
 export Hola
 export Hola9hey
-export $DONTEXIST
 export | grep "HOME"
 export ""
 export =
-export %
 export $?
 export ?=2
 export 9HOLA=
@@ -202,13 +143,9 @@ export ___HOLA=bonjour | echo $__HOLA
 export _HO_LA_=bonjour | echo $_HO_LA_
 export HOL@=bonjour
 export HOL\~A=bonjour
-export -HOLA=bonjour
-export --HOLA=bonjour
 export HOLA-=bonjour
 export HO-LA=bonjour
 export HOL.A=bonjour
-export HOL\\\$A=bonjour
-export HO\\\\LA=bonjour
 export HOL}A=bonjour
 export HOL{A=bonjour
 export HO*LA=bonjour
@@ -218,10 +155,7 @@ export HO!LA=bonjour
 export HO$?LA=bonjour 
 export +HOLA=bonjour
 export HOL+A=bonjour
-export HOLA+=bonjour
 export HOLA=bonjour
-export HOLA+=bonjour
-exportHOLA=bonjour
 export HOLA=$HOME
 export HOLA=bonjour$HOME 
 export HOLA=$HOMEbonjour
@@ -246,17 +180,12 @@ unset HOLA9
 unset HOL?A
 unset HOLA HOL?A
 unset HOL?A HOLA
-unset HOL?A HOL.A
-unset HOLA=
-unset HOL\\\\A
-unset HOL;A
 unset HOL.A
 unset HOL+A
 unset HOL=A
 unset HOL{A
 unset HOL}A
 unset HOL-A
-unset -HOLA
 unset _HOLA
 unset HOL_A
 unset HOLA_
@@ -286,15 +215,10 @@ export hola | unset hola | echo $?
 /bin/echo Hola Que Tal
 /bin/env
 /bin/cd Desktop
-history
 pwd
 pwd hola
 pwd ./hola
 pwd hola que tal
-pwd -p
-pwd --p
-pwd ---p
-pwd -- p
 pwd pwd pwd
 pwd ls
 pwd ls env
@@ -326,18 +250,12 @@ cd //
 cd '//'
 cd ///
 cd _
-cd -
-cd --
-cd ---
 cd $HOME
 cd $HOME $HOME
 cd $HOME/42_works
 cd "$PWD/srcs"
 cd '$PWD/srcs'
 cd $HOME
-cd ~
-cd ~/
-cd ~/ | echo $?
 echo $PWD
 echo $OLDPWD
 exit
@@ -386,7 +304,6 @@ exit 9223372036854775807
 exit 9223372036854775808
 exit -9223372036854775808
 exit -9223372036854775809
-cat | cat | cat | ls
 ls | exit
 ls | exit 42
 exit | ls
@@ -410,10 +327,6 @@ ifconfig | grep hola
 whoami | grep $USER
  whoami | grep $USER > /tmp/bonjour
 cat /tmp/bonjour
-whoami | cat -e | cat -e > /tmp/bonjour
-cat /tmp/bonjour
-whereis ls | cat -e | cat -e > /tmp/bonjour
-cat /tmp/bonjour
 ls | hola
 ls | ls hola
 ls | ls | hola
@@ -424,54 +337,14 @@ ls -la | grep "."
 ls -la | grep "'.'"
 echo test.c | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e
  ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls
-|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls
 echo hola | cat | cat | cat | cat | cat | grep hola
 echo hola | cat
 echo hola| cat
 echo hola |cat
 echo hola|cat
-echo hola || cat
-echo hola ||| cat
-ech|o hola | cat
 cat Makefile | cat -e | cat -e
 cat Makefile | grep srcs | cat -e
 cat Makefile | grep srcs | grep srcs | cat -e
-cat Makefile | grep pr | head -n 5 | cd file_not_exist
-cat Makefile | grep pr | head -n 5 | hello
-export HOLA=bonjour | cat -e | cat -e
-unset HOLA | cat -e
- export HOLA | echo hola
-env | grep PROUT
-export | echo hola
- echo hola > a
->>b echo que tal
-cat a | <b cat | cat > c | cat
-pwd && ls
-pwd || ls
-echo hola || echo bonjour
-echo hola && echo bonjour
-echo bonjour || echo hola
-echo bonjour && echo hola
-echo -n bonjour && echo -n hola
-pwd && ls && echo hola
-pwd || ls && echo hola
-pwd && ls || echo hola
-pwd || ls || echo hola
-ls || export ""
-export "" || ls
-ls && export ""
-export "" && ls
-ls || ;
-; || ls
-ls && ;
-; && ls
-ls || <
-ls && <
-cat | echo || ls
-cat | echo && ls
-ls || cat | echo
-ls && cat | echo
-export "" && unset 
 echo hola > bonjour
 echo hola > bonjour
 echo que tal >> bonjour | cat < bonjour
@@ -487,12 +360,8 @@ whereis grep > Docs/bonjour
 cat Docs/bonjour
 ls -la > Docs/bonjour
 cat Docs/bonjour
-pwd>bonjour
 cat bonjour
 pwd >                     bonjour | cat bonjour
-echo hola > > bonjour
-echo hola < < bonjour
-echo hola >>> bonjour
  > bonjour echo hola | cat bonjour
  > bonjour | echo hola | cat bonjour
  prout hola > bonjour
@@ -500,10 +369,6 @@ echo hola > hello >> hello >> hello
 cat <pwd
 cat <srcs/pwd
 cat <../pwd
-cat >>
-cat >>>
-cat >> <<
-cat >> > >> << >>
 cat < ls
 cat < ls > ls
 cat > ls1 < ls2

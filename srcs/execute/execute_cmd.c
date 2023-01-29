@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/29 13:13:10 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 13:17:38 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	execute_builtin(t_exec *exec)
 	if (!ft_strncmp(exec->function, "cd", 3))
 		return (ft_cd(exec));
 	else if (!ft_strncmp(exec->function, "echo", 5))
-		return (ft_echo(exec));
+	{
+		ft_echo(exec);
+	}
 	else if (!ft_strncmp(exec->function, "env", 4))
 		return (ft_env(exec));
 	else if (!ft_strncmp(exec->function, "exit", 6))
