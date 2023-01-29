@@ -162,7 +162,7 @@ MKDIR			=	mkdir -p
 LEAKS			=	leaks -atExit -- 
 LLDB			=	lldb
 CP				=	cp
-VALGRIND		=	valgrind --leak-check=full --track-origins=yes --show-reachable=no
+VALGRIND		=	valgrind --leak-check=full --track-origins=yes --show-reachable=no --show-possibly-lost=no --trace-children=yes
 
 # ****************************  RULES  ***************************** #
 
@@ -206,12 +206,12 @@ ${DIR_OBJS}			:
 						${MKDIR} ${DIR_OBJS_W}
 
 -include ${DEPS}
--include ${DEPS_B}
--include ${DEPS_E}
 -include ${DEPS_P}
--include ${DEPS_S}
 -include ${DEPS_U}
 -include ${DEPS_W}
+-include ${DEPS_E}
+-include ${DEPS_B}
+-include ${DEPS_S}
 
 # ------  Compiled Rules Debug  ------ #
 

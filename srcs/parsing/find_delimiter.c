@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:52:12 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:20 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 12:10:37 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	find_delimiter(t_exec **exec)
 				str = parse_delimiter(tmp->str);
 				if (!str)
 					return (0);
+				free(tmp->str);
 				tmp->str = str;
 			}
 			tmp = tmp->next;

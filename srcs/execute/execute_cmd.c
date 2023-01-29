@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 16:49:55 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 16:47:48 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 13:13:10 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ void	execute_without_path(t_exec *exec)
 	if (errno == EACCES)
 	{
 		ft_auto_perror_code("minishell", exec->function, "Permission denied");
-		exit (126);
+		exit(126);
 	}
 	ft_auto_perror("minishell", exec->function, "command not found");
-	exit (127);
+	exit(127);
 }
 
 void	execute_commande(t_exec *exec)

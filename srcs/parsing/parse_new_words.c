@@ -6,7 +6,7 @@
 /*   By: bperriol <bperriol@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:27:17 by bperriol          #+#    #+#             */
-/*   Updated: 2023/01/28 11:12:04 by bperriol         ###   ########lyon.fr   */
+/*   Updated: 2023/01/29 12:31:33 by bperriol         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	**add_new_word(char **old_words, char **split)
 	new_words = malloc(sizeof(char *) * \
 	(size_arg(old_words) + size_arg(split) + 1));
 	if (!new_words)
-		return (free_split(split), NULL);
+		return (free_split(split), free_split(old_words), NULL);
 	while (old_words && old_words[i])
 	{
 		new_words[i] = old_words[i];
@@ -59,7 +59,7 @@ int	parse_new_words(t_exec **exec)
 			if (!new_words)
 				return (0);
 		}
-		free(current->arg);
+		free_split(current->arg);
 		current->arg = new_words;
 		current = current->next;
 	}
