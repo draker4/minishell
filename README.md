@@ -1,0 +1,3 @@
+# minishell
+9th project of the 42 school program. Minishell is a simplified bash. It can parse the lines entered by the user, with redirections ("<", "<<", ">", ">>"), environment variables, double or single quotes, "*" character and pipes.
+Then it does the execution of the command if this last one is valid, searching in the path for functions, and with a few built-ins as "echo", "cd", "env", "unset", "export", ...
